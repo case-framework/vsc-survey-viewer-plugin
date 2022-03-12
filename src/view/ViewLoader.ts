@@ -22,7 +22,7 @@ export default class ViewLoader {
           enableScripts: true,
 
           localResourceRoots: [
-            vscode.Uri.file(path.join(extensionPath, "configViewer"))
+            vscode.Uri.file(path.join(extensionPath, "surveyViewer"))
           ]
         }
       );
@@ -34,7 +34,7 @@ export default class ViewLoader {
   private getWebviewContent(config: SurveyFileContent): string {
     // Local path to main script run in the webview
     const reactAppPathOnDisk = vscode.Uri.file(
-      path.join(this._extensionPath, "configViewer", "configViewer.js")
+      path.join(this._extensionPath, "surveyViewer", "surveyViewer.js")
     );
     const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
 

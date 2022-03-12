@@ -27,52 +27,6 @@ const React = __importStar(require("react"));
 const case_web_ui_1 = require("case-web-ui");
 const model_1 = require("./model");
 const SurveySimulator = (props) => {
-    //   constructor(props: any) {
-    //     super(props);
-    //     let initialData = this.props.initialData;
-    //     let oldState = this.props.vscode.getState();
-    //     if (oldState) {
-    //       this.state = oldState;
-    //     } else {
-    //       this.state = { config: initialData };
-    //     }
-    //   }
-    //   renderUsers(users: IUser[]) {
-    //     return (
-    //       <React.Fragment>
-    //         <h2>User List :</h2>
-    //         <ul className="">
-    //           {users && users.length > 0
-    //             ? users.map((user, userIndex) => {
-    //                 let roles =
-    //                   user.roles && user.roles.length > 0
-    //                     ? user.roles.join(",")
-    //                     : null;
-    //                 return (
-    //                   <li key={userIndex}>
-    //                     {user.name}
-    //                     <br />
-    //                     Is active : <input type="checkbox" checked={user.active} />
-    //                     <br />
-    //                     Roles : {roles}
-    //                   </li>
-    //                 );
-    //               })
-    //             : null}
-    //         </ul>
-    //       </React.Fragment>
-    //     );
-    //   }
-    //   render() {
-    //     return (
-    //       <React.Fragment>
-    //         <h1>Config name : {this.state.config.name}</h1>{" "}
-    //         {this.state.config.description}
-    //         {this.renderUsers(this.state.config.users)}
-    //         <br />
-    //       </React.Fragment>
-    //     );
-    // }   
     return (React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, props.surveyAndContext ?
         React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: props.config.showKeys, survey: props.surveyAndContext.survey, context: props.surveyAndContext.context, prefills: props.prefills, languageCode: props.selectedLanguage ? props.selectedLanguage : 'en', onSubmit: (responses) => {
                 console.log(responses);

@@ -32,10 +32,10 @@ class ViewLoader {
         this._extensionPath = extensionPath;
         let config = this.getFileContent(fileUri);
         if (config) {
-            this._panel = vscode.window.createWebviewPanel(`${fileUri.path}`, `${fileUri.path}`, vscode.ViewColumn.One, {
+            this._panel = vscode.window.createWebviewPanel(`${fileUri.path}`, "Survey Viewer", vscode.ViewColumn.One, {
                 enableScripts: true,
                 localResourceRoots: [
-                    vscode.Uri.file(path.join(extensionPath, "configViewer"))
+                    vscode.Uri.file(path.join(extensionPath, "surveyViewer"))
                 ]
             });
             this._panel.webview.html = this.getWebviewContent(config);
@@ -43,7 +43,7 @@ class ViewLoader {
     }
     getWebviewContent(config) {
         // Local path to main script run in the webview
-        const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, "configViewer", "configViewer.js"));
+        const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, "surveyViewer", "surveyViewer.js"));
         const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
         const configJson = JSON.stringify(config);
         return `<!DOCTYPE html>

@@ -29,7 +29,8 @@
         "commands": [
             {
                 "command": "jsonpreview.preview",
-                "title": "Json Preview"
+                "category": "Survey Viewer",
+                "title": "Survey Preview"
             }
         ]
     },
