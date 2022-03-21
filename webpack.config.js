@@ -10,7 +10,7 @@ module.exports = {
   },
   devtool: "eval-source-map",
   resolve: {
-    extensions: [".js", ".ts", ".tsx", ".json"]
+    extensions: [".js", ".ts", ".tsx", ".json", ".scss", "woff2"]
   },
   module: {
     rules: [
@@ -18,6 +18,39 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         loader: "ts-loader",
         options: {}
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "file-loader",
+        options: {
+        }
+      },
+      {
+        test: /\.(scss)$/,
+  use: [{
+    loader: 'style-loader'
+  }, {
+    loader: 'css-loader'
+  }, {
+    loader: 'postcss-loader',
+    options: {
+      postcssOptions: {
+        plugins: function () {
+          return [
+            require('autoprefixer')
+          ];
+        }
+      }
+    }
+  }, {
+    loader: 'resolve-url-loader',
+    options: {}
+  }, {
+    loader: 'sass-loader',
+    options: {
+      sourceMap: true, // <-- !!IMPORTANT!!
+    }
+  }]
       },
       {
         test: /\.css$/,

@@ -26,12 +26,62 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const case_web_ui_1 = require("case-web-ui");
 const model_1 = require("./model");
+const react_1 = require("react");
+const defaultSurveyContext = {
+    isLoggedIn: false,
+    participantFlags: {},
+};
+const defaultSimulatorUIConfig = {
+    showKeys: false,
+    texts: {
+        backBtn: 'Back',
+        nextBtn: 'Next',
+        submitBtn: 'Submit',
+        invalidResponseText: 'Invalid response',
+        noSurveyLoaded: 'Survey could not be loaded, please try again.'
+    }
+};
+const initialSurveyCredState = {
+    simulatorUIConfig: defaultSimulatorUIConfig,
+    surveyContext: defaultSurveyContext,
+    survey: window.initialData.survey,
+    surveyKey: window.initialData.studyKey
+};
+const initialSurveyCred = {
+    config: initialSurveyCredState.simulatorUIConfig,
+    surveyAndContext: initialSurveyCredState.survey ? {
+        survey: initialSurveyCredState.survey,
+        context: initialSurveyCredState.surveyContext
+    } : undefined,
+    prefills: initialSurveyCredState.prefillValues,
+    selectedLanguage: initialSurveyCredState.selectedLanguage
+};
 const SurveySimulator = (props) => {
-    return (React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, props.surveyAndContext ?
-        React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: props.config.showKeys, survey: props.surveyAndContext.survey, context: props.surveyAndContext.context, prefills: props.prefills, languageCode: props.selectedLanguage ? props.selectedLanguage : 'en', onSubmit: (responses) => {
-                console.log(responses);
-            }, nextBtnText: props.config.texts.nextBtn, backBtnText: props.config.texts.backBtn, submitBtnText: props.config.texts.submitBtn, invalidResponseText: props.config.texts.invalidResponseText, dateLocales: model_1.dateLocales }) :
-        React.createElement(case_web_ui_1.AlertBox, { type: "danger", useIcon: true, content: props.config.texts.noSurveyLoaded })));
+    const [surveyViewCred, setSurveyViewCred] = (0, react_1.useState)({
+        ...initialSurveyCred
+    });
+    return (React.createElement("div", { className: "container-fluid" },
+        React.createElement("div", { className: "container pt-3" },
+            React.createElement("div", { className: "row" },
+                React.createElement(case_web_ui_1.Checkbox, { id: "show-keys-checkbox", name: "show-keys-checkbox", className: "mb-3", checked: surveyViewCred.config.showKeys, onChange: (value) => {
+                        console.log(value);
+                        setSurveyViewCred({
+                            config: { texts: initialSurveyCredState.simulatorUIConfig.texts,
+                                showKeys: value },
+                            surveyAndContext: initialSurveyCredState.survey ? {
+                                survey: initialSurveyCredState.survey,
+                                context: initialSurveyCredState.surveyContext
+                            } : undefined,
+                            prefills: initialSurveyCredState.prefillValues,
+                            selectedLanguage: initialSurveyCredState.selectedLanguage
+                        });
+                    }, label: "Show keys" }))),
+        React.createElement("div", { className: "row" },
+            React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, surveyViewCred.surveyAndContext ?
+                React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.config.showKeys, survey: surveyViewCred.surveyAndContext.survey, context: surveyViewCred.surveyAndContext.context, prefills: surveyViewCred.prefills, languageCode: surveyViewCred.selectedLanguage ? surveyViewCred.selectedLanguage : 'en', onSubmit: (responses) => {
+                        console.log(responses);
+                    }, nextBtnText: surveyViewCred.config.texts.nextBtn, backBtnText: surveyViewCred.config.texts.backBtn, submitBtnText: surveyViewCred.config.texts.submitBtn, invalidResponseText: surveyViewCred.config.texts.invalidResponseText, dateLocales: model_1.dateLocales }) :
+                React.createElement(case_web_ui_1.AlertBox, { type: "danger", useIcon: true, content: surveyViewCred.config.texts.noSurveyLoaded })))));
 };
 exports.default = SurveySimulator;
 //# sourceMappingURL=surveySimulator.js.map
