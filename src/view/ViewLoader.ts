@@ -22,7 +22,8 @@ export default class ViewLoader {
           enableScripts: true,
 
           localResourceRoots: [
-            vscode.Uri.file(path.join(extensionPath, "surveyViewer"))
+            vscode.Uri.file(path.join(extensionPath, "surveyViewer")),
+            vscode.Uri.file(path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : ""}`, 'node_modules')),
           ]
         }
       );
@@ -45,12 +46,9 @@ export default class ViewLoader {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Config View</title>
+        <title></title>
         <meta http-equiv="Content-Security-Policy"
-                    content="default-src 'none';
-                             img-src https:;
-                             script-src 'unsafe-eval' 'unsafe-inline' vscode-resource:;
-                             style-src vscode-resource: 'unsafe-inline';">
+                    content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *;">
         <script>
           window.acquireVsCodeApi = acquireVsCodeApi;
           window.initialData = ${configJson};

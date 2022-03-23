@@ -20,10 +20,11 @@ module.exports = {
         options: {}
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "file-loader",
-        options: {
-        }
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "fonts/[name][ext][query]",
+        },
       },
       {
         test: /\.(scss)$/,
@@ -67,5 +68,9 @@ module.exports = {
   },
   performance: {
     hints: false
-  }
+  },
+  devServer: {
+
+    historyApiFallback: true
+}
 };

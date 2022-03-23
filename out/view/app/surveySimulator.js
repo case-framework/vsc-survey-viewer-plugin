@@ -22,11 +22,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const case_web_ui_1 = require("case-web-ui");
 const model_1 = require("./model");
 const react_1 = require("react");
+const react_bootstrap_1 = require("react-bootstrap");
+const react_2 = __importDefault(require("@monaco-editor/react"));
+const clsx_1 = __importDefault(require("clsx"));
 const defaultSurveyContext = {
     isLoggedIn: false,
     participantFlags: {},
@@ -60,9 +66,54 @@ const SurveySimulator = (props) => {
     const [surveyViewCred, setSurveyViewCred] = (0, react_1.useState)({
         ...initialSurveyCred
     });
+    const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = (0, react_1.useState)(false);
     return (React.createElement("div", { className: "container-fluid" },
         React.createElement("div", { className: "container pt-3" },
             React.createElement("div", { className: "row" },
+                React.createElement(react_bootstrap_1.DropdownButton, { id: `simulator-config`, 
+                    //size="sm"
+                    variant: "secondary", title: "Change the Config", onSelect: (eventKey) => {
+                        switch (eventKey) {
+                            case 'apply':
+                                break;
+                                break;
+                        }
+                    } },
+                    React.createElement(react_bootstrap_1.Dropdown.Item, { disabled: true, eventKey: "editor" },
+                        React.createElement(react_2.default, { height: "150px", defaultLanguage: "json", value: JSON.stringify(defaultSurveyContext, undefined, 4), className: (0, clsx_1.default)({ 'border border-danger': hasSurveyContextEditorErrors }), onValidate: (markers) => {
+                                if (markers.length > 0) {
+                                    setHasSurveyContextEditorErrors(true);
+                                }
+                                else {
+                                    setHasSurveyContextEditorErrors(false);
+                                }
+                            }, onChange: (value) => {
+                                if (!value) {
+                                    return;
+                                }
+                                let context;
+                                try {
+                                    context = JSON.parse(value);
+                                }
+                                catch (e) {
+                                    console.error(e);
+                                    return;
+                                }
+                                if (!context) {
+                                    return;
+                                }
+                                setSurveyViewCred({
+                                    config: initialSurveyCredState.simulatorUIConfig,
+                                    surveyAndContext: initialSurveyCredState.survey ? {
+                                        survey: initialSurveyCredState.survey,
+                                        context: context
+                                    } : undefined,
+                                    prefills: initialSurveyCredState.prefillValues,
+                                    selectedLanguage: initialSurveyCredState.selectedLanguage
+                                });
+                            } })),
+                    React.createElement(react_bootstrap_1.Dropdown.Divider, null),
+                    React.createElement(react_bootstrap_1.Dropdown.Item, { eventKey: "apply" }, "Apply Changes")),
                 React.createElement(case_web_ui_1.Checkbox, { id: "show-keys-checkbox", name: "show-keys-checkbox", className: "mb-3", checked: surveyViewCred.config.showKeys, onChange: (value) => {
                         console.log(value);
                         setSurveyViewCred({

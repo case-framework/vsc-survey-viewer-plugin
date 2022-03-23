@@ -3,6 +3,9 @@ import { AlertBox, Checkbox, SurveyView} from 'case-web-ui';
 import { dateLocales, SurveyFileContent, SurveyViewCred } from "./model";
 import { Survey, SurveyContext, SurveySingleItemResponse } from "survey-engine/data_types";
 import { useState } from "react";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import Editor from '@monaco-editor/react';
+import clsx from 'clsx';
 
 declare global {
     interface Window {
@@ -72,35 +75,68 @@ const SurveySimulator: React.FC = (props) => {
     const [surveyViewCred, setSurveyViewCred] = useState<SurveyViewCred>({
         ...initialSurveyCred
       }) ;
+      const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = useState(false);
 
     return (
         <div className="container-fluid">
         <div className="container pt-3">
             <div className="row">
-                    {/* <DropdownButton
-                        id={`simulator-menu`}
+                     <DropdownButton
+                        id={`simulator-config`}
                         //size="sm"
                         variant="secondary"
-                        title="Menu1"
+                        title="Change the Config"
                         onSelect={(eventKey) => {
                             switch (eventKey) {
-                                case 'save':
+                                case 'apply':
                                     break;
-                                case 'exit':
-                                    if (window.confirm('Do you want to exit the simulator (will lose state)?')) {
-                                        //props.onExit();
-                                    }
+                                
                                     break;
                             }
                         }}
                     >
                         <Dropdown.Item
                             disabled
-                            eventKey="save">Save Current Survey State</Dropdown.Item>
+                            eventKey="editor"><Editor
+                            height="150px"
+                            defaultLanguage="json"
+                            value={JSON.stringify(defaultSurveyContext , undefined, 4)}
+                            className={clsx(
+                                { 'border border-danger': hasSurveyContextEditorErrors }
+                            )}
+                            onValidate={(markers) => {
+                                if (markers.length > 0) {
+                                    setHasSurveyContextEditorErrors(true)
+                                } else {
+                                    setHasSurveyContextEditorErrors(false)
+                                }
+                            }}
+                            onChange={(value) => {
+                                if (!value) { return }
+                                let context: SurveyContext;
+                                try {
+                                    context = JSON.parse(value);
+                                } catch (e: any) {
+                                    console.error(e);
+                                    return
+                                }
+                                if (!context) { return }
+                                setSurveyViewCred({
+                                    config: initialSurveyCredState.simulatorUIConfig,
+                                     surveyAndContext :  initialSurveyCredState.survey ? {
+                                        survey: initialSurveyCredState.survey,
+                                     context: context
+                                            } : undefined,
+                                        prefills:initialSurveyCredState.prefillValues,
+                                     selectedLanguage:initialSurveyCredState.selectedLanguage
+                                  })
+        
+                            }}
+                        /></Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item eventKey="exit">Exit Simulator</Dropdown.Item>
+                        <Dropdown.Item eventKey="apply">Apply Changes</Dropdown.Item>
                     </DropdownButton>
-                    <DropdownButton
+                   {/* <DropdownButton
                         id={`simulator-na`}
                         //size="sm"
                         variant="secondary"
@@ -179,3 +215,5 @@ const SurveySimulator: React.FC = (props) => {
 };
 
 export default SurveySimulator;
+
+
