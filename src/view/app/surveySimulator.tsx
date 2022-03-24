@@ -42,8 +42,8 @@ interface AppState {
     }
   }
   const initialSurveyCredState: AppState = {
-    simulatorUIConfig: defaultSimulatorUIConfig,
-    surveyContext: defaultSurveyContext,
+    simulatorUIConfig:{ ...defaultSimulatorUIConfig},
+    surveyContext: {...defaultSurveyContext},
     survey: window.initialData.survey,
     surveyKey: window.initialData.studyKey
   }
@@ -76,12 +76,13 @@ const SurveySimulator: React.FC = (props) => {
         ...initialSurveyCred
       }) ;
       const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = useState(false);
-
+      const [changedSurveyContextValues, setChangedSurveyContextValues] = useState({ ...initialSurveyCred});
     return (
         <div className="container-fluid">
         <div className="container pt-3">
             <div className="row">
                      <DropdownButton
+                     autoClose="outside"
                         id={`simulator-config`}
                         //size="sm"
                         variant="secondary"
@@ -89,16 +90,20 @@ const SurveySimulator: React.FC = (props) => {
                         onSelect={(eventKey) => {
                             switch (eventKey) {
                                 case 'apply':
-                                    break;
-                                
+                                    console.log(changedSurveyContextValues);
+                                    setSurveyViewCred(
+                                        changedSurveyContextValues
+                                      );
                                     break;
                             }
                         }}
                     >
                         <Dropdown.Item
-                            disabled
+                    
+                        
                             eventKey="editor"><Editor
-                            height="150px"
+                            width="400px"
+                            height="250px"
                             defaultLanguage="json"
                             value={JSON.stringify(defaultSurveyContext , undefined, 4)}
                             className={clsx(
@@ -121,15 +126,15 @@ const SurveySimulator: React.FC = (props) => {
                                     return
                                 }
                                 if (!context) { return }
-                                setSurveyViewCred({
-                                    config: initialSurveyCredState.simulatorUIConfig,
-                                     surveyAndContext :  initialSurveyCredState.survey ? {
-                                        survey: initialSurveyCredState.survey,
+                                setChangedSurveyContextValues ({
+                                   ...surveyViewCred,
+                                     surveyAndContext :  surveyViewCred.surveyAndContext ? {
+                                        survey: surveyViewCred.surveyAndContext.survey,
                                      context: context
-                                            } : undefined,
-                                        prefills:initialSurveyCredState.prefillValues,
-                                     selectedLanguage:initialSurveyCredState.selectedLanguage
-                                  })
+                                            } : undefined
+                                       
+                                  });
+                                 console.log(changedSurveyContextValues);
         
                             }}
                         /></Dropdown.Item>
@@ -167,14 +172,9 @@ const SurveySimulator: React.FC = (props) => {
                     onChange={(value) => {
                         console.log(value);
                         setSurveyViewCred( {
+                            ...surveyViewCred,
                             config: { texts: initialSurveyCredState.simulatorUIConfig.texts,
                                 showKeys: value},
-                             surveyAndContext : initialSurveyCredState.survey ? {
-                                survey: initialSurveyCredState.survey,
-                             context: initialSurveyCredState.surveyContext
-                                    } : undefined,
-                                prefills:initialSurveyCredState.prefillValues,
-                             selectedLanguage:initialSurveyCredState.selectedLanguage
                           })
                     }}
                     label="Show keys"
@@ -195,6 +195,8 @@ const SurveySimulator: React.FC = (props) => {
                                 languageCode={surveyViewCred.selectedLanguage ? surveyViewCred.selectedLanguage : 'en'}
                                 onSubmit={(responses,) => {
                                     console.log(responses);
+                                    console.log(surveyViewCred);
+                                    
                                 }}
                                 nextBtnText={surveyViewCred.config.texts.nextBtn}
                                 backBtnText={surveyViewCred.config.texts.backBtn}

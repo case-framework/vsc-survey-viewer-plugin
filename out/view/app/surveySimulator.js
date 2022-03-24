@@ -48,8 +48,8 @@ const defaultSimulatorUIConfig = {
     }
 };
 const initialSurveyCredState = {
-    simulatorUIConfig: defaultSimulatorUIConfig,
-    surveyContext: defaultSurveyContext,
+    simulatorUIConfig: { ...defaultSimulatorUIConfig },
+    surveyContext: { ...defaultSurveyContext },
     survey: window.initialData.survey,
     surveyKey: window.initialData.studyKey
 };
@@ -67,20 +67,22 @@ const SurveySimulator = (props) => {
         ...initialSurveyCred
     });
     const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = (0, react_1.useState)(false);
+    const [changedSurveyContextValues, setChangedSurveyContextValues] = (0, react_1.useState)({ ...initialSurveyCred });
     return (React.createElement("div", { className: "container-fluid" },
         React.createElement("div", { className: "container pt-3" },
             React.createElement("div", { className: "row" },
-                React.createElement(react_bootstrap_1.DropdownButton, { id: `simulator-config`, 
+                React.createElement(react_bootstrap_1.DropdownButton, { autoClose: "outside", id: `simulator-config`, 
                     //size="sm"
                     variant: "secondary", title: "Change the Config", onSelect: (eventKey) => {
                         switch (eventKey) {
                             case 'apply':
-                                break;
+                                console.log(changedSurveyContextValues);
+                                setSurveyViewCred(changedSurveyContextValues);
                                 break;
                         }
                     } },
-                    React.createElement(react_bootstrap_1.Dropdown.Item, { disabled: true, eventKey: "editor" },
-                        React.createElement(react_2.default, { height: "150px", defaultLanguage: "json", value: JSON.stringify(defaultSurveyContext, undefined, 4), className: (0, clsx_1.default)({ 'border border-danger': hasSurveyContextEditorErrors }), onValidate: (markers) => {
+                    React.createElement(react_bootstrap_1.Dropdown.Item, { eventKey: "editor" },
+                        React.createElement(react_2.default, { width: "400px", height: "250px", defaultLanguage: "json", value: JSON.stringify(defaultSurveyContext, undefined, 4), className: (0, clsx_1.default)({ 'border border-danger': hasSurveyContextEditorErrors }), onValidate: (markers) => {
                                 if (markers.length > 0) {
                                     setHasSurveyContextEditorErrors(true);
                                 }
@@ -102,35 +104,30 @@ const SurveySimulator = (props) => {
                                 if (!context) {
                                     return;
                                 }
-                                setSurveyViewCred({
-                                    config: initialSurveyCredState.simulatorUIConfig,
-                                    surveyAndContext: initialSurveyCredState.survey ? {
-                                        survey: initialSurveyCredState.survey,
+                                setChangedSurveyContextValues({
+                                    ...surveyViewCred,
+                                    surveyAndContext: surveyViewCred.surveyAndContext ? {
+                                        survey: surveyViewCred.surveyAndContext.survey,
                                         context: context
-                                    } : undefined,
-                                    prefills: initialSurveyCredState.prefillValues,
-                                    selectedLanguage: initialSurveyCredState.selectedLanguage
+                                    } : undefined
                                 });
+                                console.log(changedSurveyContextValues);
                             } })),
                     React.createElement(react_bootstrap_1.Dropdown.Divider, null),
                     React.createElement(react_bootstrap_1.Dropdown.Item, { eventKey: "apply" }, "Apply Changes")),
                 React.createElement(case_web_ui_1.Checkbox, { id: "show-keys-checkbox", name: "show-keys-checkbox", className: "mb-3", checked: surveyViewCred.config.showKeys, onChange: (value) => {
                         console.log(value);
                         setSurveyViewCred({
+                            ...surveyViewCred,
                             config: { texts: initialSurveyCredState.simulatorUIConfig.texts,
                                 showKeys: value },
-                            surveyAndContext: initialSurveyCredState.survey ? {
-                                survey: initialSurveyCredState.survey,
-                                context: initialSurveyCredState.surveyContext
-                            } : undefined,
-                            prefills: initialSurveyCredState.prefillValues,
-                            selectedLanguage: initialSurveyCredState.selectedLanguage
                         });
                     }, label: "Show keys" }))),
         React.createElement("div", { className: "row" },
             React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, surveyViewCred.surveyAndContext ?
                 React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.config.showKeys, survey: surveyViewCred.surveyAndContext.survey, context: surveyViewCred.surveyAndContext.context, prefills: surveyViewCred.prefills, languageCode: surveyViewCred.selectedLanguage ? surveyViewCred.selectedLanguage : 'en', onSubmit: (responses) => {
                         console.log(responses);
+                        console.log(surveyViewCred);
                     }, nextBtnText: surveyViewCred.config.texts.nextBtn, backBtnText: surveyViewCred.config.texts.backBtn, submitBtnText: surveyViewCred.config.texts.submitBtn, invalidResponseText: surveyViewCred.config.texts.invalidResponseText, dateLocales: model_1.dateLocales }) :
                 React.createElement(case_web_ui_1.AlertBox, { type: "danger", useIcon: true, content: surveyViewCred.config.texts.noSurveyLoaded })))));
 };
