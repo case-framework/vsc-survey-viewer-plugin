@@ -27,26 +27,56 @@ const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 class ViewLoader {
-    constructor(fileUri, extensionPath) {
+    constructor(context) {
         this._disposables = [];
-        this._extensionPath = extensionPath;
-        let config = this.getFileContent(fileUri);
-        if (config) {
-            this._panel = vscode.window.createWebviewPanel(`${fileUri.path}`, "Survey Viewer", vscode.ViewColumn.One, {
-                enableScripts: true,
-                localResourceRoots: [
-                    vscode.Uri.file(path.join(extensionPath, "surveyViewer")),
-                    vscode.Uri.file(path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : ""}`, 'node_modules')),
-                ]
-            });
-            this._panel.webview.html = this.getWebviewContent(config);
-        }
+        this._extensionPath = context.extensionPath;
+        this._panel = vscode.window.createWebviewPanel("Survey Viewer", "Survey Viewer", vscode.ViewColumn.One, {
+            enableScripts: true,
+            retainContextWhenHidden: true,
+            localResourceRoots: [
+                vscode.Uri.file(path.join(context.extensionPath, "surveyViewer")),
+            ]
+        });
+        this._panel.webview.html = this.getWebviewContent();
+        this._panel.webview.onDidReceiveMessage(message => {
+            switch (message.command) {
+                case 'getOutputFileContent':
+                    if (this._panel) {
+                        const content = this.getOutputFileContent();
+                        this._panel.webview.postMessage({ command: 'sendTheOutputFileContent',
+                            content: content });
+                    }
+                    break;
+                case 'fileSelectedForPreview':
+                    if (this._panel) {
+                        const survey = this.getFileContent(message.data);
+                        this._panel.webview.postMessage({ command: 'setTheNewSurvey',
+                            content: survey });
+                    }
+                    break;
+                case 'missingOutputDirError':
+                    if (this._panel) {
+                        vscode.window.showErrorMessage(message.data);
+                    }
+                    break;
+                case 'selectedFileToDetectChanges':
+                    if (vscode.workspace.workspaceFolders) {
+                        vscode.workspace.createFileSystemWatcher(message.data).onDidChange(() => {
+                            if (this._panel) {
+                                const survey = this.getFileContent(message.data);
+                                this._panel.webview.postMessage({ command: 'setTheUpdatedSurvey',
+                                    content: survey });
+                            }
+                        });
+                    }
+                    break;
+            }
+        }, undefined, context.subscriptions);
     }
-    getWebviewContent(config) {
+    getWebviewContent() {
         // Local path to main script run in the webview
         const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, "surveyViewer", "surveyViewer.js"));
         const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
-        const configJson = JSON.stringify(config);
         return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -57,7 +87,24 @@ class ViewLoader {
                     content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *;">
         <script>
           window.acquireVsCodeApi = acquireVsCodeApi;
-          window.initialData = ${configJson};
+          window.surveyData = undefined;
+          window.addEventListener('message', event => {
+
+            const message = event.data; // The JSON data our extension sent
+
+            switch (message.command) {
+                case 'sendTheOutputFileContent':
+                  window.outPutDirContent = message.content;
+                    break;
+                    case 'setTheNewSurvey':
+                  window.surveyData = message.content;
+                    break;
+                    case 'setTheUpdatedSurvey':
+                    window.changeInSurvey=true;
+                  window.surveyData = message.content;
+                    break;
+            }
+        });
         </script>
     </head>
     <body>
@@ -66,13 +113,42 @@ class ViewLoader {
     </body>
     </html>`;
     }
-    getFileContent(fileUri) {
-        if (fs.existsSync(fileUri.fsPath)) {
-            let content = fs.readFileSync(fileUri.fsPath, "utf8");
+    getFileContent(filePath) {
+        if (fs.existsSync(filePath)) {
+            let content = fs.readFileSync(filePath, "utf8");
             let surveyData = JSON.parse(content);
             return surveyData;
         }
         return undefined;
+    }
+    getOutputFileContent() {
+        const fullContent = [];
+        const outputFolderPath = path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : undefined}`, `output`);
+        if (fs.existsSync(outputFolderPath)) {
+            fs.readdirSync(outputFolderPath).forEach((file) => {
+                let newPath = path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : undefined}`, `output/${file}/surveys`);
+                let newFiles;
+                newFiles = fs.readdirSync(newPath);
+                let singleSurveyContent = {
+                    SurveyPath: newPath,
+                    SurveyName: file,
+                    SurveyFiles: newFiles
+                };
+                fullContent.push(singleSurveyContent);
+            });
+            const content = {
+                isOutputDirMissing: false,
+                directoryContent: fullContent
+            };
+            return content;
+        }
+        else {
+            const contentWithError = {
+                isOutputDirMissing: true,
+                directoryContent: []
+            };
+            return contentWithError;
+        }
     }
 }
 exports.default = ViewLoader;

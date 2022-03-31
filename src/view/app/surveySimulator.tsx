@@ -1,20 +1,25 @@
 import * as React from "react";
-import { AlertBox, Checkbox, SurveyView} from 'case-web-ui';
-import { dateLocales, SurveyFileContent, SurveyViewCred } from "./model";
+import {  Checkbox,  LoadingPlaceholder,  SurveyView} from 'case-web-ui';
+import { dateLocales, OutputFileStructure, SurveyFileContent, SurveyViewCred } from "./model";
 import { Survey, SurveyContext, SurveySingleItemResponse } from "survey-engine/data_types";
-import { useState } from "react";
+import {   useEffect, useState } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import Editor from '@monaco-editor/react';
 import clsx from 'clsx';
 
+
+
 declare global {
     interface Window {
       acquireVsCodeApi(): any;
-      initialData: SurveyFileContent;
+      surveyData: SurveyFileContent;
+      outPutDirContent: OutputFileStructure;
+      changeInSurvey: boolean;
+      
     }
   }
   
-  //const vscode = window.acquireVsCodeApi();
+const vscode = window.acquireVsCodeApi();
 
 interface AppState {
     selectedLanguage?: string;
@@ -44,8 +49,8 @@ interface AppState {
   const initialSurveyCredState: AppState = {
     simulatorUIConfig:{ ...defaultSimulatorUIConfig},
     surveyContext: {...defaultSurveyContext},
-    survey: window.initialData.survey,
-    surveyKey: window.initialData.studyKey
+    survey: window.surveyData? window.surveyData.survey : undefined,
+    surveyKey: window.surveyData? window.surveyData.studyKey: undefined
   }
 
   const initialSurveyCred: SurveyViewCred = {
@@ -77,11 +82,118 @@ const SurveySimulator: React.FC = (props) => {
       }) ;
       const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = useState(false);
       const [changedSurveyContextValues, setChangedSurveyContextValues] = useState({ ...initialSurveyCred});
+      const [outPutDirContentValue, setOutPutDirContentValue] = useState({
+          hasValue: false,
+          isOutputDirMissing: true
+      });
+
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+            if(window.changeInSurvey){
+                console.log(window.changeInSurvey);
+                setSurveyViewCred( {
+                    ...initialSurveyCred,
+                    surveyAndContext :  window.surveyData.survey ? {
+                        survey: window.surveyData.survey,
+                     context: initialSurveyCredState.surveyContext
+                            } : undefined
+                  })
+                  window.changeInSurvey = false;
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+      }, []);
+    
+
+      function giveCommandToExtention(command : string, data: string) {
+        vscode.postMessage({
+            command: command,
+            data: data
+        });
+      };
+
+      function setDropdowns(items: OutputFileStructure):  React.ReactNode{
+        return items.directoryContent.map((item) => {
+              return <div> 
+              <Dropdown.Item eventKey={item.SurveyName} 
+              disabled={true} 
+              active= {true}>{item.SurveyName}</Dropdown.Item>
+              <Dropdown.Divider />
+              {setDropdownItems(item.SurveyFiles, item.SurveyPath)}
+              </div>
+        
+          });
+      }
+
+      function setDropdownItems(items:  string[], directoryPath: string):  React.ReactNode{
+            return items.map((item) => {
+                 return   <div >
+                        <Dropdown.Item 
+                        eventKey={directoryPath+item}
+                        onClick= {()=>{
+                            giveCommandToExtention('fileSelectedForPreview', directoryPath+"/"+item);
+                            giveCommandToExtention('selectedFileToDetectChanges', directoryPath+"/"+item);
+                            const intervalId = setInterval(() => {
+                                if(window.surveyData){
+                                    setSurveyViewCred( {
+                                        ...initialSurveyCred,
+                                        surveyAndContext :  window.surveyData.survey ? {
+                                            survey: window.surveyData.survey,
+                                         context: initialSurveyCredState.surveyContext
+                                                } : undefined
+                                      })
+                                clearInterval(intervalId);
+                                }
+                                
+                    
+                            }, 1000);
+                        }}
+                        >{item}</Dropdown.Item>
+                        <Dropdown.Divider />
+                        </div>
+            });
+      }
+      
+      
     return (
         <div className="container-fluid">
         <div className="container pt-3">
             <div className="row">
-                     <DropdownButton
+                   <DropdownButton
+                        id={`selectFileToPreview`}
+                        style= {{width: "33%", minWidth: "220px"}}
+                        //size="sm"
+                        variant="secondary"
+                        title="Select File To Preview"
+                        onClick={()=>{
+                            giveCommandToExtention('getOutputFileContent',"");
+                            const intervalId = setInterval(() => {
+                                
+                                if(window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == false){
+                                setOutPutDirContentValue({
+                                    hasValue: true,
+                                    isOutputDirMissing: false
+                                });
+                                clearInterval(intervalId);
+                                }else if(!window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == true){
+                                    setOutPutDirContentValue({
+                                        hasValue: true,
+                                        isOutputDirMissing: true
+                                    });
+                                    giveCommandToExtention('missingOutputDirError',"The Output Directory is not yet generated");
+                                    clearInterval(intervalId);
+                                }
+                                console.log(window.outPutDirContent);
+                    
+                            }, 1000);
+                        }}
+                        
+                    >
+                             {outPutDirContentValue.hasValue ? setDropdowns(window.outPutDirContent) :<LoadingPlaceholder color="white" minHeight="10vh"/> }
+                    </DropdownButton>
+                    <DropdownButton
+                     style= {{width: "33%", minWidth: "220px"}}
                      autoClose="outside"
                         id={`simulator-config`}
                         //size="sm"
@@ -141,30 +253,9 @@ const SurveySimulator: React.FC = (props) => {
                         <Dropdown.Divider />
                         <Dropdown.Item eventKey="apply">Apply Changes</Dropdown.Item>
                     </DropdownButton>
-                   {/* <DropdownButton
-                        id={`simulator-na`}
-                        //size="sm"
-                        variant="secondary"
-                        title="Menu2"
-                        onSelect={(eventKey) => {
-                            switch (eventKey) {
-                                case 'save':
-                                    break;
-                                case 'exit':
-                                    if (window.confirm('Do you want to exit the simulator (will lose state)?')) {
-                                        //props.onExit();
-                                    }
-                                    break;
-                            }
-                        }}
-                    >
-                        <Dropdown.Item
-                            disabled
-                            eventKey="save">Save Current Survey State</Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item eventKey="exit">Exit Simulator</Dropdown.Item>
-                    </DropdownButton> */}
+                    <div style={{width: "33%", minWidth: "220px"}}>
                     <Checkbox
+                     
                     id="show-keys-checkbox"
                     name="show-keys-checkbox"
                     className="mb-3"
@@ -179,8 +270,11 @@ const SurveySimulator: React.FC = (props) => {
                     }}
                     label="Show keys"
                 />
-                    </div>
                 </div>
+                    </div>
+                    <div className="divider py-1 bg-dark"></div>
+                </div>
+                
             <div className="row">
         <div className="col-12 col-lg-8 offset-lg-2"
                     //style={{ minHeight: 'calc()' }}
@@ -204,18 +298,20 @@ const SurveySimulator: React.FC = (props) => {
                                 invalidResponseText={surveyViewCred.config.texts.invalidResponseText}
                                 dateLocales={dateLocales}
                             /> :
-                            <AlertBox type="danger"
-                                useIcon={true}
-                                content={surveyViewCred.config.texts.noSurveyLoaded}
-                            />
+                            <div>
+                                <p className="text-center">Please Select The File To Preview The Survey.</p>
+                            </div>
                         }
                     </div>
                     </div>
                     </div>
       );
+                   
 
 };
 
 export default SurveySimulator;
+
+
 
 

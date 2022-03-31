@@ -25,6 +25,15 @@ export interface SurveyUILabels {
   invalidResponseText: string;
   noSurveyLoaded: string;
 }
+export interface OutputFileStructure {
+  isOutputDirMissing: Boolean,
+  directoryContent: SurveyDirectory[]
+}
+export interface SurveyDirectory{
+  SurveyPath: string,
+  SurveyName: string,
+  SurveyFiles: string[]
+}
 
 export const dateLocales = [
   { code: 'nl', locale: nl, format: 'dd-MM-yyyy' },

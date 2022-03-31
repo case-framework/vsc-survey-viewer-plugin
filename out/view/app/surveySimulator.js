@@ -33,6 +33,7 @@ const react_1 = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const react_2 = __importDefault(require("@monaco-editor/react"));
 const clsx_1 = __importDefault(require("clsx"));
+const vscode = window.acquireVsCodeApi();
 const defaultSurveyContext = {
     isLoggedIn: false,
     participantFlags: {},
@@ -50,8 +51,8 @@ const defaultSimulatorUIConfig = {
 const initialSurveyCredState = {
     simulatorUIConfig: { ...defaultSimulatorUIConfig },
     surveyContext: { ...defaultSurveyContext },
-    survey: window.initialData.survey,
-    surveyKey: window.initialData.studyKey
+    survey: window.surveyData ? window.surveyData.survey : undefined,
+    surveyKey: window.surveyData ? window.surveyData.studyKey : undefined
 };
 const initialSurveyCred = {
     config: initialSurveyCredState.simulatorUIConfig,
@@ -68,10 +69,90 @@ const SurveySimulator = (props) => {
     });
     const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = (0, react_1.useState)(false);
     const [changedSurveyContextValues, setChangedSurveyContextValues] = (0, react_1.useState)({ ...initialSurveyCred });
+    const [outPutDirContentValue, setOutPutDirContentValue] = (0, react_1.useState)({
+        hasValue: false,
+        isOutputDirMissing: true
+    });
+    (0, react_1.useEffect)(() => {
+        const interval = setInterval(() => {
+            if (window.changeInSurvey) {
+                console.log(window.changeInSurvey);
+                setSurveyViewCred({
+                    ...initialSurveyCred,
+                    surveyAndContext: window.surveyData.survey ? {
+                        survey: window.surveyData.survey,
+                        context: initialSurveyCredState.surveyContext
+                    } : undefined
+                });
+                window.changeInSurvey = false;
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
+    function giveCommandToExtention(command, data) {
+        vscode.postMessage({
+            command: command,
+            data: data
+        });
+    }
+    ;
+    function setDropdowns(items) {
+        return items.directoryContent.map((item) => {
+            return React.createElement("div", null,
+                React.createElement(react_bootstrap_1.Dropdown.Item, { eventKey: item.SurveyName, disabled: true, active: true }, item.SurveyName),
+                React.createElement(react_bootstrap_1.Dropdown.Divider, null),
+                setDropdownItems(item.SurveyFiles, item.SurveyPath));
+        });
+    }
+    function setDropdownItems(items, directoryPath) {
+        return items.map((item) => {
+            return React.createElement("div", null,
+                React.createElement(react_bootstrap_1.Dropdown.Item, { eventKey: directoryPath + item, onClick: () => {
+                        giveCommandToExtention('fileSelectedForPreview', directoryPath + "/" + item);
+                        giveCommandToExtention('selectedFileToDetectChanges', directoryPath + "/" + item);
+                        const intervalId = setInterval(() => {
+                            if (window.surveyData) {
+                                setSurveyViewCred({
+                                    ...initialSurveyCred,
+                                    surveyAndContext: window.surveyData.survey ? {
+                                        survey: window.surveyData.survey,
+                                        context: initialSurveyCredState.surveyContext
+                                    } : undefined
+                                });
+                                clearInterval(intervalId);
+                            }
+                        }, 1000);
+                    } }, item),
+                React.createElement(react_bootstrap_1.Dropdown.Divider, null));
+        });
+    }
     return (React.createElement("div", { className: "container-fluid" },
         React.createElement("div", { className: "container pt-3" },
             React.createElement("div", { className: "row" },
-                React.createElement(react_bootstrap_1.DropdownButton, { autoClose: "outside", id: `simulator-config`, 
+                React.createElement(react_bootstrap_1.DropdownButton, { id: `selectFileToPreview`, style: { width: "33%", minWidth: "220px" }, 
+                    //size="sm"
+                    variant: "secondary", title: "Select File To Preview", onClick: () => {
+                        giveCommandToExtention('getOutputFileContent', "");
+                        const intervalId = setInterval(() => {
+                            if (window.outPutDirContent.directoryContent.length && window.outPutDirContent.isOutputDirMissing == false) {
+                                setOutPutDirContentValue({
+                                    hasValue: true,
+                                    isOutputDirMissing: false
+                                });
+                                clearInterval(intervalId);
+                            }
+                            else if (!window.outPutDirContent.directoryContent.length && window.outPutDirContent.isOutputDirMissing == true) {
+                                setOutPutDirContentValue({
+                                    hasValue: true,
+                                    isOutputDirMissing: true
+                                });
+                                giveCommandToExtention('missingOutputDirError', "The Output Directory is not yet generated");
+                                clearInterval(intervalId);
+                            }
+                            console.log(window.outPutDirContent);
+                        }, 1000);
+                    } }, outPutDirContentValue.hasValue ? setDropdowns(window.outPutDirContent) : React.createElement(case_web_ui_1.LoadingPlaceholder, { color: "white", minHeight: "10vh" })),
+                React.createElement(react_bootstrap_1.DropdownButton, { style: { width: "33%", minWidth: "220px" }, autoClose: "outside", id: `simulator-config`, 
                     //size="sm"
                     variant: "secondary", title: "Change the Config", onSelect: (eventKey) => {
                         switch (eventKey) {
@@ -115,21 +196,24 @@ const SurveySimulator = (props) => {
                             } })),
                     React.createElement(react_bootstrap_1.Dropdown.Divider, null),
                     React.createElement(react_bootstrap_1.Dropdown.Item, { eventKey: "apply" }, "Apply Changes")),
-                React.createElement(case_web_ui_1.Checkbox, { id: "show-keys-checkbox", name: "show-keys-checkbox", className: "mb-3", checked: surveyViewCred.config.showKeys, onChange: (value) => {
-                        console.log(value);
-                        setSurveyViewCred({
-                            ...surveyViewCred,
-                            config: { texts: initialSurveyCredState.simulatorUIConfig.texts,
-                                showKeys: value },
-                        });
-                    }, label: "Show keys" }))),
+                React.createElement("div", { style: { width: "33%", minWidth: "220px" } },
+                    React.createElement(case_web_ui_1.Checkbox, { id: "show-keys-checkbox", name: "show-keys-checkbox", className: "mb-3", checked: surveyViewCred.config.showKeys, onChange: (value) => {
+                            console.log(value);
+                            setSurveyViewCred({
+                                ...surveyViewCred,
+                                config: { texts: initialSurveyCredState.simulatorUIConfig.texts,
+                                    showKeys: value },
+                            });
+                        }, label: "Show keys" }))),
+            React.createElement("div", { className: "divider py-1 bg-dark" })),
         React.createElement("div", { className: "row" },
             React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, surveyViewCred.surveyAndContext ?
                 React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.config.showKeys, survey: surveyViewCred.surveyAndContext.survey, context: surveyViewCred.surveyAndContext.context, prefills: surveyViewCred.prefills, languageCode: surveyViewCred.selectedLanguage ? surveyViewCred.selectedLanguage : 'en', onSubmit: (responses) => {
                         console.log(responses);
                         console.log(surveyViewCred);
                     }, nextBtnText: surveyViewCred.config.texts.nextBtn, backBtnText: surveyViewCred.config.texts.backBtn, submitBtnText: surveyViewCred.config.texts.submitBtn, invalidResponseText: surveyViewCred.config.texts.invalidResponseText, dateLocales: model_1.dateLocales }) :
-                React.createElement(case_web_ui_1.AlertBox, { type: "danger", useIcon: true, content: surveyViewCred.config.texts.noSurveyLoaded })))));
+                React.createElement("div", null,
+                    React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))))));
 };
 exports.default = SurveySimulator;
 //# sourceMappingURL=surveySimulator.js.map
