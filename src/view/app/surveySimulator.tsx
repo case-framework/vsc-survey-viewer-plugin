@@ -82,6 +82,7 @@ const SurveySimulator: React.FC = (props) => {
       }) ;
       const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = useState(false);
       const [changedSurveyContextValues, setChangedSurveyContextValues] = useState({ ...initialSurveyCred});
+      const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] = useState("Select File To Preview");
       const [outPutDirContentValue, setOutPutDirContentValue] = useState({
           hasValue: false,
           isOutputDirMissing: true
@@ -115,43 +116,44 @@ const SurveySimulator: React.FC = (props) => {
 
       function setDropdowns(items: OutputFileStructure):  React.ReactNode{
         return items.directoryContent.map((item) => {
-              return <div> 
-              <Dropdown.Item eventKey={item.SurveyName} 
-              disabled={true} 
-              active= {true}>{item.SurveyName}</Dropdown.Item>
-              <Dropdown.Divider />
-              {setDropdownItems(item.SurveyFiles, item.SurveyPath)}
-              </div>
-        
+              return (
+                  <div >
+                    <div className="dropdown-divider"></div>
+                  <h6 className="dropdown-header">{item.SurveyName}</h6>
+                <div className="dropdown-divider"></div>
+                {setDropdownItems(item.SurveyFiles, item.SurveyPath)} 
+            </div>
+           
+              );
           });
       }
 
       function setDropdownItems(items:  string[], directoryPath: string):  React.ReactNode{
             return items.map((item) => {
-                 return   <div >
-                        <Dropdown.Item 
-                        eventKey={directoryPath+item}
-                        onClick= {()=>{
-                            giveCommandToExtention('fileSelectedForPreview', directoryPath+"/"+item);
-                            giveCommandToExtention('selectedFileToDetectChanges', directoryPath+"/"+item);
-                            const intervalId = setInterval(() => {
-                                if(window.surveyData){
-                                    setSurveyViewCred( {
-                                        ...initialSurveyCred,
-                                        surveyAndContext :  window.surveyData.survey ? {
-                                            survey: window.surveyData.survey,
-                                         context: initialSurveyCredState.surveyContext
-                                                } : undefined
-                                      })
-                                clearInterval(intervalId);
-                                }
-                                
-                    
-                            }, 1000);
-                        }}
-                        >{item}</Dropdown.Item>
-                        <Dropdown.Divider />
-                        </div>
+                 return (   
+                     <button 
+                     className="dropdown-item" type="button" id={item}
+                     onClick={()=>{
+                        giveCommandToExtention('fileSelectedForPreview', directoryPath+"/"+item);
+                        giveCommandToExtention('selectedFileToDetectChanges', directoryPath+"/"+item);
+                        const intervalId = setInterval(() => {
+                            if(window.surveyData){
+                                setChangedSelectTheFileBtnText(item.substring(0, item.lastIndexOf('.')));
+                                setSurveyViewCred( {
+                                    ...initialSurveyCred,
+                                    surveyAndContext :  window.surveyData.survey ? {
+                                        survey: window.surveyData.survey,
+                                     context: initialSurveyCredState.surveyContext
+                                            } : undefined
+                                  })
+                            clearInterval(intervalId);
+                            }
+                            
+                
+                        }, 1000);
+                    }}>{item.substring(0, item.lastIndexOf('.'))}</button>
+                 );
+                     
             });
       }
       
@@ -160,38 +162,39 @@ const SurveySimulator: React.FC = (props) => {
         <div className="container-fluid">
         <div className="container pt-3">
             <div className="row">
-                   <DropdownButton
-                        id={`selectFileToPreview`}
-                        style= {{width: "33%", minWidth: "220px"}}
-                        //size="sm"
-                        variant="secondary"
-                        title="Select File To Preview"
-                        onClick={()=>{
-                            giveCommandToExtention('getOutputFileContent',"");
-                            const intervalId = setInterval(() => {
-                                
-                                if(window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == false){
-                                setOutPutDirContentValue({
-                                    hasValue: true,
-                                    isOutputDirMissing: false
-                                });
-                                clearInterval(intervalId);
-                                }else if(!window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == true){
-                                    setOutPutDirContentValue({
-                                        hasValue: true,
-                                        isOutputDirMissing: true
-                                    });
-                                    giveCommandToExtention('missingOutputDirError',"The Output Directory is not yet generated");
-                                    clearInterval(intervalId);
-                                }
-                                console.log(window.outPutDirContent);
+             <div className="dropdown"  style= {{width: "33%", minWidth: "200px"}}>
+            <button  className="btn btn-secondary dropdown-toggle" 
+             type="button" id="SelectFileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            onClick={(event)=>{
+                console.log(event.target);
+                giveCommandToExtention('getOutputFileContent',"");
+                const intervalId = setInterval(() => {
                     
-                            }, 1000);
-                        }}
-                        
-                    >
-                             {outPutDirContentValue.hasValue ? setDropdowns(window.outPutDirContent) :<LoadingPlaceholder color="white" minHeight="10vh"/> }
-                    </DropdownButton>
+                    if(window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == false){
+                        setOutPutDirContentValue({
+                        hasValue: true,
+                        isOutputDirMissing: false
+                    });
+                    clearInterval(intervalId);
+                    }else if(!window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == true){
+                        setOutPutDirContentValue({
+                            hasValue: true,
+                            isOutputDirMissing: true
+                        });
+                        giveCommandToExtention('missingOutputDirError',"The Output Directory is not yet generated");
+                        clearInterval(intervalId);
+                    }
+                    console.log(window.outPutDirContent);
+        
+                }, 1000);
+            }}> {changedSelectTheFileBtnText}
+                </button>
+                
+            <div className="dropdown-menu" aria-labelledby="SelectFileDropdown" style={{maxHeight: "280px", overflowY: "auto"
+}}>
+            {outPutDirContentValue.hasValue ? setDropdowns(window.outPutDirContent) :<LoadingPlaceholder color="white" minHeight="10vh"/> }
+            </div>
+            </div>
                     <DropdownButton
                      style= {{width: "33%", minWidth: "220px"}}
                      autoClose="outside"
@@ -272,7 +275,7 @@ const SurveySimulator: React.FC = (props) => {
                 />
                 </div>
                     </div>
-                    <div className="divider py-1 bg-dark"></div>
+                   
                 </div>
                 
             <div className="row">
