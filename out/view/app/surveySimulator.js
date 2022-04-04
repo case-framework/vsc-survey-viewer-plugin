@@ -70,10 +70,7 @@ const SurveySimulator = (props) => {
     const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = (0, react_1.useState)(false);
     const [changedSurveyContextValues, setChangedSurveyContextValues] = (0, react_1.useState)({ ...initialSurveyCred });
     const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] = (0, react_1.useState)("Select File To Preview");
-    const [outPutDirContentValue, setOutPutDirContentValue] = (0, react_1.useState)({
-        hasValue: false,
-        isOutputDirMissing: true
-    });
+    const [outPutDirContentValue, setOutPutDirContentValue] = (0, react_1.useState)(false);
     (0, react_1.useEffect)(() => {
         const interval = setInterval(() => {
             if (window.changeInSurvey) {
@@ -124,29 +121,23 @@ const SurveySimulator = (props) => {
                             clearInterval(intervalId);
                         }
                     }, 1000);
-                } }, item.substring(0, item.lastIndexOf('.'))));
+                } }, item.substring(0, item.lastIndexOf('.')).replace('_', ' ')));
         });
     }
     return (React.createElement("div", { className: "container-fluid" },
         React.createElement("div", { className: "container pt-3" },
             React.createElement("div", { className: "row" },
                 React.createElement("div", { className: "dropdown", style: { width: "33%", minWidth: "200px" } },
-                    React.createElement("button", { className: "btn btn-secondary dropdown-toggle", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", onClick: (event) => {
-                            console.log(event.target);
+                    React.createElement("button", { className: "btn btn-secondary dropdown-toggle", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
+                            setOutPutDirContentValue(false);
                             giveCommandToExtention('getOutputFileContent', "");
                             const intervalId = setInterval(() => {
                                 if (window.outPutDirContent.directoryContent.length && window.outPutDirContent.isOutputDirMissing == false) {
-                                    setOutPutDirContentValue({
-                                        hasValue: true,
-                                        isOutputDirMissing: false
-                                    });
+                                    setOutPutDirContentValue(true);
                                     clearInterval(intervalId);
                                 }
                                 else if (!window.outPutDirContent.directoryContent.length && window.outPutDirContent.isOutputDirMissing == true) {
-                                    setOutPutDirContentValue({
-                                        hasValue: true,
-                                        isOutputDirMissing: true
-                                    });
+                                    setOutPutDirContentValue(true);
                                     giveCommandToExtention('missingOutputDirError', "The Output Directory is not yet generated");
                                     clearInterval(intervalId);
                                 }
@@ -156,7 +147,7 @@ const SurveySimulator = (props) => {
                         " ",
                         changedSelectTheFileBtnText),
                     React.createElement("div", { className: "dropdown-menu", "aria-labelledby": "SelectFileDropdown", style: { maxHeight: "280px", overflowY: "auto"
-                        } }, outPutDirContentValue.hasValue ? setDropdowns(window.outPutDirContent) : React.createElement(case_web_ui_1.LoadingPlaceholder, { color: "white", minHeight: "10vh" }))),
+                        } }, outPutDirContentValue ? setDropdowns(window.outPutDirContent) : React.createElement(case_web_ui_1.LoadingPlaceholder, { color: "white", minHeight: "10vh" }))),
                 React.createElement(react_bootstrap_1.DropdownButton, { style: { width: "33%", minWidth: "220px" }, autoClose: "outside", id: `simulator-config`, 
                     //size="sm"
                     variant: "secondary", title: "Change the Config", onSelect: (eventKey) => {
@@ -216,7 +207,7 @@ const SurveySimulator = (props) => {
                         console.log(responses);
                         console.log(surveyViewCred);
                     }, nextBtnText: surveyViewCred.config.texts.nextBtn, backBtnText: surveyViewCred.config.texts.backBtn, submitBtnText: surveyViewCred.config.texts.submitBtn, invalidResponseText: surveyViewCred.config.texts.invalidResponseText, dateLocales: model_1.dateLocales }) :
-                React.createElement("div", null,
+                React.createElement("div", { className: "mt-5" },
                     React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))))));
 };
 exports.default = SurveySimulator;

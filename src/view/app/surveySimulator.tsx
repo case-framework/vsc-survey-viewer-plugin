@@ -83,10 +83,7 @@ const SurveySimulator: React.FC = (props) => {
       const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = useState(false);
       const [changedSurveyContextValues, setChangedSurveyContextValues] = useState({ ...initialSurveyCred});
       const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] = useState("Select File To Preview");
-      const [outPutDirContentValue, setOutPutDirContentValue] = useState({
-          hasValue: false,
-          isOutputDirMissing: true
-      });
+      const [outPutDirContentValue, setOutPutDirContentValue] = useState(false);
 
 
       useEffect(() => {
@@ -151,7 +148,7 @@ const SurveySimulator: React.FC = (props) => {
                             
                 
                         }, 1000);
-                    }}>{item.substring(0, item.lastIndexOf('.'))}</button>
+                    }}>{item.substring(0, item.lastIndexOf('.')).replace('_', ' ')}</button>
                  );
                      
             });
@@ -165,22 +162,17 @@ const SurveySimulator: React.FC = (props) => {
              <div className="dropdown"  style= {{width: "33%", minWidth: "200px"}}>
             <button  className="btn btn-secondary dropdown-toggle" 
              type="button" id="SelectFileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-            onClick={(event)=>{
-                console.log(event.target);
+            onClick={()=>{
+                setOutPutDirContentValue(false);
                 giveCommandToExtention('getOutputFileContent',"");
                 const intervalId = setInterval(() => {
-                    
                     if(window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == false){
-                        setOutPutDirContentValue({
-                        hasValue: true,
-                        isOutputDirMissing: false
-                    });
+                        
+                        setOutPutDirContentValue(true);
                     clearInterval(intervalId);
                     }else if(!window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == true){
-                        setOutPutDirContentValue({
-                            hasValue: true,
-                            isOutputDirMissing: true
-                        });
+                        
+                        setOutPutDirContentValue(true);
                         giveCommandToExtention('missingOutputDirError',"The Output Directory is not yet generated");
                         clearInterval(intervalId);
                     }
@@ -192,7 +184,7 @@ const SurveySimulator: React.FC = (props) => {
                 
             <div className="dropdown-menu" aria-labelledby="SelectFileDropdown" style={{maxHeight: "280px", overflowY: "auto"
 }}>
-            {outPutDirContentValue.hasValue ? setDropdowns(window.outPutDirContent) :<LoadingPlaceholder color="white" minHeight="10vh"/> }
+            {outPutDirContentValue ? setDropdowns(window.outPutDirContent) :<LoadingPlaceholder color="white" minHeight="10vh"/> }
             </div>
             </div>
                     <DropdownButton
@@ -301,7 +293,7 @@ const SurveySimulator: React.FC = (props) => {
                                 invalidResponseText={surveyViewCred.config.texts.invalidResponseText}
                                 dateLocales={dateLocales}
                             /> :
-                            <div>
+                            <div className = "mt-5">
                                 <p className="text-center">Please Select The File To Preview The Survey.</p>
                             </div>
                         }
