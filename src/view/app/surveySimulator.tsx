@@ -1,5 +1,5 @@
 import * as React from "react";
-import {  Checkbox,  LoadingPlaceholder,  SurveyView} from 'case-web-ui';
+import {  Checkbox,  SurveyView} from 'case-web-ui';
 import { dateLocales, OutputFileStructure, SurveyFileContent, SurveyViewCred } from "./model";
 import { Survey, SurveyContext, SurveySingleItemResponse } from "survey-engine/data_types";
 import {   useEffect, useState } from "react";
@@ -114,11 +114,12 @@ const SurveySimulator: React.FC = (props) => {
       function setDropdowns(items: OutputFileStructure):  React.ReactNode{
         return items.directoryContent.map((item) => {
               return (
-                  <div >
+                  <div>
                     <div className="dropdown-divider"></div>
-                  <h6 className="dropdown-header">{item.SurveyName}</h6>
-                <div className="dropdown-divider"></div>
+                    <p className="h5" style={{paddingLeft: "1rem"}}>{item.SurveyName}</p>
+                  
                 {setDropdownItems(item.SurveyFiles, item.SurveyPath)} 
+                
             </div>
            
               );
@@ -129,13 +130,14 @@ const SurveySimulator: React.FC = (props) => {
             return items.map((item) => {
                  return (   
                      <button 
-                     className="dropdown-item" type="button" id={item}
+                     className="dropdown-item"  style={{paddingLeft: "3rem"}}
+                     type="button" id={item}
                      onClick={()=>{
                         giveCommandToExtention('fileSelectedForPreview', directoryPath+"/"+item);
                         giveCommandToExtention('selectedFileToDetectChanges', directoryPath+"/"+item);
                         const intervalId = setInterval(() => {
                             if(window.surveyData){
-                                setChangedSelectTheFileBtnText(item.substring(0, item.lastIndexOf('.')));
+                                setChangedSelectTheFileBtnText(item.substring(0, item.lastIndexOf('.')).replace('_', ' '));
                                 setSurveyViewCred( {
                                     ...initialSurveyCred,
                                     surveyAndContext :  window.surveyData.survey ? {
@@ -149,6 +151,7 @@ const SurveySimulator: React.FC = (props) => {
                 
                         }, 1000);
                     }}>{item.substring(0, item.lastIndexOf('.')).replace('_', ' ')}</button>
+                    
                  );
                      
             });
@@ -159,7 +162,7 @@ const SurveySimulator: React.FC = (props) => {
         <div className="container-fluid">
         <div className="container pt-3">
             <div className="row">
-             <div className="dropdown"  style= {{width: "33%", minWidth: "200px"}}>
+             <div className="dropdown"  style= {{width: "33%", minWidth: "214px"}}>
             <button  className="btn btn-secondary dropdown-toggle" 
              type="button" id="SelectFileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
             onClick={()=>{
@@ -182,9 +185,10 @@ const SurveySimulator: React.FC = (props) => {
             }}> {changedSelectTheFileBtnText}
                 </button>
                 
-            <div className="dropdown-menu" aria-labelledby="SelectFileDropdown" style={{maxHeight: "280px", overflowY: "auto"
-}}>
-            {outPutDirContentValue ? setDropdowns(window.outPutDirContent) :<LoadingPlaceholder color="white" minHeight="10vh"/> }
+                <div className="dropdown-menu overflow-auto" aria-labelledby="SelectFileDropdown" style={{maxHeight: "280px", background:"white"}}>
+                {outPutDirContentValue ? setDropdowns(window.outPutDirContent) :<div className="text-center" style={{width:"214px"}}><div className="spinner-border text-secondary" style={{width: "2rem", height: "2rem"}} role="status">
+  <span className="sr-only"></span>
+</div></div> }
             </div>
             </div>
                     <DropdownButton
@@ -250,7 +254,7 @@ const SurveySimulator: React.FC = (props) => {
                     </DropdownButton>
                     <div style={{width: "33%", minWidth: "220px"}}>
                     <Checkbox
-                     
+                    
                     id="show-keys-checkbox"
                     name="show-keys-checkbox"
                     className="mb-3"
