@@ -43,15 +43,19 @@ class ViewLoader {
                 case 'getOutputFileContent':
                     if (this._panel) {
                         const content = this.getOutputFileContent();
-                        this._panel.webview.postMessage({ command: 'sendTheOutputFileContent',
-                            content: content });
+                        this._panel.webview.postMessage({
+                            command: 'sendTheOutputFileContent',
+                            content: content
+                        });
                     }
                     break;
                 case 'fileSelectedForPreview':
                     if (this._panel) {
                         const survey = this.getFileContent(message.data);
-                        this._panel.webview.postMessage({ command: 'setTheNewSurvey',
-                            content: survey });
+                        this._panel.webview.postMessage({
+                            command: 'setTheNewSurvey',
+                            content: survey
+                        });
                     }
                     break;
                 case 'missingOutputDirError':
@@ -59,13 +63,20 @@ class ViewLoader {
                         vscode.window.showErrorMessage(message.data);
                     }
                     break;
+                case 'showFileDownloadSuccessMsg':
+                    if (this._panel) {
+                        vscode.window.showInformationMessage(message.data);
+                    }
+                    break;
                 case 'selectedFileToDetectChanges':
                     if (vscode.workspace.workspaceFolders) {
                         vscode.workspace.createFileSystemWatcher(message.data).onDidChange(() => {
                             if (this._panel) {
                                 const survey = this.getFileContent(message.data);
-                                this._panel.webview.postMessage({ command: 'setTheUpdatedSurvey',
-                                    content: survey });
+                                this._panel.webview.postMessage({
+                                    command: 'setTheUpdatedSurvey',
+                                    content: survey
+                                });
                             }
                         });
                     }
@@ -130,9 +141,9 @@ class ViewLoader {
                 let newFiles;
                 newFiles = fs.readdirSync(newPath);
                 let singleSurveyContent = {
-                    SurveyPath: newPath,
-                    SurveyName: file,
-                    SurveyFiles: newFiles
+                    surveyPath: newPath,
+                    surveyName: file,
+                    surveyFiles: newFiles
                 };
                 fullContent.push(singleSurveyContent);
             });

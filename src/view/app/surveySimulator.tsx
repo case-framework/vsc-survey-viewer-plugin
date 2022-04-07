@@ -1,316 +1,289 @@
 import * as React from "react";
-import {  Checkbox,  SurveyView} from 'case-web-ui';
-import { dateLocales, OutputFileStructure, SurveyFileContent, SurveyViewCred } from "./model";
-import { Survey, SurveyContext, SurveySingleItemResponse } from "survey-engine/data_types";
-import {   useEffect, useState } from "react";
+import { SurveyView } from "case-web-ui";
+import {
+  dateLocales,
+  OutputFileStructure,
+  SurveyFileContent,
+  SurveyViewCred,
+} from "./model";
+import {
+  SurveyContext,
+  SurveySingleItemResponse,
+} from "survey-engine/data_types";
+import { useEffect, useState } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import Editor from '@monaco-editor/react';
-import clsx from 'clsx';
-
-
+import Editor from "@monaco-editor/react";
+import clsx from "clsx";
+import SelectFileToPreview from "./Components/SelectFileToPreview";
+import ShowKeysCheckBox from "./Components/ShowKeysCheckBox";
+import UploadPrefill from "./Components/UploadPrefill";
 
 declare global {
-    interface Window {
-      acquireVsCodeApi(): any;
-      surveyData: SurveyFileContent;
-      outPutDirContent: OutputFileStructure;
-      changeInSurvey: boolean;
-      
-    }
+  interface Window {
+    acquireVsCodeApi(): any;
+    surveyData: SurveyFileContent;
+    outPutDirContent: OutputFileStructure;
+    changeInSurvey: boolean;
   }
-  
+}
+
 const vscode = window.acquireVsCodeApi();
 
-interface AppState {
-    selectedLanguage?: string;
-    languageCodes?: string[];
-    surveyKey?: string;
-    survey?: Survey;
-    surveyContext: SurveyContext;
-    prefillsFile?: File;
-    prefillValues?: SurveySingleItemResponse[],
-    simulatorUIConfig: SimulatorUIConfig;
-  }
-  
-  const defaultSurveyContext: SurveyContext = {
-    isLoggedIn: false,
-    participantFlags: {},
-  }
-  const defaultSimulatorUIConfig: SimulatorUIConfig = {
-    showKeys: false,
-    texts: {
-        backBtn: 'Back',
-        nextBtn: 'Next',
-        submitBtn: 'Submit',
-        invalidResponseText: 'Invalid response',
-        noSurveyLoaded: 'Survey could not be loaded, please try again.'
-    }
-  }
-  const initialSurveyCredState: AppState = {
-    simulatorUIConfig:{ ...defaultSimulatorUIConfig},
-    surveyContext: {...defaultSurveyContext},
-    survey: window.surveyData? window.surveyData.survey : undefined,
-    surveyKey: window.surveyData? window.surveyData.studyKey: undefined
-  }
+const defaultSurveyContext: SurveyContext = {
+  isLoggedIn: false,
+  participantFlags: {},
+};
+const defaultSimulatorUIConfig: SimulatorUIConfig = {
+  showKeys: false,
+  texts: {
+    backBtn: "Back",
+    nextBtn: "Next",
+    submitBtn: "Submit",
+    invalidResponseText: "Invalid response",
+    noSurveyLoaded: "Survey could not be loaded, please try again.",
+  },
+};
 
-  const initialSurveyCred: SurveyViewCred = {
-    config:initialSurveyCredState.simulatorUIConfig ,
-    surveyAndContext : initialSurveyCredState.survey ? {
-        survey: initialSurveyCredState.survey,
-        context: initialSurveyCredState.surveyContext
-      } : undefined,
-    prefills:initialSurveyCredState.prefillValues,
-    selectedLanguage:initialSurveyCredState.selectedLanguage
-  }
-  
-  interface SimulatorUIConfig {
-    texts: SurveyUILabels;
-    showKeys: boolean;
-  }
-  interface SurveyUILabels {
-    backBtn: string;
-    nextBtn: string;
-    submitBtn: string;
-    invalidResponseText: string;
-    noSurveyLoaded: string;
-  }
+const initialSurveyCred: SurveyViewCred = {
+  simulatorUIConfig: { ...defaultSimulatorUIConfig },
+  surveyAndContext: window.surveyData
+    ? {
+        survey: window.surveyData.survey,
+        context: { ...defaultSurveyContext },
+      }
+    : undefined,
+  selectedLanguage: "en",
+  prefillValues: [],
+  prefillsFile: undefined,
+};
 
-  
+interface SimulatorUIConfig {
+  texts: SurveyUILabels;
+  showKeys: boolean;
+}
+interface SurveyUILabels {
+  backBtn: string;
+  nextBtn: string;
+  submitBtn: string;
+  invalidResponseText: string;
+  noSurveyLoaded: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const SurveySimulator: React.FC = (props) => {
-    const [surveyViewCred, setSurveyViewCred] = useState<SurveyViewCred>({
-        ...initialSurveyCred
-      }) ;
-      const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] = useState(false);
-      const [changedSurveyContextValues, setChangedSurveyContextValues] = useState({ ...initialSurveyCred});
-      const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] = useState("Select File To Preview");
-      const [outPutDirContentValue, setOutPutDirContentValue] = useState(false);
+  const [surveyViewCred, setSurveyViewCred] = useState<SurveyViewCred>({
+    ...initialSurveyCred,
+  });
+  const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] =
+    useState(false);
+  const [changedSurveyContextValues, setChangedSurveyContextValues] = useState({
+    ...initialSurveyCred,
+  });
+  const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] =
+    useState("Select File To Preview");
+  const [outPutDirContentValue, setOutPutDirContentValue] = useState(false);
 
-
-      useEffect(() => {
-        const interval = setInterval(() => {
-            if(window.changeInSurvey){
-                console.log(window.changeInSurvey);
-                setSurveyViewCred( {
-                    ...initialSurveyCred,
-                    surveyAndContext :  window.surveyData.survey ? {
-                        survey: window.surveyData.survey,
-                     context: initialSurveyCredState.surveyContext
-                            } : undefined
-                  })
-                  window.changeInSurvey = false;
-            }
-        }, 1000);
-        return () => clearInterval(interval);
-      }, []);
-    
-
-      function giveCommandToExtention(command : string, data: string) {
-        vscode.postMessage({
-            command: command,
-            data: data
-        });
-      };
-
-      function setDropdowns(items: OutputFileStructure):  React.ReactNode{
-        return items.directoryContent.map((item) => {
-              return (
-                  <div>
-                    <div className="dropdown-divider"></div>
-                    <p className="h5" style={{paddingLeft: "1rem"}}>{item.SurveyName}</p>
-                  
-                {setDropdownItems(item.SurveyFiles, item.SurveyPath)} 
-                
-            </div>
-           
-              );
-          });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (window.changeInSurvey) {
+        console.log(window.changeInSurvey);
+        setSurveyViewCred((prevState) => ({
+          ...prevState,
+          surveyAndContext: window.surveyData.survey
+            ? {
+                survey: window.surveyData.survey,
+                context: { ...defaultSurveyContext },
+              }
+            : undefined,
+        }));
+        window.changeInSurvey = false;
       }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-      function setDropdownItems(items:  string[], directoryPath: string):  React.ReactNode{
-            return items.map((item) => {
-                 return (   
-                     <button 
-                     className="dropdown-item"  style={{paddingLeft: "3rem"}}
-                     type="button" id={item}
-                     onClick={()=>{
-                        giveCommandToExtention('fileSelectedForPreview', directoryPath+"/"+item);
-                        giveCommandToExtention('selectedFileToDetectChanges', directoryPath+"/"+item);
-                        const intervalId = setInterval(() => {
-                            if(window.surveyData){
-                                setChangedSelectTheFileBtnText(item.substring(0, item.lastIndexOf('.')).replace('_', ' '));
-                                setSurveyViewCred( {
-                                    ...initialSurveyCred,
-                                    surveyAndContext :  window.surveyData.survey ? {
-                                        survey: window.surveyData.survey,
-                                     context: initialSurveyCredState.surveyContext
-                                            } : undefined
-                                  })
-                            clearInterval(intervalId);
-                            }
-                            
-                
-                        }, 1000);
-                    }}>{item.substring(0, item.lastIndexOf('.')).replace('_', ' ')}</button>
-                    
-                 );
-                     
-            });
-      }
-      
-      
-    return (
-        <div className="container-fluid">
-        <div className="container pt-3">
-            <div className="row">
-             <div className="dropdown"  style= {{width: "33%", minWidth: "214px"}}>
-            <button  className="btn btn-secondary dropdown-toggle" 
-             type="button" id="SelectFileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-            onClick={()=>{
-                setOutPutDirContentValue(false);
-                giveCommandToExtention('getOutputFileContent',"");
-                const intervalId = setInterval(() => {
-                    if(window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == false){
-                        
-                        setOutPutDirContentValue(true);
-                    clearInterval(intervalId);
-                    }else if(!window.outPutDirContent.directoryContent.length  && window.outPutDirContent.isOutputDirMissing == true){
-                        
-                        setOutPutDirContentValue(true);
-                        giveCommandToExtention('missingOutputDirError',"The Output Directory is not yet generated");
-                        clearInterval(intervalId);
+  const giveCommandToExtention = (command: string, data: string) => {
+    vscode.postMessage({
+      command: command,
+      data: data,
+    });
+  };
+
+  return (
+    <div className="container-fluid">
+      <div className="container pt-3">
+        <div className="row">
+          <SelectFileToPreview
+            giveCommandToExtention={(command: string, data: string) => {
+              giveCommandToExtention(command, data);
+            }}
+            setChangedSelectTheFileBtnText={(newText: string) => {
+              setChangedSelectTheFileBtnText(newText);
+            }}
+            changedSelectTheFileBtnText={changedSelectTheFileBtnText}
+            setOutPutDirContentValue={(value: boolean) => {
+              setOutPutDirContentValue(value);
+            }}
+            outPutDirContentValue={outPutDirContentValue}
+            onChangedSurveyViewCred={() => {
+              setSurveyViewCred((prevState) => ({
+                ...prevState,
+                surveyAndContext: window.surveyData.survey
+                  ? {
+                      survey: window.surveyData.survey,
+                      context: { ...defaultSurveyContext },
                     }
-                    console.log(window.outPutDirContent);
-        
-                }, 1000);
-            }}> {changedSelectTheFileBtnText}
-                </button>
-                
-                <div className="dropdown-menu overflow-auto" aria-labelledby="SelectFileDropdown" style={{maxHeight: "280px", background:"white"}}>
-                {outPutDirContentValue ? setDropdowns(window.outPutDirContent) :<div className="text-center" style={{width:"214px"}}><div className="spinner-border text-secondary" style={{width: "2rem", height: "2rem"}} role="status">
-  <span className="sr-only"></span>
-</div></div> }
-            </div>
-            </div>
-                    <DropdownButton
-                     style= {{width: "33%", minWidth: "220px"}}
-                     autoClose="outside"
-                        id={`simulator-config`}
-                        //size="sm"
-                        variant="secondary"
-                        title="Change the Config"
-                        onSelect={(eventKey) => {
-                            switch (eventKey) {
-                                case 'apply':
-                                    console.log(changedSurveyContextValues);
-                                    setSurveyViewCred(
-                                        changedSurveyContextValues
-                                      );
-                                    break;
-                            }
-                        }}
-                    >
-                        <Dropdown.Item
-                    
-                        
-                            eventKey="editor"><Editor
-                            width="400px"
-                            height="250px"
-                            defaultLanguage="json"
-                            value={JSON.stringify(defaultSurveyContext , undefined, 4)}
-                            className={clsx(
-                                { 'border border-danger': hasSurveyContextEditorErrors }
-                            )}
-                            onValidate={(markers) => {
-                                if (markers.length > 0) {
-                                    setHasSurveyContextEditorErrors(true)
-                                } else {
-                                    setHasSurveyContextEditorErrors(false)
-                                }
-                            }}
-                            onChange={(value) => {
-                                if (!value) { return }
-                                let context: SurveyContext;
-                                try {
-                                    context = JSON.parse(value);
-                                } catch (e: any) {
-                                    console.error(e);
-                                    return
-                                }
-                                if (!context) { return }
-                                setChangedSurveyContextValues ({
-                                   ...surveyViewCred,
-                                     surveyAndContext :  surveyViewCred.surveyAndContext ? {
-                                        survey: surveyViewCred.surveyAndContext.survey,
-                                     context: context
-                                            } : undefined
-                                       
-                                  });
-                                 console.log(changedSurveyContextValues);
-        
-                            }}
-                        /></Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item eventKey="apply">Apply Changes</Dropdown.Item>
-                    </DropdownButton>
-                    <div style={{width: "33%", minWidth: "220px"}}>
-                    <Checkbox
-                    
-                    id="show-keys-checkbox"
-                    name="show-keys-checkbox"
-                    className="mb-3"
-                    checked={surveyViewCred.config.showKeys}
-                    onChange={(value) => {
-                        console.log(value);
-                        setSurveyViewCred( {
-                            ...surveyViewCred,
-                            config: { texts: initialSurveyCredState.simulatorUIConfig.texts,
-                                showKeys: value},
-                          })
-                    }}
-                    label="Show keys"
-                />
-                </div>
-                    </div>
-                   
-                </div>
-                
-            <div className="row">
-        <div className="col-12 col-lg-8 offset-lg-2"
-                    //style={{ minHeight: 'calc()' }}
-                    >
-                        {surveyViewCred.surveyAndContext ?
-                            <SurveyView
-                                loading={false}
-                                showKeys={surveyViewCred.config.showKeys}
-                                survey={surveyViewCred.surveyAndContext.survey}
-                                context={surveyViewCred.surveyAndContext.context}
-                                prefills={surveyViewCred.prefills}
-                                languageCode={surveyViewCred.selectedLanguage ? surveyViewCred.selectedLanguage : 'en'}
-                                onSubmit={(responses,) => {
-                                    console.log(responses);
-                                    console.log(surveyViewCred);
-                                    
-                                }}
-                                nextBtnText={surveyViewCred.config.texts.nextBtn}
-                                backBtnText={surveyViewCred.config.texts.backBtn}
-                                submitBtnText={surveyViewCred.config.texts.submitBtn}
-                                invalidResponseText={surveyViewCred.config.texts.invalidResponseText}
-                                dateLocales={dateLocales}
-                            /> :
-                            <div className = "mt-5">
-                                <p className="text-center">Please Select The File To Preview The Survey.</p>
-                            </div>
+                  : undefined,
+              }));
+            }}
+          />
+          <DropdownButton
+            style={{ width: "25%", minWidth: "220px" }}
+            autoClose="outside"
+            id={`simulator-config`}
+            //size="sm"
+            variant="secondary"
+            title="Change the Config"
+            onSelect={(eventKey) => {
+              switch (eventKey) {
+                case "apply":
+                  console.log(changedSurveyContextValues);
+                  setSurveyViewCred(changedSurveyContextValues);
+                  break;
+              }
+            }}
+          >
+            <Dropdown.Item eventKey="editor">
+              <Editor
+                width="400px"
+                height="250px"
+                defaultLanguage="json"
+                value={JSON.stringify(defaultSurveyContext, undefined, 4)}
+                className={clsx({
+                  "border border-danger": hasSurveyContextEditorErrors,
+                })}
+                onValidate={(markers) => {
+                  if (markers.length > 0) {
+                    setHasSurveyContextEditorErrors(true);
+                  } else {
+                    setHasSurveyContextEditorErrors(false);
+                  }
+                }}
+                onChange={(value) => {
+                  if (!value) {
+                    return;
+                  }
+                  let context: SurveyContext;
+                  try {
+                    context = JSON.parse(value);
+                  } catch (e: any) {
+                    console.error(e);
+                    return;
+                  }
+                  if (!context) {
+                    return;
+                  }
+                  setChangedSurveyContextValues({
+                    ...surveyViewCred,
+                    surveyAndContext: surveyViewCred.surveyAndContext
+                      ? {
+                          survey: surveyViewCred.surveyAndContext.survey,
+                          context: context,
                         }
-                    </div>
-                    </div>
-                    </div>
-      );
-                   
+                      : undefined,
+                  });
+                  console.log(changedSurveyContextValues);
+                }}
+              />
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item eventKey="apply">Apply Changes</Dropdown.Item>
+          </DropdownButton>
 
+          <UploadPrefill
+            onPrefillChange={(
+              preFillFile: File | undefined,
+              preFillValues: SurveySingleItemResponse[]
+            ) => {
+              setSurveyViewCred((prevState) => ({
+                ...prevState,
+                prefillsFile: preFillFile,
+                prefillValues: preFillValues,
+              }));
+            }}
+            currentSelectFileName={
+              surveyViewCred.prefillsFile
+                ? surveyViewCred.prefillsFile.name
+                : "Upload Prefill"
+            }
+          />
+
+          <ShowKeysCheckBox
+            currentCheckBoxStatus={surveyViewCred.simulatorUIConfig.showKeys}
+            onCheckBoxStausChange={(newStaus: boolean) => {
+              setSurveyViewCred((prevState) => ({
+                ...prevState,
+                simulatorUIConfig: {
+                  texts: initialSurveyCred.simulatorUIConfig.texts,
+                  showKeys: newStaus,
+                },
+              }));
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-12 col-lg-8 offset-lg-2">
+          {surveyViewCred.surveyAndContext ? (
+            <SurveyView
+              loading={false}
+              showKeys={surveyViewCred.simulatorUIConfig.showKeys}
+              survey={surveyViewCred.surveyAndContext.survey}
+              context={surveyViewCred.surveyAndContext.context}
+              prefills={surveyViewCred.prefillValues}
+              languageCode={
+                surveyViewCred.selectedLanguage
+                  ? surveyViewCred.selectedLanguage
+                  : "en"
+              }
+              onSubmit={(responses) => {
+                const exportData = responses.slice();
+                var a = document.createElement("a");
+                var file = new Blob(
+                  [JSON.stringify(exportData, undefined, 2)],
+                  { type: "json" }
+                );
+                a.href = URL.createObjectURL(file);
+                a.download = `${
+                  surveyViewCred.surveyAndContext?.survey.current
+                    .surveyDefinition.key
+                }_responses_${new Date().toLocaleDateString()}.json`;
+                a.click();
+                giveCommandToExtention(
+                  "showFileDownloadSuccessMsg",
+                  "The file is saved"
+                );
+              }}
+              nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
+              backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}
+              submitBtnText={surveyViewCred.simulatorUIConfig.texts.submitBtn}
+              invalidResponseText={
+                surveyViewCred.simulatorUIConfig.texts.invalidResponseText
+              }
+              dateLocales={dateLocales}
+            />
+          ) : (
+            <div className="mt-5">
+              <p className="text-center">
+                Please Select The File To Preview The Survey.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default SurveySimulator;
-
-
-
-

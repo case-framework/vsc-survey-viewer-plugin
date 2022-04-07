@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
-import {  OutputFileStructure, SurveyDirectory, SurveyFileContent } from "./app/model";
+import { OutputFileStructure, SurveyDirectory, SurveyFileContent } from "./app/model";
 
 
 export default class ViewLoader {
@@ -9,62 +9,73 @@ export default class ViewLoader {
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
 
-  constructor( context:  vscode.ExtensionContext) {
+  constructor(context: vscode.ExtensionContext) {
     this._extensionPath = context.extensionPath;
-    
-      this._panel = vscode.window.createWebviewPanel(
-        "Survey Viewer",
-        "Survey Viewer",
-        vscode.ViewColumn.One,
-        {
-          enableScripts: true,
-          retainContextWhenHidden: true,
-          localResourceRoots: [
-            vscode.Uri.file(path.join(context.extensionPath, "surveyViewer")),
-          ]
-        }
-      );
 
-      this._panel.webview.html = this.getWebviewContent();
-      this._panel.webview.onDidReceiveMessage(
-        message => {
-          switch (message.command) {
-            case 'getOutputFileContent':
-              if(this._panel){
-                const content = this.getOutputFileContent();
-              this._panel.webview.postMessage({ command: 'sendTheOutputFileContent' ,
-                                                content : content});
-              }
-              break;
-              case 'fileSelectedForPreview':
-                if(this._panel){
+    this._panel = vscode.window.createWebviewPanel(
+      "Survey Viewer",
+      "Survey Viewer",
+      vscode.ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+        localResourceRoots: [
+          vscode.Uri.file(path.join(context.extensionPath, "surveyViewer")),
+        ]
+      }
+    );
+
+    this._panel.webview.html = this.getWebviewContent();
+    this._panel.webview.onDidReceiveMessage(
+      message => {
+        switch (message.command) {
+          case 'getOutputFileContent':
+            if (this._panel) {
+              const content = this.getOutputFileContent();
+              this._panel.webview.postMessage({
+                command: 'sendTheOutputFileContent',
+                content: content
+              });
+            }
+            break;
+          case 'fileSelectedForPreview':
+            if (this._panel) {
+              const survey = this.getFileContent(message.data);
+              this._panel.webview.postMessage({
+                command: 'setTheNewSurvey',
+                content: survey
+              });
+            }
+            break;
+          case 'missingOutputDirError':
+            if (this._panel) {
+              vscode.window.showErrorMessage(message.data);
+            }
+            break;
+            case 'showFileDownloadSuccessMsg':
+            if (this._panel) {
+              vscode.window.showInformationMessage(message.data);
+            }
+            break;
+          case 'selectedFileToDetectChanges':
+            if (vscode.workspace.workspaceFolders) {
+              vscode.workspace.createFileSystemWatcher(message.data).onDidChange(() => {
+                if (this._panel) {
                   const survey = this.getFileContent(message.data);
-                  this._panel.webview.postMessage({ command: 'setTheNewSurvey' ,
-                                                content : survey});
+                  this._panel.webview.postMessage({
+                    command: 'setTheUpdatedSurvey',
+                    content: survey
+                  });
                 }
-                break;
-                case 'missingOutputDirError':
-                  if(this._panel){
-                    vscode.window.showErrorMessage(message.data);
-                  }
-                  break;
-                  case 'selectedFileToDetectChanges':
-                    if(vscode.workspace.workspaceFolders){
-                      vscode.workspace.createFileSystemWatcher(message.data).onDidChange(() => {
-                        if(this._panel){
-                          const survey = this.getFileContent(message.data);
-                  this._panel.webview.postMessage({ command: 'setTheUpdatedSurvey' ,
-                                                content : survey});     
-                        }
-                       });
-                     }
-              break;
-          }
-        },
-        undefined,
-        context.subscriptions
-      );
-    
+              });
+            }
+            break;
+        }
+      },
+      undefined,
+      context.subscriptions
+    );
+
   }
 
   private getWebviewContent(): string {
@@ -73,7 +84,7 @@ export default class ViewLoader {
       path.join(this._extensionPath, "surveyViewer", "surveyViewer.js")
     );
     const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
-    
+
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -121,39 +132,40 @@ export default class ViewLoader {
     return undefined;
   }
 
-  private  getOutputFileContent(): Error | OutputFileStructure| undefined {
+  private getOutputFileContent(): Error | OutputFileStructure | undefined {
     const fullContent: SurveyDirectory[] = [];
-    const outputFolderPath = 
-    path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : undefined}`, `output`);
-      if(fs.existsSync(outputFolderPath)){
-      fs.readdirSync(outputFolderPath).forEach( (file) => {
+    const outputFolderPath =
+      path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : undefined}`, `output`);
+    if (fs.existsSync(outputFolderPath)) {
+      fs.readdirSync(outputFolderPath).forEach((file) => {
         let newPath = path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : undefined}`, `output/${file}/surveys`);
         let newFiles: string[];
-        
-          newFiles = fs.readdirSync(newPath);
-        
+
+        newFiles = fs.readdirSync(newPath);
+
 
         let singleSurveyContent: SurveyDirectory = {
-          SurveyPath: newPath,
-          SurveyName: file,
-          SurveyFiles: newFiles
+          surveyPath: newPath,
+          surveyName: file,
+          surveyFiles: newFiles
         };
         fullContent.push(singleSurveyContent);
 
       });
 
-      const content: OutputFileStructure = { 
+      const content: OutputFileStructure = {
         isOutputDirMissing: false,
-        directoryContent: fullContent };
+        directoryContent: fullContent
+      };
 
-    return content;
-      }else{
-        const contentWithError: OutputFileStructure = {
-          isOutputDirMissing: true,
-          directoryContent: []
-        };
-        return contentWithError;
-      }
-    
+      return content;
+    } else {
+      const contentWithError: OutputFileStructure = {
+        isOutputDirMissing: true,
+        directoryContent: []
+      };
+      return contentWithError;
+    }
+
   }
 }

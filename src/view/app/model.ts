@@ -6,13 +6,16 @@ export interface SurveyFileContent {
   survey: Survey;
 }
 export interface SurveyViewCred {
-  config: SimulatorUIConfig;
   surveyAndContext?: {
-      survey: Survey;
-      context: SurveyContext;
+    survey: Survey;
+    context: SurveyContext;
   };
-  prefills?: SurveySingleItemResponse[];
   selectedLanguage?: string;
+    languageCodes?: string[];
+    surveyKey?: string;
+    prefillsFile?: File;
+    prefillValues?: SurveySingleItemResponse[],
+    simulatorUIConfig: SimulatorUIConfig;
 }
 export interface SimulatorUIConfig {
   texts: SurveyUILabels;
@@ -29,10 +32,10 @@ export interface OutputFileStructure {
   isOutputDirMissing: Boolean,
   directoryContent: SurveyDirectory[]
 }
-export interface SurveyDirectory{
-  SurveyPath: string,
-  SurveyName: string,
-  SurveyFiles: string[]
+export interface SurveyDirectory {
+  surveyPath: string,
+  surveyName: string,
+  surveyFiles: string[]
 }
 
 export const dateLocales = [
