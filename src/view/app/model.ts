@@ -37,6 +37,15 @@ export interface SurveyDirectory {
   surveyName: string,
   surveyFiles: string[]
 }
+export interface ConfigFileStructure {
+  isConfigDirMissing: Boolean,
+  directoryContent: ConfigFile[]
+}
+export interface ConfigFile {
+  configFilePath: string,
+  configFileName: string,
+  configFileContent: SurveyContext
+}
 
 export const dateLocales = [
   { code: 'nl', locale: nl, format: 'dd-MM-yyyy' },

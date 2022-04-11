@@ -1,6 +1,7 @@
 import * as React from "react";
 import { SurveyView } from "case-web-ui";
 import {
+    ConfigFileStructure,
   dateLocales,
   OutputFileStructure,
   SurveyFileContent,
@@ -11,12 +12,11 @@ import {
   SurveySingleItemResponse,
 } from "survey-engine/data_types";
 import { useEffect, useState } from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
-import Editor from "@monaco-editor/react";
-import clsx from "clsx";
 import SelectFileToPreview from "./Components/SelectFileToPreview";
 import ShowKeysCheckBox from "./Components/ShowKeysCheckBox";
 import UploadPrefill from "./Components/UploadPrefill";
+import EnterFileNameDialog from "./Components/EnterFileNameDialog";
+import ChangeConfig from "./Components/ChangeConfig";
 
 declare global {
   interface Window {
@@ -24,6 +24,7 @@ declare global {
     surveyData: SurveyFileContent;
     outPutDirContent: OutputFileStructure;
     changeInSurvey: boolean;
+    configFilesDir: ConfigFileStructure
   }
 }
 
@@ -74,14 +75,10 @@ const SurveySimulator: React.FC = (props) => {
   const [surveyViewCred, setSurveyViewCred] = useState<SurveyViewCred>({
     ...initialSurveyCred,
   });
-  const [hasSurveyContextEditorErrors, setHasSurveyContextEditorErrors] =
-    useState(false);
-  const [changedSurveyContextValues, setChangedSurveyContextValues] = useState({
-    ...initialSurveyCred,
-  });
   const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] =
     useState("Select File To Preview");
   const [outPutDirContentValue, setOutPutDirContentValue] = useState(false);
+  const [configDirContentValue, setConfigDirContentValue] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -137,68 +134,6 @@ const SurveySimulator: React.FC = (props) => {
               }));
             }}
           />
-          <DropdownButton
-            style={{ width: "25%", minWidth: "220px" }}
-            autoClose="outside"
-            id={`simulator-config`}
-            //size="sm"
-            variant="secondary"
-            title="Change the Config"
-            onSelect={(eventKey) => {
-              switch (eventKey) {
-                case "apply":
-                  console.log(changedSurveyContextValues);
-                  setSurveyViewCred(changedSurveyContextValues);
-                  break;
-              }
-            }}
-          >
-            <Dropdown.Item eventKey="editor">
-              <Editor
-                width="400px"
-                height="250px"
-                defaultLanguage="json"
-                value={JSON.stringify(defaultSurveyContext, undefined, 4)}
-                className={clsx({
-                  "border border-danger": hasSurveyContextEditorErrors,
-                })}
-                onValidate={(markers) => {
-                  if (markers.length > 0) {
-                    setHasSurveyContextEditorErrors(true);
-                  } else {
-                    setHasSurveyContextEditorErrors(false);
-                  }
-                }}
-                onChange={(value) => {
-                  if (!value) {
-                    return;
-                  }
-                  let context: SurveyContext;
-                  try {
-                    context = JSON.parse(value);
-                  } catch (e: any) {
-                    console.error(e);
-                    return;
-                  }
-                  if (!context) {
-                    return;
-                  }
-                  setChangedSurveyContextValues({
-                    ...surveyViewCred,
-                    surveyAndContext: surveyViewCred.surveyAndContext
-                      ? {
-                          survey: surveyViewCred.surveyAndContext.survey,
-                          context: context,
-                        }
-                      : undefined,
-                  });
-                  console.log(changedSurveyContextValues);
-                }}
-              />
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item eventKey="apply">Apply Changes</Dropdown.Item>
-          </DropdownButton>
 
           <UploadPrefill
             onPrefillChange={(
@@ -217,7 +152,23 @@ const SurveySimulator: React.FC = (props) => {
                 : "Upload Prefill"
             }
           />
-
+          <ChangeConfig 
+                      giveCommandToExtension={(command: string, data: string) => {
+                          giveCommandToExtention(command, data);
+                      } } setConfigDirContentValue={(value: boolean)=>{
+                          setConfigDirContentValue(value);
+                      } } configDirContentValue={configDirContentValue} 
+                      onConfigChange={(context: SurveyContext)=>{
+                        setSurveyViewCred((prevState) => ({
+                            ...prevState,
+                            surveyAndContext: window.surveyData
+                            ? {
+                                survey: window.surveyData.survey,
+                                context: { ...context },
+                              }
+                            : undefined,
+                          }));
+                      } }                      />
           <ShowKeysCheckBox
             currentCheckBoxStatus={surveyViewCred.simulatorUIConfig.showKeys}
             onCheckBoxStausChange={(newStaus: boolean) => {
@@ -282,6 +233,11 @@ const SurveySimulator: React.FC = (props) => {
           )}
         </div>
       </div>
+      <EnterFileNameDialog
+        giveCommandToExtention={(command: string, data: string) => {
+          giveCommandToExtention(command, data);
+        }}
+      />
     </div>
   );
 };

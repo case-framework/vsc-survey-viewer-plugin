@@ -25,10 +25,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const case_web_ui_1 = require("case-web-ui");
 const React = __importStar(require("react"));
-;
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ShowKeysCheckBox = (props) => {
-    return (React.createElement("div", { style: { width: "25%", minWidth: "220px", paddingLeft: "2rem", paddingTop: "0.5rem" } },
+    return (React.createElement("div", { style: {
+            width: "25%",
+            minWidth: "220px",
+            paddingLeft: "1rem",
+            paddingTop: "0.5rem",
+        } },
         React.createElement(case_web_ui_1.Checkbox, { id: "show-keys-checkbox", name: "show-keys-checkbox", className: "mb-3", checked: props.currentCheckBoxStatus, onChange: (value) => {
                 props.onCheckBoxStausChange(value);
             }, label: "Show keys" })));

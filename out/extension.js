@@ -32,28 +32,6 @@ const ViewLoader_1 = __importDefault(require("./view/ViewLoader"));
 function activate(context) {
     context.subscriptions.push(vscode.commands.registerCommand('jsonpreview.preview', () => {
         const view = new ViewLoader_1.default(context);
-        // if(vscode.window.activeTextEditor?.document.languageId == "JsonFile"){
-        // 	const view = new ViewLoader(vscode.Uri.file(vscode.window.activeTextEditor.document.fileName), context);
-        // }else{
-        // 	let openDialogOptions: vscode.OpenDialogOptions = {
-        // 	canSelectFiles: true,
-        // 	canSelectFolders: false,
-        // 	canSelectMany: false,
-        // 	filters: {
-        // 	  Json: ["json"]
-        // 	}
-        //   };
-        //   vscode.window
-        // 	.showOpenDialog(openDialogOptions)
-        // 	.then(async (uri: vscode.Uri[] | undefined) => {
-        // 	  if (uri && uri.length > 0) {
-        // 		const view = new ViewLoader(uri[0], context);
-        // 	  } else {
-        // 		vscode.window.showErrorMessage("No valid file selected!");
-        // 		return;
-        // 	  }
-        // 	});
-        // }
     }));
 }
 exports.activate = activate;

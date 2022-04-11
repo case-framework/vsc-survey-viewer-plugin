@@ -24,31 +24,30 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
-;
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const UploadPrefill = (props) => {
     const openDialogForFileSelection = () => {
-        const buttonRef = document.getElementById('get_file');
+        const buttonRef = document.getElementById("get_file");
         if (buttonRef) {
             buttonRef.onclick = function () {
-                const inputRef = document.getElementById('input_file');
+                const inputRef = document.getElementById("input_file");
                 if (inputRef) {
                     inputRef.click();
                 }
             };
         }
     };
-    const uploadFileForPreFIll = (event) => {
+    const uploadFileForPreFill = (event) => {
         const prefills = event.target.files ? event.target.files[0] : undefined;
         if (prefills) {
             const reader = new FileReader();
-            reader.onabort = () => console.log('file reading was aborted');
-            reader.onerror = () => console.log('file reading has failed');
+            reader.onabort = () => console.log("file reading was aborted");
+            reader.onerror = () => console.log("file reading has failed");
             reader.onload = () => {
                 // Do whatever you want with the file contents
                 const res = reader.result;
-                if (!res || typeof (res) !== 'string') {
-                    console.error('TODO: handle file upload error');
+                if (!res || typeof res !== "string") {
+                    console.error("TODO: handle file upload error");
                     return;
                 }
                 const content = JSON.parse(res);
@@ -60,13 +59,15 @@ const UploadPrefill = (props) => {
             props.onPrefillChange(prefills, []);
         }
     };
-    return (React.createElement("div", { style: { width: "fit-content" } },
+    return (React.createElement("div", { style: { width: "fit-content", paddingLeft: "1rem" } },
         React.createElement("button", { style: { width: "fit-content" }, id: "get_file", className: "btn btn-secondary", onClick: () => openDialogForFileSelection() },
             " ",
             React.createElement("p", null,
-                props.currentSelectFileName,
+                props.currentSelectFileName.length <= 18 ? props.currentSelectFileName : props.currentSelectFileName.substring(0, 17),
                 " ")),
-        React.createElement("input", { type: "file", id: "input_file", accept: ".json", style: { display: 'none' }, onChange: (event) => { uploadFileForPreFIll(event); } })));
+        React.createElement("input", { type: "file", id: "input_file", accept: ".json", style: { display: "none" }, onChange: (event) => {
+                uploadFileForPreFill(event);
+            } })));
 };
 exports.default = UploadPrefill;
 //# sourceMappingURL=UploadPrefill.js.map

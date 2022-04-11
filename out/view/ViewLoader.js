@@ -51,14 +51,14 @@ class ViewLoader {
                     break;
                 case 'fileSelectedForPreview':
                     if (this._panel) {
-                        const survey = this.getFileContent(message.data);
+                        const survey = this.getSurveyFileContent(message.data);
                         this._panel.webview.postMessage({
                             command: 'setTheNewSurvey',
                             content: survey
                         });
                     }
                     break;
-                case 'missingOutputDirError':
+                case 'showError':
                     if (this._panel) {
                         vscode.window.showErrorMessage(message.data);
                     }
@@ -67,12 +67,25 @@ class ViewLoader {
                     if (this._panel) {
                         vscode.window.showInformationMessage(message.data);
                     }
+                case 'getTheConfigFilesList':
+                    if (this._panel) {
+                        const content = this.getTheConfigFilesList();
+                        this._panel.webview.postMessage({
+                            command: 'setConfigFilesList',
+                            content: content
+                        });
+                    }
+                    break;
+                case 'createNewFile':
+                    if (this._panel) {
+                        this.createNewConfigFile(message.data);
+                    }
                     break;
                 case 'selectedFileToDetectChanges':
                     if (vscode.workspace.workspaceFolders) {
                         vscode.workspace.createFileSystemWatcher(message.data).onDidChange(() => {
                             if (this._panel) {
-                                const survey = this.getFileContent(message.data);
+                                const survey = this.getSurveyFileContent(message.data);
                                 this._panel.webview.postMessage({
                                     command: 'setTheUpdatedSurvey',
                                     content: survey
@@ -114,6 +127,9 @@ class ViewLoader {
                     window.changeInSurvey=true;
                   window.surveyData = message.content;
                     break;
+                    case 'setConfigFilesList':
+                  window.configFilesDir = message.content;
+                    break;
             }
         });
         </script>
@@ -124,7 +140,7 @@ class ViewLoader {
     </body>
     </html>`;
     }
-    getFileContent(filePath) {
+    getSurveyFileContent(filePath) {
         if (fs.existsSync(filePath)) {
             let content = fs.readFileSync(filePath, "utf8");
             let surveyData = JSON.parse(content);
@@ -156,6 +172,60 @@ class ViewLoader {
         else {
             const contentWithError = {
                 isOutputDirMissing: true,
+                directoryContent: []
+            };
+            return contentWithError;
+        }
+    }
+    createNewConfigFile(fileName) {
+        const configFilePath = path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : undefined}`, `config`);
+        if (fileName !== "") {
+            if (!fs.existsSync(configFilePath)) {
+                vscode.workspace.fs.createDirectory(vscode.Uri.file(configFilePath));
+            }
+            const filePath = path.join(configFilePath, fileName + ".json");
+            if (!fs.existsSync(filePath)) {
+                const defaultDataForTheFile = {
+                    "isLoggedIn": false,
+                    "participantFlags": {}
+                };
+                const fileUri = vscode.Uri.file(filePath);
+                vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(JSON.stringify(defaultDataForTheFile))).then((doc) => {
+                    vscode.window.showTextDocument(fileUri, { preview: false });
+                });
+            }
+            else {
+                vscode.window.showErrorMessage("File Name Already exists");
+            }
+        }
+        else {
+            vscode.window.showErrorMessage("File name should not be empty");
+        }
+    }
+    getTheConfigFilesList() {
+        const configFilePath = path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : undefined}`, `config`);
+        if (fs.existsSync(configFilePath)) {
+            const fullContent = [];
+            fs.readdirSync(configFilePath).forEach((file) => {
+                let filePath = path.join(`${vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.path : undefined}`, `config/${file}`);
+                let content = fs.readFileSync(filePath, "utf8");
+                let config = JSON.parse(content);
+                const singleFileContent = {
+                    configFilePath: filePath,
+                    configFileName: file,
+                    configFileContent: config
+                };
+                fullContent.push(singleFileContent);
+            });
+            const configFileStructure = {
+                isConfigDirMissing: false,
+                directoryContent: fullContent
+            };
+            return configFileStructure;
+        }
+        else {
+            const contentWithError = {
+                isConfigDirMissing: true,
                 directoryContent: []
             };
             return contentWithError;
