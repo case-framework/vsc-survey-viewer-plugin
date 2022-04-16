@@ -15,7 +15,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
   const setDropdowns = (items: OutputFileStructure): React.ReactNode => {
     return items.directoryContent.map((item) => {
       return (
-        <div style={{ width:"214px" }}>
+        <div style={{ width: "214px" }}>
           <div className="dropdown-divider"></div>
           <p className="h5" style={{ paddingLeft: "1rem" }}>
             {item.surveyName}
@@ -65,10 +65,10 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
   };
 
   return (
-    <div className="dropdown" style={{ width: "25%", minWidth: "214px" }}>
+    <div className="dropdown nav-item" style={{ width: "25%", minWidth: "214px" , height: "44px"}}>
       <button
         className="btn btn-secondary dropdown-toggle"
-        style={{ width:"214px" }}
+        style={{ width: "214px" }}
         type="button"
         id="SelectFileDropdown"
         data-bs-toggle="dropdown"
@@ -106,7 +106,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
       <div
         className="dropdown-menu overflow-auto"
         aria-labelledby="SelectFileDropdown"
-        style={{ maxHeight: "280px", background: "white"}}
+        style={{ maxHeight: "280px", background: "white" }}
       >
         {props.outPutDirContentValue ? (
           setDropdowns(window.outPutDirContent)

@@ -52,12 +52,8 @@ const defaultSimulatorUIConfig = {
 };
 const initialSurveyCred = {
     simulatorUIConfig: { ...defaultSimulatorUIConfig },
-    surveyAndContext: window.surveyData
-        ? {
-            survey: window.surveyData.survey,
-            context: { ...defaultSurveyContext },
-        }
-        : undefined,
+    survey: window.surveyData ? window.surveyData.survey : undefined,
+    context: { ...defaultSurveyContext },
     selectedLanguage: "en",
     prefillValues: [],
     prefillsFile: undefined,
@@ -76,12 +72,8 @@ const SurveySimulator = (props) => {
                 console.log(window.changeInSurvey);
                 setSurveyViewCred((prevState) => ({
                     ...prevState,
-                    surveyAndContext: window.surveyData.survey
-                        ? {
-                            survey: window.surveyData.survey,
-                            context: { ...defaultSurveyContext },
-                        }
-                        : undefined,
+                    survey: window.surveyData ? window.surveyData.survey : undefined,
+                    context: { ...defaultSurveyContext },
                 }));
                 window.changeInSurvey = false;
             }
@@ -95,68 +87,65 @@ const SurveySimulator = (props) => {
         });
     };
     return (React.createElement("div", { className: "container-fluid" },
-        React.createElement("div", { className: "container pt-3" },
-            React.createElement("div", { className: "row" },
-                React.createElement(SelectFileToPreview_1.default, { giveCommandToExtention: (command, data) => {
-                        giveCommandToExtention(command, data);
-                    }, setChangedSelectTheFileBtnText: (newText) => {
-                        setChangedSelectTheFileBtnText(newText);
-                    }, changedSelectTheFileBtnText: changedSelectTheFileBtnText, setOutPutDirContentValue: (value) => {
-                        setOutPutDirContentValue(value);
-                    }, outPutDirContentValue: outPutDirContentValue, onChangedSurveyViewCred: () => {
-                        setSurveyViewCred((prevState) => ({
-                            ...prevState,
-                            surveyAndContext: window.surveyData.survey
-                                ? {
-                                    survey: window.surveyData.survey,
+        React.createElement("div", { className: "container pt-2" },
+            React.createElement("nav", { className: "navbar navbar-expand navbar-light bg-light " },
+                React.createElement("div", { className: "collapse navbar-collapse justify-content-center order-2", id: "navbarNavAltMarkup" },
+                    React.createElement("div", { className: "navbar-nav" },
+                        React.createElement(SelectFileToPreview_1.default, { giveCommandToExtention: (command, data) => {
+                                giveCommandToExtention(command, data);
+                            }, setChangedSelectTheFileBtnText: (newText) => {
+                                setChangedSelectTheFileBtnText(newText);
+                            }, changedSelectTheFileBtnText: changedSelectTheFileBtnText, setOutPutDirContentValue: (value) => {
+                                setOutPutDirContentValue(value);
+                            }, outPutDirContentValue: outPutDirContentValue, onChangedSurveyViewCred: () => {
+                                setSurveyViewCred((prevState) => ({
+                                    ...prevState,
+                                    survey: window.surveyData
+                                        ? window.surveyData.survey
+                                        : undefined,
                                     context: { ...defaultSurveyContext },
-                                }
-                                : undefined,
-                        }));
-                    } }),
-                React.createElement(UploadPrefill_1.default, { onPrefillChange: (preFillFile, preFillValues) => {
-                        setSurveyViewCred((prevState) => ({
-                            ...prevState,
-                            prefillsFile: preFillFile,
-                            prefillValues: preFillValues,
-                        }));
-                    }, currentSelectFileName: surveyViewCred.prefillsFile
-                        ? surveyViewCred.prefillsFile.name
-                        : "Upload Prefill" }),
-                React.createElement(ChangeConfig_1.default, { giveCommandToExtension: (command, data) => {
-                        giveCommandToExtention(command, data);
-                    }, setConfigDirContentValue: (value) => {
-                        setConfigDirContentValue(value);
-                    }, configDirContentValue: configDirContentValue, onConfigChange: (context) => {
-                        setSurveyViewCred((prevState) => ({
-                            ...prevState,
-                            surveyAndContext: window.surveyData
-                                ? {
-                                    survey: window.surveyData.survey,
+                                }));
+                            } }),
+                        React.createElement(UploadPrefill_1.default, { onPrefillChange: (preFillFile, preFillValues) => {
+                                setSurveyViewCred((prevState) => ({
+                                    ...prevState,
+                                    prefillsFile: preFillFile,
+                                    prefillValues: preFillValues,
+                                }));
+                            }, currentSelectFileName: surveyViewCred.prefillsFile
+                                ? surveyViewCred.prefillsFile.name
+                                : "Upload Prefill" }),
+                        React.createElement(ChangeConfig_1.default, { giveCommandToExtension: (command, data) => {
+                                giveCommandToExtention(command, data);
+                            }, setConfigDirContentValue: (value) => {
+                                setConfigDirContentValue(value);
+                            }, configDirContentValue: configDirContentValue, onConfigChange: (context) => {
+                                setSurveyViewCred((prevState) => ({
+                                    ...prevState,
+                                    survey: window.surveyData
+                                        ? window.surveyData.survey
+                                        : undefined,
                                     context: { ...context },
-                                }
-                                : undefined,
-                        }));
-                    } }),
-                React.createElement(ShowKeysCheckBox_1.default, { currentCheckBoxStatus: surveyViewCred.simulatorUIConfig.showKeys, onCheckBoxStausChange: (newStaus) => {
-                        setSurveyViewCred((prevState) => ({
-                            ...prevState,
-                            simulatorUIConfig: {
-                                texts: initialSurveyCred.simulatorUIConfig.texts,
-                                showKeys: newStaus,
-                            },
-                        }));
-                    } }))),
+                                }));
+                            } }),
+                        React.createElement(ShowKeysCheckBox_1.default, { currentCheckBoxStatus: surveyViewCred.simulatorUIConfig.showKeys, onCheckBoxStausChange: (newStaus) => {
+                                setSurveyViewCred((prevState) => ({
+                                    ...prevState,
+                                    simulatorUIConfig: {
+                                        texts: initialSurveyCred.simulatorUIConfig.texts,
+                                        showKeys: newStaus,
+                                    },
+                                }));
+                            } }))))),
         React.createElement("div", { className: "row" },
-            React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, surveyViewCred.surveyAndContext ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.surveyAndContext.survey, context: surveyViewCred.surveyAndContext.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
+            React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
                     ? surveyViewCred.selectedLanguage
                     : "en", onSubmit: (responses) => {
                     const exportData = responses.slice();
                     var a = document.createElement("a");
                     var file = new Blob([JSON.stringify(exportData, undefined, 2)], { type: "json" });
                     a.href = URL.createObjectURL(file);
-                    a.download = `${surveyViewCred.surveyAndContext?.survey.current
-                        .surveyDefinition.key}_responses_${new Date().toLocaleDateString()}.json`;
+                    a.download = `${surveyViewCred.survey?.current.surveyDefinition.key}_responses_${new Date().toLocaleDateString()}.json`;
                     a.click();
                     giveCommandToExtention("showFileDownloadSuccessMsg", "The file is saved");
                 }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("div", { className: "mt-5" },

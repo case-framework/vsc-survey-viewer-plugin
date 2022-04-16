@@ -27,14 +27,10 @@ const React = __importStar(require("react"));
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const UploadPrefill = (props) => {
     const openDialogForFileSelection = () => {
-        const buttonRef = document.getElementById("get_file");
-        if (buttonRef) {
-            buttonRef.onclick = function () {
-                const inputRef = document.getElementById("input_file");
-                if (inputRef) {
-                    inputRef.click();
-                }
-            };
+        const inputRef = document.getElementById("input_file");
+        console.log(inputRef);
+        if (inputRef) {
+            inputRef.click();
         }
     };
     const uploadFileForPreFill = (event) => {
@@ -59,11 +55,13 @@ const UploadPrefill = (props) => {
             props.onPrefillChange(prefills, []);
         }
     };
-    return (React.createElement("div", { style: { width: "fit-content", paddingLeft: "1rem" } },
-        React.createElement("button", { style: { width: "fit-content" }, id: "get_file", className: "btn btn-secondary", onClick: () => openDialogForFileSelection() },
+    return (React.createElement("div", { className: "nav-item", style: { width: "25%", minWidth: "165px", height: "44px", paddingLeft: "1rem" } },
+        React.createElement("button", { id: "get_file", className: "btn btn-secondary", onClick: () => openDialogForFileSelection() },
             " ",
             React.createElement("p", null,
-                props.currentSelectFileName.length <= 18 ? props.currentSelectFileName : props.currentSelectFileName.substring(0, 17),
+                props.currentSelectFileName.length <= 18
+                    ? props.currentSelectFileName
+                    : props.currentSelectFileName.substring(0, 17),
                 " ")),
         React.createElement("input", { type: "file", id: "input_file", accept: ".json", style: { display: "none" }, onChange: (event) => {
                 uploadFileForPreFill(event);

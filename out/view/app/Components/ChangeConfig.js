@@ -34,7 +34,7 @@ const ChangeConfig = (props) => {
                 } }, item.configFileName.substring(0, item.configFileName.lastIndexOf("."))));
         });
     };
-    return (React.createElement("div", { className: "dropdown", style: { width: "25%", minWidth: "165px", paddingLeft: "1rem" } },
+    return (React.createElement("div", { className: "dropdown nav-item", style: { width: "25%", minWidth: "165px", height: "44px", paddingRight: "1rem" } },
         React.createElement("button", { className: "btn btn-secondary dropdown-toggle", type: "button", id: "ChangeConfig", "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setConfigDirContentValue(false);
                 props.giveCommandToExtension("getTheConfigFilesList", "");

@@ -49,7 +49,7 @@ const SelectFileToPreview = (props) => {
                 } }, item.substring(0, item.lastIndexOf(".")).replace("_", " ")));
         });
     };
-    return (React.createElement("div", { className: "dropdown", style: { width: "25%", minWidth: "214px" } },
+    return (React.createElement("div", { className: "dropdown nav-item", style: { width: "25%", minWidth: "214px", height: "44px" } },
         React.createElement("button", { className: "btn btn-secondary dropdown-toggle", style: { width: "214px" }, type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setOutPutDirContentValue(false);
                 props.giveCommandToExtention("getOutputFileContent", "");

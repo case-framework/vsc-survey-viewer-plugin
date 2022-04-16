@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SurveyView } from "case-web-ui";
 import {
-    ConfigFileStructure,
+  ConfigFileStructure,
   dateLocales,
   OutputFileStructure,
   SurveyFileContent,
@@ -24,7 +24,7 @@ declare global {
     surveyData: SurveyFileContent;
     outPutDirContent: OutputFileStructure;
     changeInSurvey: boolean;
-    configFilesDir: ConfigFileStructure
+    configFilesDir: ConfigFileStructure;
   }
 }
 
@@ -47,12 +47,9 @@ const defaultSimulatorUIConfig: SimulatorUIConfig = {
 
 const initialSurveyCred: SurveyViewCred = {
   simulatorUIConfig: { ...defaultSimulatorUIConfig },
-  surveyAndContext: window.surveyData
-    ? {
-        survey: window.surveyData.survey,
-        context: { ...defaultSurveyContext },
-      }
-    : undefined,
+
+  survey: window.surveyData ? window.surveyData.survey : undefined,
+  context: { ...defaultSurveyContext },
   selectedLanguage: "en",
   prefillValues: [],
   prefillsFile: undefined,
@@ -86,12 +83,9 @@ const SurveySimulator: React.FC = (props) => {
         console.log(window.changeInSurvey);
         setSurveyViewCred((prevState) => ({
           ...prevState,
-          surveyAndContext: window.surveyData.survey
-            ? {
-                survey: window.surveyData.survey,
-                context: { ...defaultSurveyContext },
-              }
-            : undefined,
+
+          survey: window.surveyData ? window.surveyData.survey : undefined,
+          context: { ...defaultSurveyContext },
         }));
         window.changeInSurvey = false;
       }
@@ -108,90 +102,94 @@ const SurveySimulator: React.FC = (props) => {
 
   return (
     <div className="container-fluid">
-      <div className="container pt-3">
-        <div className="row">
-          <SelectFileToPreview
-            giveCommandToExtention={(command: string, data: string) => {
-              giveCommandToExtention(command, data);
-            }}
-            setChangedSelectTheFileBtnText={(newText: string) => {
-              setChangedSelectTheFileBtnText(newText);
-            }}
-            changedSelectTheFileBtnText={changedSelectTheFileBtnText}
-            setOutPutDirContentValue={(value: boolean) => {
-              setOutPutDirContentValue(value);
-            }}
-            outPutDirContentValue={outPutDirContentValue}
-            onChangedSurveyViewCred={() => {
-              setSurveyViewCred((prevState) => ({
-                ...prevState,
-                surveyAndContext: window.surveyData.survey
-                  ? {
-                      survey: window.surveyData.survey,
-                      context: { ...defaultSurveyContext },
-                    }
-                  : undefined,
-              }));
-            }}
-          />
-
-          <UploadPrefill
-            onPrefillChange={(
-              preFillFile: File | undefined,
-              preFillValues: SurveySingleItemResponse[]
-            ) => {
-              setSurveyViewCred((prevState) => ({
-                ...prevState,
-                prefillsFile: preFillFile,
-                prefillValues: preFillValues,
-              }));
-            }}
-            currentSelectFileName={
-              surveyViewCred.prefillsFile
-                ? surveyViewCred.prefillsFile.name
-                : "Upload Prefill"
-            }
-          />
-          <ChangeConfig 
-                      giveCommandToExtension={(command: string, data: string) => {
-                          giveCommandToExtention(command, data);
-                      } } setConfigDirContentValue={(value: boolean)=>{
-                          setConfigDirContentValue(value);
-                      } } configDirContentValue={configDirContentValue} 
-                      onConfigChange={(context: SurveyContext)=>{
-                        setSurveyViewCred((prevState) => ({
-                            ...prevState,
-                            surveyAndContext: window.surveyData
-                            ? {
-                                survey: window.surveyData.survey,
-                                context: { ...context },
-                              }
-                            : undefined,
-                          }));
-                      } }                      />
-          <ShowKeysCheckBox
-            currentCheckBoxStatus={surveyViewCred.simulatorUIConfig.showKeys}
-            onCheckBoxStausChange={(newStaus: boolean) => {
-              setSurveyViewCred((prevState) => ({
-                ...prevState,
-                simulatorUIConfig: {
-                  texts: initialSurveyCred.simulatorUIConfig.texts,
-                  showKeys: newStaus,
-                },
-              }));
-            }}
-          />
-        </div>
+      <div className="container pt-2">
+        <nav className="navbar navbar-expand navbar-light bg-light ">
+          <div className="collapse navbar-collapse justify-content-center order-2" id="navbarNavAltMarkup">
+            <div className="navbar-nav">
+              <SelectFileToPreview
+                giveCommandToExtention={(command: string, data: string) => {
+                  giveCommandToExtention(command, data);
+                }}
+                setChangedSelectTheFileBtnText={(newText: string) => {
+                  setChangedSelectTheFileBtnText(newText);
+                }}
+                changedSelectTheFileBtnText={changedSelectTheFileBtnText}
+                setOutPutDirContentValue={(value: boolean) => {
+                  setOutPutDirContentValue(value);
+                }}
+                outPutDirContentValue={outPutDirContentValue}
+                onChangedSurveyViewCred={() => {
+                  setSurveyViewCred((prevState) => ({
+                    ...prevState,
+                    survey: window.surveyData
+                      ? window.surveyData.survey
+                      : undefined,
+                    context: { ...defaultSurveyContext },
+                  }));
+                }}
+              />
+              <UploadPrefill
+                onPrefillChange={(
+                  preFillFile: File | undefined,
+                  preFillValues: SurveySingleItemResponse[]
+                ) => {
+                  setSurveyViewCred((prevState) => ({
+                    ...prevState,
+                    prefillsFile: preFillFile,
+                    prefillValues: preFillValues,
+                  }));
+                }}
+                currentSelectFileName={
+                  surveyViewCred.prefillsFile
+                    ? surveyViewCred.prefillsFile.name
+                    : "Upload Prefill"
+                }
+              />
+              <ChangeConfig
+                giveCommandToExtension={(command: string, data: string) => {
+                  giveCommandToExtention(command, data);
+                }}
+                setConfigDirContentValue={(value: boolean) => {
+                  setConfigDirContentValue(value);
+                }}
+                configDirContentValue={configDirContentValue}
+                onConfigChange={(context: SurveyContext) => {
+                  setSurveyViewCred((prevState) => ({
+                    ...prevState,
+                    survey: window.surveyData
+                      ? window.surveyData.survey
+                      : undefined,
+                    context: { ...context },
+                  }));
+                }}
+              />
+              <ShowKeysCheckBox
+                currentCheckBoxStatus={
+                  surveyViewCred.simulatorUIConfig.showKeys
+                }
+                onCheckBoxStausChange={(newStaus: boolean) => {
+                  setSurveyViewCred((prevState) => ({
+                    ...prevState,
+                    simulatorUIConfig: {
+                      texts: initialSurveyCred.simulatorUIConfig.texts,
+                      showKeys: newStaus,
+                    },
+                  }));
+                }}
+              />
+            </div>
+          </div>
+        </nav>
       </div>
 
       <div className="row">
         <div className="col-12 col-lg-8 offset-lg-2">
-          {surveyViewCred.surveyAndContext ? (
+          {surveyViewCred.survey ? (
             <SurveyView
               loading={false}
               showKeys={surveyViewCred.simulatorUIConfig.showKeys}
-              survey={surveyViewCred.surveyAndContext.survey}
-              context={surveyViewCred.surveyAndContext.context}
+              survey={surveyViewCred.survey}
+              context={surveyViewCred.context}
               prefills={surveyViewCred.prefillValues}
               languageCode={
                 surveyViewCred.selectedLanguage
@@ -207,8 +205,7 @@ const SurveySimulator: React.FC = (props) => {
                 );
                 a.href = URL.createObjectURL(file);
                 a.download = `${
-                  surveyViewCred.surveyAndContext?.survey.current
-                    .surveyDefinition.key
+                  surveyViewCred.survey?.current.surveyDefinition.key
                 }_responses_${new Date().toLocaleDateString()}.json`;
                 a.click();
                 giveCommandToExtention(

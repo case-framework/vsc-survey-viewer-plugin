@@ -6,10 +6,8 @@ export interface SurveyFileContent {
   survey: Survey;
 }
 export interface SurveyViewCred {
-  surveyAndContext?: {
-    survey: Survey;
-    context: SurveyContext;
-  };
+    survey?: Survey;
+    context?: SurveyContext;
   selectedLanguage?: string;
     languageCodes?: string[];
     surveyKey?: string;

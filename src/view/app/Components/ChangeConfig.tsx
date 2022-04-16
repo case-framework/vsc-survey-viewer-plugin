@@ -5,26 +5,39 @@ import { ConfigFile } from "../model";
 interface ChangeConfigProps {
   setConfigDirContentValue: (value: boolean) => void;
   configDirContentValue: boolean;
-  onConfigChange: (context: SurveyContext)=> void;
+  onConfigChange: (context: SurveyContext) => void;
   giveCommandToExtension: (command: string, data: string) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
-  const setConfigFilesList = (configFileList: ConfigFile[]): React.ReactNode => {
-      console.log(configFileList);
+  const setConfigFilesList = (
+    configFileList: ConfigFile[]
+  ): React.ReactNode => {
+    console.log(configFileList);
     return configFileList.map((item) => {
-        return(
-      <button className="dropdown-item" type="button" style={{ width: "165px" }} onClick={() => {
-        props.onConfigChange(item.configFileContent);
-      }}>
-       {item.configFileName.substring(0, item.configFileName.lastIndexOf("."))}
-      </button>
-        );
+      return (
+        <button
+          className="dropdown-item"
+          type="button"
+          style={{ width: "165px" }}
+          onClick={() => {
+            props.onConfigChange(item.configFileContent);
+          }}
+        >
+          {item.configFileName.substring(
+            0,
+            item.configFileName.lastIndexOf(".")
+          )}
+        </button>
+      );
     });
   };
   return (
-    <div className="dropdown" style={{ width: "25%", minWidth: "165px" ,paddingLeft: "1rem"}}>
+    <div
+      className="dropdown nav-item"
+      style={{ width: "25%", minWidth: "165px", height: "44px" , paddingRight: "1rem"}}
+    >
       <button
         className="btn btn-secondary dropdown-toggle"
         type="button"
@@ -45,8 +58,12 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
       >
         Change Config
       </button>
-      <div className="dropdown-menu" aria-labelledby="ChangeConfig" style={{ width: "165px" }}>
-        <button 
+      <div
+        className="dropdown-menu"
+        aria-labelledby="ChangeConfig"
+        style={{ width: "165px" }}
+      >
+        <button
           className="dropdown-item"
           type="button"
           data-bs-toggle="modal"
