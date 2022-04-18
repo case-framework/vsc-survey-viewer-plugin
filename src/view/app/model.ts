@@ -35,6 +35,17 @@ export interface SurveyDirectory {
   surveyName: string,
   surveyFiles: string[]
 }
+export interface SimulatorUIConfig {
+  texts: SurveyUILabels;
+  showKeys: boolean;
+}
+export interface SurveyUILabels {
+  backBtn: string;
+  nextBtn: string;
+  submitBtn: string;
+  invalidResponseText: string;
+  noSurveyLoaded: string;
+}
 export interface ConfigFileStructure {
   isConfigDirMissing: Boolean,
   directoryContent: ConfigFile[]
@@ -44,7 +55,6 @@ export interface ConfigFile {
   configFileName: string,
   configFileContent: SurveyContext
 }
-
 export const dateLocales = [
   { code: 'nl', locale: nl, format: 'dd-MM-yyyy' },
   { code: 'nl-be', locale: nlBE, format: 'dd.MM.yyyy' },

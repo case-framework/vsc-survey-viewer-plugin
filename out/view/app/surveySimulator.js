@@ -69,13 +69,18 @@ const SurveySimulator = (props) => {
     (0, react_1.useEffect)(() => {
         const interval = setInterval(() => {
             if (window.changeInSurvey) {
-                console.log(window.changeInSurvey);
                 setSurveyViewCred((prevState) => ({
                     ...prevState,
                     survey: window.surveyData ? window.surveyData.survey : undefined,
-                    context: { ...defaultSurveyContext },
                 }));
                 window.changeInSurvey = false;
+            }
+            if (window.changeInConfigFile) {
+                setSurveyViewCred((prevState) => ({
+                    ...prevState,
+                    context: window.updatedConfigFileData,
+                }));
+                window.changeInConfigFile = false;
             }
         }, 1000);
         return () => clearInterval(interval);

@@ -22,6 +22,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           type="button"
           style={{ width: "165px" }}
           onClick={() => {
+            props.giveCommandToExtension("setTheConfigFileChangeWatcher", item.configFilePath);
             props.onConfigChange(item.configFileContent);
           }}
         >
@@ -91,3 +92,5 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
 };
 
 export default ChangeConfig;
+
+

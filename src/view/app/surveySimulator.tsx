@@ -4,6 +4,7 @@ import {
   ConfigFileStructure,
   dateLocales,
   OutputFileStructure,
+  SimulatorUIConfig,
   SurveyFileContent,
   SurveyViewCred,
 } from "./model";
@@ -25,6 +26,8 @@ declare global {
     outPutDirContent: OutputFileStructure;
     changeInSurvey: boolean;
     configFilesDir: ConfigFileStructure;
+    changeInConfigFile: boolean,
+    updatedConfigFileData: SurveyContext
   }
 }
 
@@ -55,17 +58,6 @@ const initialSurveyCred: SurveyViewCred = {
   prefillsFile: undefined,
 };
 
-interface SimulatorUIConfig {
-  texts: SurveyUILabels;
-  showKeys: boolean;
-}
-interface SurveyUILabels {
-  backBtn: string;
-  nextBtn: string;
-  submitBtn: string;
-  invalidResponseText: string;
-  noSurveyLoaded: string;
-}
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const SurveySimulator: React.FC = (props) => {
@@ -80,14 +72,18 @@ const SurveySimulator: React.FC = (props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (window.changeInSurvey) {
-        console.log(window.changeInSurvey);
         setSurveyViewCred((prevState) => ({
           ...prevState,
-
           survey: window.surveyData ? window.surveyData.survey : undefined,
-          context: { ...defaultSurveyContext },
         }));
         window.changeInSurvey = false;
+      } 
+      if(window.changeInConfigFile) {
+        setSurveyViewCred((prevState) => ({
+          ...prevState,
+          context: window.updatedConfigFileData,
+        }));
+        window.changeInConfigFile = false;
       }
     }, 1000);
     return () => clearInterval(interval);
