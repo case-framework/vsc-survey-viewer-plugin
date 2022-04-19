@@ -42,8 +42,8 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
     }
   };
   return (
-    <div className="nav-item" style={{ width: "25%", minWidth: "165px", height: "44px", paddingLeft: "1rem" }}>
-      <button
+    <div className="nav-item" style={{ width: "200px", height: "44px", paddingLeft: "1rem" , paddingRight: "1rem" }}>
+      <button style={{ width: "165px"}}
         id="get_file"
         className="btn btn-secondary"
         onClick={() => openDialogForFileSelection()}

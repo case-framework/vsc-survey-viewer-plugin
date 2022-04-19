@@ -29,7 +29,7 @@ const ChangeConfig = (props) => {
     const setConfigFilesList = (configFileList) => {
         console.log(configFileList);
         return configFileList.map((item) => {
-            return (React.createElement("button", { className: "dropdown-item", type: "button", style: { width: "165px" }, onClick: () => {
+            return (React.createElement("button", { className: "dropdown-item text-center", type: "button", style: { width: "165px" }, onClick: () => {
                     props.giveCommandToExtension("setTheConfigFileChangeWatcher", item.configFilePath);
                     props.onConfigChange(item.configFileContent);
                 } }, item.configFileName.substring(0, item.configFileName.lastIndexOf("."))));

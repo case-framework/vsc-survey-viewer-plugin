@@ -55,8 +55,8 @@ const UploadPrefill = (props) => {
             props.onPrefillChange(prefills, []);
         }
     };
-    return (React.createElement("div", { className: "nav-item", style: { width: "25%", minWidth: "165px", height: "44px", paddingLeft: "1rem" } },
-        React.createElement("button", { id: "get_file", className: "btn btn-secondary", onClick: () => openDialogForFileSelection() },
+    return (React.createElement("div", { className: "nav-item", style: { width: "200px", height: "44px", paddingLeft: "1rem", paddingRight: "1rem" } },
+        React.createElement("button", { style: { width: "165px" }, id: "get_file", className: "btn btn-secondary", onClick: () => openDialogForFileSelection() },
             " ",
             React.createElement("p", null,
                 props.currentSelectFileName.length <= 18

@@ -18,7 +18,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
     return configFileList.map((item) => {
       return (
         <button
-          className="dropdown-item"
+          className="dropdown-item text-center"
           type="button"
           style={{ width: "165px" }}
           onClick={() => {
