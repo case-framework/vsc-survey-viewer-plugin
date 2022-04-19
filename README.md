@@ -2,13 +2,13 @@
 
 # First step when you download the  Extention
 1: Run "npm install" cmd to install all the dependencies.\
-2: Run "npm run compile" cmd in terminal so that webpack can compile the react app into surveyViewer folder as surveyViewer.js file.\
+2: Run "npm run compile" cmd in terminal so that webpack can compile the react app into surveyViewer folder as surveyViewer.js file.
 
 # For testing the extension
 1: Open the extension.ts file.\
 2: Press "fn+f5" keys and a new vscode window will open where you can test the extension on a json file.\
 3: Open the json file which you want to test.\
-4: Press "cmd+shift+p" and Type "Survey Preview" and you will find the command in the suggestion with the category of "Survey Viewer".\
+4: Press "cmd+shift+p" and Type "Survey Preview" and you will find the command in the suggestion with the category of "Survey Viewer".
 
 
 # After You update something in the code
@@ -20,5 +20,5 @@
 2:  User can upload the saved prefill(The user can save the prefill clicking on the submit button when finished filling the survey) for the survey by clicking on the "Upload Prefill" button.\
 3: User can update the configuration of the survey by clicking on the "Change Config" dropdown. The dropdown has two options , either user can create a new config file or can select the already created config files.\
 4: User has option to show the keys of the survey by selecting the "Sjow Kays" checkbox.
-5: This extension also detects the change in the selected survey file and selected config file and reloads the survey when the change is found.\
+5: This extension also detects the change in the selected survey file and selected config file and reloads the survey when the change is found.
 
