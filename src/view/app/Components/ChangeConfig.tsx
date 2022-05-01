@@ -6,7 +6,7 @@ interface ChangeConfigProps {
   setConfigDirContentValue: (value: boolean) => void;
   configDirContentValue: boolean;
   onConfigChange: (context: SurveyContext) => void;
-  giveCommandToExtension: (command: string, data: string) => void;
+  giveCommandToVscode: (command: string, data: string) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -22,7 +22,10 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           type="button"
           style={{ width: "165px" }}
           onClick={() => {
-            props.giveCommandToExtension("setTheConfigFileChangeWatcher", item.configFilePath);
+            props.giveCommandToVscode(
+              "setTheConfigFileChangeWatcher",
+              item.configFilePath
+            );
             props.onConfigChange(item.configFileContent);
           }}
         >
@@ -37,7 +40,12 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
   return (
     <div
       className="dropdown nav-item"
-      style={{ width: "25%", minWidth: "165px", height: "44px" , paddingRight: "1rem"}}
+      style={{
+        width: "20%",
+        minWidth: "165px",
+        height: "44px",
+        paddingRight: "1rem",
+      }}
     >
       <button
         className="btn btn-secondary dropdown-toggle"
@@ -48,7 +56,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         aria-expanded="false"
         onClick={() => {
           props.setConfigDirContentValue(false);
-          props.giveCommandToExtension("getTheConfigFilesList", "");
+          props.giveCommandToVscode("getTheConfigFilesList", "");
           const intervalId = setInterval(() => {
             if (window.configFilesDir) {
               props.setConfigDirContentValue(true);
@@ -92,5 +100,3 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
 };
 
 export default ChangeConfig;
-
-

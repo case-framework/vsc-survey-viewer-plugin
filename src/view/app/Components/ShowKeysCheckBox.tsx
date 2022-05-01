@@ -11,7 +11,7 @@ const ShowKeysCheckBox: React.FC<ShowsKeysCheckBoxProps> = (props) => {
   return (
     <div className="nav-item"
       style={{
-        width: "25%",
+        width: "20%",
         minWidth: "220px",
         paddingLeft: "1rem",
         paddingTop: "0.5rem",

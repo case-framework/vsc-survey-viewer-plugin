@@ -18,6 +18,8 @@ import ShowKeysCheckBox from "./Components/ShowKeysCheckBox";
 import UploadPrefill from "./Components/UploadPrefill";
 import EnterFileNameDialog from "./Components/EnterFileNameDialog";
 import ChangeConfig from "./Components/ChangeConfig";
+import ChangeTheme from "./Components/ChangeTheme";
+import {  ThemeType } from "./AppConstants";
 
 declare global {
   interface Window {
@@ -26,8 +28,8 @@ declare global {
     outPutDirContent: OutputFileStructure;
     changeInSurvey: boolean;
     configFilesDir: ConfigFileStructure;
-    changeInConfigFile: boolean,
-    updatedConfigFileData: SurveyContext
+    changeInConfigFile: boolean;
+    updatedConfigFileData: SurveyContext;
   }
 }
 
@@ -58,7 +60,6 @@ const initialSurveyCred: SurveyViewCred = {
   prefillsFile: undefined,
 };
 
-
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const SurveySimulator: React.FC = (props) => {
   const [surveyViewCred, setSurveyViewCred] = useState<SurveyViewCred>({
@@ -77,8 +78,8 @@ const SurveySimulator: React.FC = (props) => {
           survey: window.surveyData ? window.surveyData.survey : undefined,
         }));
         window.changeInSurvey = false;
-      } 
-      if(window.changeInConfigFile) {
+      }
+      if (window.changeInConfigFile) {
         setSurveyViewCred((prevState) => ({
           ...prevState,
           context: window.updatedConfigFileData,
@@ -89,7 +90,7 @@ const SurveySimulator: React.FC = (props) => {
     return () => clearInterval(interval);
   }, []);
 
-  const giveCommandToExtention = (command: string, data: string) => {
+  const giveCommandToVscode = (command: string, data: string) => {
     vscode.postMessage({
       command: command,
       data: data,
@@ -100,11 +101,14 @@ const SurveySimulator: React.FC = (props) => {
     <div className="container-fluid">
       <div className="container pt-2">
         <nav className="navbar navbar-expand navbar-light bg-light ">
-          <div className="collapse navbar-collapse justify-content-center order-2" id="navbarNavAltMarkup">
+          <div
+            className="collapse navbar-collapse justify-content-center order-2"
+            id="navbarNavAltMarkup"
+          >
             <div className="navbar-nav">
               <SelectFileToPreview
-                giveCommandToExtention={(command: string, data: string) => {
-                  giveCommandToExtention(command, data);
+                giveCommandToVscode={(command: string, data: string) => {
+                  giveCommandToVscode(command, data);
                 }}
                 setChangedSelectTheFileBtnText={(newText: string) => {
                   setChangedSelectTheFileBtnText(newText);
@@ -142,8 +146,8 @@ const SurveySimulator: React.FC = (props) => {
                 }
               />
               <ChangeConfig
-                giveCommandToExtension={(command: string, data: string) => {
-                  giveCommandToExtention(command, data);
+                giveCommandToVscode={(command: string, data: string) => {
+                  giveCommandToVscode(command, data);
                 }}
                 setConfigDirContentValue={(value: boolean) => {
                   setConfigDirContentValue(value);
@@ -171,6 +175,12 @@ const SurveySimulator: React.FC = (props) => {
                       showKeys: newStaus,
                     },
                   }));
+                }}
+              />
+              <ChangeTheme
+                onThemeChange={(value: ThemeType) => {
+                  console.log(value);
+                  giveCommandToVscode("changeTheme", value);
                 }}
               />
             </div>
@@ -204,7 +214,7 @@ const SurveySimulator: React.FC = (props) => {
                   surveyViewCred.survey?.current.surveyDefinition.key
                 }_responses_${new Date().toLocaleDateString()}.json`;
                 a.click();
-                giveCommandToExtention(
+                giveCommandToVscode(
                   "showFileDownloadSuccessMsg",
                   "The file is saved"
                 );
@@ -227,8 +237,8 @@ const SurveySimulator: React.FC = (props) => {
         </div>
       </div>
       <EnterFileNameDialog
-        giveCommandToExtention={(command: string, data: string) => {
-          giveCommandToExtention(command, data);
+        giveCommandToVscode={(command: string, data: string) => {
+          giveCommandToVscode(command, data);
         }}
       />
     </div>

@@ -7,7 +7,7 @@ import ViewLoader from './view/ViewLoader';
 export function activate(context: vscode.ExtensionContext) {
 	
 
-	context.subscriptions.push( vscode.commands.registerCommand('jsonpreview.preview', () => {
+	context.subscriptions.push( vscode.commands.registerCommand('surveyviewer.preview', () => {
 
 		const view = new ViewLoader( context);	
 		}

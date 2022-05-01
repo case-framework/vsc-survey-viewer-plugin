@@ -37,8 +37,8 @@ const SelectFileToPreview = (props) => {
     const setDropdownItems = (items, directoryPath) => {
         return items.map((item) => {
             return (React.createElement("button", { className: "dropdown-item", style: { paddingLeft: "3rem" }, type: "button", id: item, onClick: () => {
-                    props.giveCommandToExtention("fileSelectedForPreview", directoryPath + "/" + item);
-                    props.giveCommandToExtention("selectedFileToDetectChanges", directoryPath + "/" + item);
+                    props.giveCommandToVscode("fileSelectedForPreview", directoryPath + "/" + item);
+                    props.giveCommandToVscode("selectedFileToDetectChanges", directoryPath + "/" + item);
                     const intervalId = setInterval(() => {
                         if (window.surveyData) {
                             props.setChangedSelectTheFileBtnText(item.substring(0, item.lastIndexOf(".")).replace("_", " "));
@@ -49,10 +49,10 @@ const SelectFileToPreview = (props) => {
                 } }, item.substring(0, item.lastIndexOf(".")).replace("_", " ")));
         });
     };
-    return (React.createElement("div", { className: "dropdown nav-item", style: { width: "25%", minWidth: "214px", height: "44px" } },
+    return (React.createElement("div", { className: "dropdown nav-item", style: { width: "20%", minWidth: "214px", height: "44px" } },
         React.createElement("button", { className: "btn btn-secondary dropdown-toggle", style: { width: "214px" }, type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setOutPutDirContentValue(false);
-                props.giveCommandToExtention("getOutputFileContent", "");
+                props.giveCommandToVscode("getOutputFileContent", "");
                 const intervalId = setInterval(() => {
                     if (window.outPutDirContent.directoryContent.length &&
                         window.outPutDirContent.isOutputDirMissing === false) {
@@ -62,7 +62,7 @@ const SelectFileToPreview = (props) => {
                     else if (!window.outPutDirContent.directoryContent.length &&
                         window.outPutDirContent.isOutputDirMissing === true) {
                         props.setOutPutDirContentValue(true);
-                        props.giveCommandToExtention("showError", "The Output Directory is not yet generated");
+                        props.giveCommandToVscode("showError", "The Output Directory is not yet generated");
                         clearInterval(intervalId);
                     }
                     console.log(window.outPutDirContent);

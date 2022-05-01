@@ -1,6 +1,6 @@
 # Change Log
 
-All notable changes to the "jsonpreview" extension will be documented in this file.
+All notable changes to the "surveyviewer" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 

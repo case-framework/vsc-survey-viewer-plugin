@@ -2,7 +2,7 @@ import * as React from "react";
 import { OutputFileStructure } from "../model";
 
 interface SelectFileDropdownProps {
-  giveCommandToExtention: (command: string, data: string) => void;
+  giveCommandToVscode: (command: string, data: string) => void;
   setChangedSelectTheFileBtnText: (newText: string) => void;
   changedSelectTheFileBtnText: string;
   setOutPutDirContentValue: (value: boolean) => void;
@@ -39,11 +39,11 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
           type="button"
           id={item}
           onClick={() => {
-            props.giveCommandToExtention(
+            props.giveCommandToVscode(
               "fileSelectedForPreview",
               directoryPath + "/" + item
             );
-            props.giveCommandToExtention(
+            props.giveCommandToVscode(
               "selectedFileToDetectChanges",
               directoryPath + "/" + item
             );
@@ -65,7 +65,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
   };
 
   return (
-    <div className="dropdown nav-item" style={{ width: "25%", minWidth: "214px" , height: "44px"}}>
+    <div className="dropdown nav-item" style={{ width: "20%", minWidth: "214px" , height: "44px"}}>
       <button
         className="btn btn-secondary dropdown-toggle"
         style={{ width: "214px" }}
@@ -76,7 +76,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         aria-expanded="false"
         onClick={() => {
           props.setOutPutDirContentValue(false);
-          props.giveCommandToExtention("getOutputFileContent", "");
+          props.giveCommandToVscode("getOutputFileContent", "");
           const intervalId = setInterval(() => {
             if (
               window.outPutDirContent.directoryContent.length &&
@@ -89,7 +89,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
               window.outPutDirContent.isOutputDirMissing === true
             ) {
               props.setOutPutDirContentValue(true);
-              props.giveCommandToExtention(
+              props.giveCommandToVscode(
                 "showError",
                 "The Output Directory is not yet generated"
               );

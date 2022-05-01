@@ -35,6 +35,7 @@ const ShowKeysCheckBox_1 = __importDefault(require("./Components/ShowKeysCheckBo
 const UploadPrefill_1 = __importDefault(require("./Components/UploadPrefill"));
 const EnterFileNameDialog_1 = __importDefault(require("./Components/EnterFileNameDialog"));
 const ChangeConfig_1 = __importDefault(require("./Components/ChangeConfig"));
+const ChangeTheme_1 = __importDefault(require("./Components/ChangeTheme"));
 const vscode = window.acquireVsCodeApi();
 const defaultSurveyContext = {
     isLoggedIn: false,
@@ -85,7 +86,7 @@ const SurveySimulator = (props) => {
         }, 1000);
         return () => clearInterval(interval);
     }, []);
-    const giveCommandToExtention = (command, data) => {
+    const giveCommandToVscode = (command, data) => {
         vscode.postMessage({
             command: command,
             data: data,
@@ -96,8 +97,8 @@ const SurveySimulator = (props) => {
             React.createElement("nav", { className: "navbar navbar-expand navbar-light bg-light " },
                 React.createElement("div", { className: "collapse navbar-collapse justify-content-center order-2", id: "navbarNavAltMarkup" },
                     React.createElement("div", { className: "navbar-nav" },
-                        React.createElement(SelectFileToPreview_1.default, { giveCommandToExtention: (command, data) => {
-                                giveCommandToExtention(command, data);
+                        React.createElement(SelectFileToPreview_1.default, { giveCommandToVscode: (command, data) => {
+                                giveCommandToVscode(command, data);
                             }, setChangedSelectTheFileBtnText: (newText) => {
                                 setChangedSelectTheFileBtnText(newText);
                             }, changedSelectTheFileBtnText: changedSelectTheFileBtnText, setOutPutDirContentValue: (value) => {
@@ -120,8 +121,8 @@ const SurveySimulator = (props) => {
                             }, currentSelectFileName: surveyViewCred.prefillsFile
                                 ? surveyViewCred.prefillsFile.name
                                 : "Upload Prefill" }),
-                        React.createElement(ChangeConfig_1.default, { giveCommandToExtension: (command, data) => {
-                                giveCommandToExtention(command, data);
+                        React.createElement(ChangeConfig_1.default, { giveCommandToVscode: (command, data) => {
+                                giveCommandToVscode(command, data);
                             }, setConfigDirContentValue: (value) => {
                                 setConfigDirContentValue(value);
                             }, configDirContentValue: configDirContentValue, onConfigChange: (context) => {
@@ -141,6 +142,10 @@ const SurveySimulator = (props) => {
                                         showKeys: newStaus,
                                     },
                                 }));
+                            } }),
+                        React.createElement(ChangeTheme_1.default, { onThemeChange: (value) => {
+                                console.log(value);
+                                giveCommandToVscode("changeTheme", value);
                             } }))))),
         React.createElement("div", { className: "row" },
             React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
@@ -152,11 +157,11 @@ const SurveySimulator = (props) => {
                     a.href = URL.createObjectURL(file);
                     a.download = `${surveyViewCred.survey?.current.surveyDefinition.key}_responses_${new Date().toLocaleDateString()}.json`;
                     a.click();
-                    giveCommandToExtention("showFileDownloadSuccessMsg", "The file is saved");
+                    giveCommandToVscode("showFileDownloadSuccessMsg", "The file is saved");
                 }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("div", { className: "mt-5" },
                 React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))))),
-        React.createElement(EnterFileNameDialog_1.default, { giveCommandToExtention: (command, data) => {
-                giveCommandToExtention(command, data);
+        React.createElement(EnterFileNameDialog_1.default, { giveCommandToVscode: (command, data) => {
+                giveCommandToVscode(command, data);
             } })));
 };
 exports.default = SurveySimulator;

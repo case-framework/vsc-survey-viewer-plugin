@@ -26,10 +26,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const AppConstants_1 = require("./app/AppConstants");
 class ViewLoader {
     constructor(context) {
         this._disposables = [];
         this._extensionPath = context.extensionPath;
+        context.workspaceState.update("selectedTheme", AppConstants_1.ThemeType.defaultTheme);
         this._panel = vscode.window.createWebviewPanel("Survey Viewer", "Survey Viewer", vscode.ViewColumn.One, {
             enableScripts: true,
             retainContextWhenHidden: true,
@@ -37,7 +39,7 @@ class ViewLoader {
                 vscode.Uri.file(path.join(context.extensionPath, "surveyViewer")),
             ],
         });
-        this._panel.webview.html = this.getWebviewContent();
+        this._panel.webview.html = this.getWebviewContent(AppConstants_1.ThemeType.defaultTheme);
         this._panel.webview.onDidReceiveMessage((message) => {
             switch (message.command) {
                 case "getOutputFileContent":
@@ -111,12 +113,27 @@ class ViewLoader {
                         });
                     }
                     break;
+                case "changeTheme":
+                    if (message.data !== context.workspaceState.get("selectedTheme")) {
+                        vscode.window.showInformationMessage("The Survey will restart. Would to still want to continue", "Yes", "No").then((value) => {
+                            if (value === "Yes") {
+                                if (this._panel) {
+                                    context.workspaceState.update("selectedTheme", message.data);
+                                    this._panel.webview.html = this.getWebviewContent(message.data);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        vscode.window.showErrorMessage("Alredy in use");
+                    }
+                    break;
             }
         }, undefined, context.subscriptions);
     }
-    getWebviewContent() {
+    getWebviewContent(themeType) {
         // Local path to main script run in the webview
-        const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, "surveyViewer", "surveyViewer.js"));
+        const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, "surveyViewer", themeType + ".js"));
         const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
         return `<!DOCTYPE html>
     <html lang="en">
@@ -149,7 +166,7 @@ class ViewLoader {
                     break;
                     case 'setTheUpdatedConfigFileData':
                       window.changeInConfigFile = true;
-                      window.updatedConfigFileData = message.content
+                      window.updatedConfigFileData = message.content;
                     break;
             }
         });

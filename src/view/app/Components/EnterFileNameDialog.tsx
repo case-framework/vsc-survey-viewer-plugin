@@ -1,7 +1,7 @@
 import * as React from "react";
 
 interface EnterFileNameDialogProps {
-  giveCommandToExtention: (command: string, data: string) => void;
+  giveCommandToVscode: (command: string, data: string) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -20,7 +20,7 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="DialogTitle">
-              Modal title
+              Create a new file
             </h5>
             <button
               type="button"
@@ -61,7 +61,7 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
               className="btn btn-primary"
               data-bs-dismiss="modal"
               onClick={() => {
-                props.giveCommandToExtention("createNewFile", fileName);
+                props.giveCommandToVscode("createNewFile", fileName);
               }}
             >
               Create

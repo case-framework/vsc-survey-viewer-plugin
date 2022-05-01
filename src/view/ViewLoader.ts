@@ -9,6 +9,7 @@ import {
   SurveyFileContent,
 } from "./app/model";
 import { SurveyContext } from "survey-engine/data_types";
+import {  ThemeType } from "./app/AppConstants";
 
 export default class ViewLoader {
   private readonly _panel: vscode.WebviewPanel | undefined;
@@ -18,6 +19,7 @@ export default class ViewLoader {
   constructor(context: vscode.ExtensionContext) {
     this._extensionPath = context.extensionPath;
 
+    context.workspaceState.update("selectedTheme", ThemeType.defaultTheme);
     this._panel = vscode.window.createWebviewPanel(
       "Survey Viewer",
       "Survey Viewer",
@@ -30,8 +32,7 @@ export default class ViewLoader {
         ],
       }
     );
-
-    this._panel.webview.html = this.getWebviewContent();
+    this._panel.webview.html = this.getWebviewContent(ThemeType.defaultTheme);
     this._panel.webview.onDidReceiveMessage(
       (message) => {
         switch (message.command) {
@@ -106,6 +107,24 @@ export default class ViewLoader {
                 });
             }
             break;
+          case "changeTheme":
+           
+            if (message.data !== context.workspaceState.get("selectedTheme")) {
+              vscode.window.showInformationMessage("The Survey will restart. Would to still want to continue","Yes", "No").then((value) =>{
+                if(value === "Yes"){
+                  if (this._panel) {
+                    context.workspaceState.update("selectedTheme", message.data);
+                  this._panel.webview.html = this.getWebviewContent(message.data);
+                  }
+                }
+              }
+              );
+              
+            } else {
+              vscode.window.showErrorMessage("Alredy in use");
+            }
+         
+            break;
         }
       },
       undefined,
@@ -113,10 +132,10 @@ export default class ViewLoader {
     );
   }
 
-  private getWebviewContent(): string {
+  private getWebviewContent(themeType: ThemeType): string {
     // Local path to main script run in the webview
     const reactAppPathOnDisk = vscode.Uri.file(
-      path.join(this._extensionPath, "surveyViewer", "surveyViewer.js")
+      path.join(this._extensionPath, "surveyViewer", themeType + ".js")
     );
     const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
 
@@ -151,7 +170,7 @@ export default class ViewLoader {
                     break;
                     case 'setTheUpdatedConfigFileData':
                       window.changeInConfigFile = true;
-                      window.updatedConfigFileData = message.content
+                      window.updatedConfigFileData = message.content;
                     break;
             }
         });
@@ -164,7 +183,9 @@ export default class ViewLoader {
     </html>`;
   }
 
-  private getSurveyFileContent(filePath: string): SurveyFileContent | undefined {
+  private getSurveyFileContent(
+    filePath: string
+  ): SurveyFileContent | undefined {
     if (fs.existsSync(filePath)) {
       let content = fs.readFileSync(filePath, "utf8");
       let surveyData: SurveyFileContent = JSON.parse(content);

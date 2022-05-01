@@ -31,7 +31,7 @@ const EnterFileNameDialog = (props) => {
         React.createElement("div", { className: "modal-dialog modal-dialog-centered", role: "document" },
             React.createElement("div", { className: "modal-content" },
                 React.createElement("div", { className: "modal-header" },
-                    React.createElement("h5", { className: "modal-title", id: "DialogTitle" }, "Modal title"),
+                    React.createElement("h5", { className: "modal-title", id: "DialogTitle" }, "Create a new file"),
                     React.createElement("button", { type: "button", className: "close", "data-bs-dismiss": "modal", "aria-label": "Close" },
                         React.createElement("span", { "aria-hidden": "true" }, "\u00D7"))),
                 React.createElement("div", { className: "modal-body" },
@@ -44,7 +44,7 @@ const EnterFileNameDialog = (props) => {
                 React.createElement("div", { className: "modal-footer" },
                     React.createElement("button", { type: "button", className: "btn btn-secondary", "data-bs-dismiss": "modal" }, "Close"),
                     React.createElement("button", { type: "button", className: "btn btn-primary", "data-bs-dismiss": "modal", onClick: () => {
-                            props.giveCommandToExtention("createNewFile", fileName);
+                            props.giveCommandToVscode("createNewFile", fileName);
                         } }, "Create"))))));
 };
 exports.default = EnterFileNameDialog;

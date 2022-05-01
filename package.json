@@ -1,6 +1,6 @@
 {
-    "name": "jsonpreview",
-    "displayName": "jsonPreview",
+    "name": "surveyviewer",
+    "displayName": "surveyViewer",
     "description": "",
     "version": "0.0.1",
     "engines": {
@@ -10,7 +10,7 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:jsonpreview.preview"
+        "onCommand:surveyviewer.preview"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -28,7 +28,7 @@
         ],
         "commands": [
             {
-                "command": "jsonpreview.preview",
+                "command": "surveyviewer.preview",
                 "category": "Survey Viewer",
                 "title": "Survey Preview"
             }

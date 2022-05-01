@@ -2,7 +2,8 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    surveyViewer: "./src/view/app/index.tsx"
+    surveyViewerDefaultTheme: "./src/view/app/IndexFilesWithDifferentThemes/indexWithDefaultTheme.tsx",
+    surveyViewerWithTekenradarTheme: "./src/view/app/IndexFilesWithDifferentThemes/indexWithTekenradarTheme.tsx"
   },
   output: {
     path: path.resolve(__dirname, "surveyViewer"),
