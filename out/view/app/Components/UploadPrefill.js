@@ -52,7 +52,7 @@ const UploadPrefill = (props) => {
             reader.readAsText(prefills);
         }
         else {
-            props.onPrefillChange(prefills, []);
+            props.giveCommandToVscode("PrefillFileSelectionError", "No appropriate file is selected");
         }
     };
     return (React.createElement("div", { className: "nav-item", style: { width: "200px", height: "44px", paddingLeft: "1rem", paddingRight: "1rem" } },

@@ -138,13 +138,13 @@ const SurveySimulator: React.FC = (props) => {
                     prefillsFile: preFillFile,
                     prefillValues: preFillValues,
                   }));
-                }}
-                currentSelectFileName={
-                  surveyViewCred.prefillsFile
-                    ? surveyViewCred.prefillsFile.name
-                    : "Upload Prefill"
-                }
-              />
+                } }
+                currentSelectFileName={surveyViewCred.prefillsFile
+                  ? surveyViewCred.prefillsFile.name
+                  : "Upload Prefill"} 
+                  giveCommandToVscode={ (command: string, data: string) => {
+                    giveCommandToVscode(command,data);
+                  } }              />
               <ChangeConfig
                 giveCommandToVscode={(command: string, data: string) => {
                   giveCommandToVscode(command, data);
@@ -214,10 +214,10 @@ const SurveySimulator: React.FC = (props) => {
                   surveyViewCred.survey?.current.surveyDefinition.key
                 }_responses_${new Date().toLocaleDateString()}.json`;
                 a.click();
-                giveCommandToVscode(
-                  "showFileDownloadSuccessMsg",
-                  "The file is saved"
-                );
+                // giveCommandToVscode(
+                //   "showFileDownloadSuccessMsg",
+                //   "The file is saved"
+                // );
               }}
               nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
               backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}

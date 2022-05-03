@@ -128,6 +128,11 @@ class ViewLoader {
                         vscode.window.showErrorMessage("Alredy in use");
                     }
                     break;
+                case "PrefillFileSelectionError":
+                    if (this._panel) {
+                        vscode.window.showErrorMessage(message.data);
+                    }
+                    break;
             }
         }, undefined, context.subscriptions);
     }

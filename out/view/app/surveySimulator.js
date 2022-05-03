@@ -120,7 +120,9 @@ const SurveySimulator = (props) => {
                                 }));
                             }, currentSelectFileName: surveyViewCred.prefillsFile
                                 ? surveyViewCred.prefillsFile.name
-                                : "Upload Prefill" }),
+                                : "Upload Prefill", giveCommandToVscode: (command, data) => {
+                                giveCommandToVscode(command, data);
+                            } }),
                         React.createElement(ChangeConfig_1.default, { giveCommandToVscode: (command, data) => {
                                 giveCommandToVscode(command, data);
                             }, setConfigDirContentValue: (value) => {
@@ -157,7 +159,10 @@ const SurveySimulator = (props) => {
                     a.href = URL.createObjectURL(file);
                     a.download = `${surveyViewCred.survey?.current.surveyDefinition.key}_responses_${new Date().toLocaleDateString()}.json`;
                     a.click();
-                    giveCommandToVscode("showFileDownloadSuccessMsg", "The file is saved");
+                    // giveCommandToVscode(
+                    //   "showFileDownloadSuccessMsg",
+                    //   "The file is saved"
+                    // );
                 }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("div", { className: "mt-5" },
                 React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))))),
         React.createElement(EnterFileNameDialog_1.default, { giveCommandToVscode: (command, data) => {

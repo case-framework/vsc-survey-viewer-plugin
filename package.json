@@ -13,6 +13,10 @@
         "onCommand:surveyviewer.preview"
     ],
     "main": "./out/extension.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/case-framework/vsc-survey-viewer-plugin.git"
+    },
     "contributes": {
         "languages": [
             {

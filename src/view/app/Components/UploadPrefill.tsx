@@ -2,6 +2,7 @@ import * as React from "react";
 import { SurveySingleItemResponse } from "survey-engine/data_types";
 
 interface UploadPrefillProps {
+  giveCommandToVscode: (command: string, data: string) => void;
   onPrefillChange: (
     preFillFile: File | undefined,
     preFillValues: SurveySingleItemResponse[]
@@ -38,7 +39,7 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
       };
       reader.readAsText(prefills);
     } else {
-      props.onPrefillChange(prefills, []);
+      props.giveCommandToVscode("PrefillFileSelectionError", "No appropriate file is selected");
     }
   };
   return (

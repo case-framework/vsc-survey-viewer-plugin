@@ -125,6 +125,11 @@ export default class ViewLoader {
             }
          
             break;
+            case "PrefillFileSelectionError":
+            if (this._panel) {
+              vscode.window.showErrorMessage(message.data);
+            }
+            break;
         }
       },
       undefined,
