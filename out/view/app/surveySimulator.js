@@ -106,15 +106,25 @@ const SurveySimulator = (props) => {
                             }, outPutDirContentValue: outPutDirContentValue, onChangedSurveyViewCred: () => {
                                 setSurveyViewCred((prevState) => ({
                                     ...prevState,
+                                    survey: undefined,
+                                }));
+                                setSurveyViewCred((prevState) => ({
+                                    ...prevState,
                                     survey: window.surveyData
                                         ? window.surveyData.survey
                                         : undefined,
-                                    context: { ...defaultSurveyContext },
                                 }));
                             } }),
                         React.createElement(UploadPrefill_1.default, { onPrefillChange: (preFillFile, preFillValues) => {
                                 setSurveyViewCred((prevState) => ({
                                     ...prevState,
+                                    survey: undefined,
+                                }));
+                                setSurveyViewCred((prevState) => ({
+                                    ...prevState,
+                                    survey: window.surveyData
+                                        ? window.surveyData.survey
+                                        : undefined,
                                     prefillsFile: preFillFile,
                                     prefillValues: preFillValues,
                                 }));
@@ -128,6 +138,10 @@ const SurveySimulator = (props) => {
                             }, setConfigDirContentValue: (value) => {
                                 setConfigDirContentValue(value);
                             }, configDirContentValue: configDirContentValue, onConfigChange: (context) => {
+                                setSurveyViewCred((prevState) => ({
+                                    ...prevState,
+                                    survey: undefined,
+                                }));
                                 setSurveyViewCred((prevState) => ({
                                     ...prevState,
                                     survey: window.surveyData

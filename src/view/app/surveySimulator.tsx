@@ -121,11 +121,16 @@ const SurveySimulator: React.FC = (props) => {
                 onChangedSurveyViewCred={() => {
                   setSurveyViewCred((prevState) => ({
                     ...prevState,
+                    survey: undefined,
+                  }));
+                  
+                  setSurveyViewCred((prevState) => ({
+                    ...prevState,
                     survey: window.surveyData
                       ? window.surveyData.survey
                       : undefined,
-                    context: { ...defaultSurveyContext },
                   }));
+                  
                 }}
               />
               <UploadPrefill
@@ -135,6 +140,13 @@ const SurveySimulator: React.FC = (props) => {
                 ) => {
                   setSurveyViewCred((prevState) => ({
                     ...prevState,
+                    survey: undefined,
+                  }));
+                  setSurveyViewCred((prevState) => ({
+                    ...prevState,
+                    survey: window.surveyData
+                    ? window.surveyData.survey
+                    : undefined,
                     prefillsFile: preFillFile,
                     prefillValues: preFillValues,
                   }));
@@ -154,6 +166,10 @@ const SurveySimulator: React.FC = (props) => {
                 }}
                 configDirContentValue={configDirContentValue}
                 onConfigChange={(context: SurveyContext) => {
+                  setSurveyViewCred((prevState) => ({
+                    ...prevState,
+                    survey: undefined,
+                  }));
                   setSurveyViewCred((prevState) => ({
                     ...prevState,
                     survey: window.surveyData
