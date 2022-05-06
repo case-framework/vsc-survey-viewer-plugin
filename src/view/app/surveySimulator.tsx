@@ -75,6 +75,10 @@ const SurveySimulator: React.FC = (props) => {
       if (window.changeInSurvey) {
         setSurveyViewCred((prevState) => ({
           ...prevState,
+          survey: undefined,
+        }));
+        setSurveyViewCred((prevState) => ({
+          ...prevState,
           survey: window.surveyData ? window.surveyData.survey : undefined,
         }));
         window.changeInSurvey = false;
