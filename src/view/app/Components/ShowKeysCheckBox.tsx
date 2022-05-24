@@ -9,10 +9,11 @@ interface ShowsKeysCheckBoxProps {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ShowKeysCheckBox: React.FC<ShowsKeysCheckBoxProps> = (props) => {
   return (
-    <div className="nav-item"
+    <div
+      className="nav-item "
       style={{
-        width: "20%",
-        minWidth: "220px",
+        width: "180px",
+        paddingRight: "1rem",
         paddingLeft: "1rem",
         paddingTop: "0.5rem",
       }}

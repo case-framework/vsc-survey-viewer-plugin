@@ -36,6 +36,7 @@ const UploadPrefill_1 = __importDefault(require("./Components/UploadPrefill"));
 const EnterFileNameDialog_1 = __importDefault(require("./Components/EnterFileNameDialog"));
 const ChangeConfig_1 = __importDefault(require("./Components/ChangeConfig"));
 const ChangeTheme_1 = __importDefault(require("./Components/ChangeTheme"));
+const AppConstants_1 = require("./AppConstants");
 const vscode = window.acquireVsCodeApi();
 const defaultSurveyContext = {
     isLoggedIn: false,
@@ -68,6 +69,7 @@ const SurveySimulator = (props) => {
     const [outPutDirContentValue, setOutPutDirContentValue] = (0, react_1.useState)(false);
     const [configDirContentValue, setConfigDirContentValue] = (0, react_1.useState)(false);
     (0, react_1.useEffect)(() => {
+        console.log(window.selectedTheme);
         const interval = setInterval(() => {
             if (window.changeInSurvey) {
                 setSurveyViewCred((prevState) => ({
@@ -97,76 +99,79 @@ const SurveySimulator = (props) => {
         });
     };
     return (React.createElement("div", { className: "container-fluid" },
-        React.createElement("div", { className: "container pt-2" },
-            React.createElement("nav", { className: "navbar navbar-expand navbar-light bg-light " },
-                React.createElement("div", { className: "collapse navbar-collapse justify-content-center order-2", id: "navbarNavAltMarkup" },
-                    React.createElement("div", { className: "navbar-nav" },
-                        React.createElement(SelectFileToPreview_1.default, { giveCommandToVscode: (command, data) => {
-                                giveCommandToVscode(command, data);
-                            }, setChangedSelectTheFileBtnText: (newText) => {
-                                setChangedSelectTheFileBtnText(newText);
-                            }, changedSelectTheFileBtnText: changedSelectTheFileBtnText, setOutPutDirContentValue: (value) => {
-                                setOutPutDirContentValue(value);
-                            }, outPutDirContentValue: outPutDirContentValue, onChangedSurveyViewCred: () => {
-                                setSurveyViewCred((prevState) => ({
-                                    ...prevState,
-                                    survey: undefined,
-                                }));
-                                setSurveyViewCred((prevState) => ({
-                                    ...prevState,
-                                    survey: window.surveyData
-                                        ? window.surveyData.survey
-                                        : undefined,
-                                }));
-                            } }),
-                        React.createElement(UploadPrefill_1.default, { onPrefillChange: (preFillFile, preFillValues) => {
-                                setSurveyViewCred((prevState) => ({
-                                    ...prevState,
-                                    survey: undefined,
-                                }));
-                                setSurveyViewCred((prevState) => ({
-                                    ...prevState,
-                                    survey: window.surveyData
-                                        ? window.surveyData.survey
-                                        : undefined,
-                                    prefillsFile: preFillFile,
-                                    prefillValues: preFillValues,
-                                }));
-                            }, currentSelectFileName: surveyViewCred.prefillsFile
-                                ? surveyViewCred.prefillsFile.name
-                                : "Upload Prefill", giveCommandToVscode: (command, data) => {
-                                giveCommandToVscode(command, data);
-                            } }),
-                        React.createElement(ChangeConfig_1.default, { giveCommandToVscode: (command, data) => {
-                                giveCommandToVscode(command, data);
-                            }, setConfigDirContentValue: (value) => {
-                                setConfigDirContentValue(value);
-                            }, configDirContentValue: configDirContentValue, onConfigChange: (context) => {
-                                setSurveyViewCred((prevState) => ({
-                                    ...prevState,
-                                    survey: undefined,
-                                }));
-                                setSurveyViewCred((prevState) => ({
-                                    ...prevState,
-                                    survey: window.surveyData
-                                        ? window.surveyData.survey
-                                        : undefined,
-                                    context: { ...context },
-                                }));
-                            } }),
-                        React.createElement(ShowKeysCheckBox_1.default, { currentCheckBoxStatus: surveyViewCred.simulatorUIConfig.showKeys, onCheckBoxStausChange: (newStaus) => {
-                                setSurveyViewCred((prevState) => ({
-                                    ...prevState,
-                                    simulatorUIConfig: {
-                                        texts: initialSurveyCred.simulatorUIConfig.texts,
-                                        showKeys: newStaus,
-                                    },
-                                }));
-                            } }),
-                        React.createElement(ChangeTheme_1.default, { onThemeChange: (value) => {
-                                console.log(value);
-                                giveCommandToVscode("changeTheme", value);
-                            } }))))),
+        React.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-secondary rounded mt-3" },
+            React.createElement("button", { className: "navbar-toggler shadow-none", type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNavAltMarkup", "aria-controls": "navbarNavAltMarkup", "aria-expanded": "false", "aria-label": "Toggle navigation" },
+                React.createElement("span", { className: "navbar-toggler-icon" })),
+            React.createElement("div", { className: "collapse navbar-collapse", id: "navbarNavAltMarkup" },
+                React.createElement("div", { className: "navbar-nav mr-auto mt-2 mt-lg-0 " },
+                    React.createElement(SelectFileToPreview_1.default, { giveCommandToVscode: (command, data) => {
+                            giveCommandToVscode(command, data);
+                        }, setChangedSelectTheFileBtnText: (newText) => {
+                            setChangedSelectTheFileBtnText(newText);
+                        }, changedSelectTheFileBtnText: changedSelectTheFileBtnText, setOutPutDirContentValue: (value) => {
+                            setOutPutDirContentValue(value);
+                        }, outPutDirContentValue: outPutDirContentValue, onChangedSurveyViewCred: () => {
+                            setSurveyViewCred((prevState) => ({
+                                ...prevState,
+                                survey: undefined,
+                            }));
+                            setSurveyViewCred((prevState) => ({
+                                ...prevState,
+                                survey: window.surveyData
+                                    ? window.surveyData.survey
+                                    : undefined,
+                            }));
+                        } }),
+                    React.createElement(UploadPrefill_1.default, { onPrefillChange: (preFillFile, preFillValues) => {
+                            setSurveyViewCred((prevState) => ({
+                                ...prevState,
+                                survey: undefined,
+                            }));
+                            setSurveyViewCred((prevState) => ({
+                                ...prevState,
+                                survey: window.surveyData
+                                    ? window.surveyData.survey
+                                    : undefined,
+                                prefillsFile: preFillFile,
+                                prefillValues: preFillValues,
+                            }));
+                        }, currentSelectFileName: surveyViewCred.prefillsFile
+                            ? surveyViewCred.prefillsFile.name
+                            : "Upload Prefill", giveCommandToVscode: (command, data) => {
+                            giveCommandToVscode(command, data);
+                        } }),
+                    React.createElement(ChangeConfig_1.default, { giveCommandToVscode: (command, data) => {
+                            giveCommandToVscode(command, data);
+                        }, setConfigDirContentValue: (value) => {
+                            setConfigDirContentValue(value);
+                        }, configDirContentValue: configDirContentValue, onConfigChange: (context) => {
+                            setSurveyViewCred((prevState) => ({
+                                ...prevState,
+                                survey: undefined,
+                            }));
+                            setSurveyViewCred((prevState) => ({
+                                ...prevState,
+                                survey: window.surveyData
+                                    ? window.surveyData.survey
+                                    : undefined,
+                                context: { ...context },
+                            }));
+                        } }),
+                    React.createElement(ShowKeysCheckBox_1.default, { currentCheckBoxStatus: surveyViewCred.simulatorUIConfig.showKeys, onCheckBoxStausChange: (newStaus) => {
+                            setSurveyViewCred((prevState) => ({
+                                ...prevState,
+                                simulatorUIConfig: {
+                                    texts: initialSurveyCred.simulatorUIConfig.texts,
+                                    showKeys: newStaus,
+                                },
+                            }));
+                        } }),
+                    React.createElement(ChangeTheme_1.default, { onThemeChange: (value) => {
+                            console.log(value);
+                            giveCommandToVscode("changeTheme", value);
+                        }, selectedTheme: window.selectedTheme
+                            ? window.selectedTheme
+                            : AppConstants_1.ThemeType.defaultTheme })))),
         React.createElement("div", { className: "row" },
             React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
                     ? surveyViewCred.selectedLanguage

@@ -27,9 +27,9 @@ const case_web_ui_1 = require("case-web-ui");
 const React = __importStar(require("react"));
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ShowKeysCheckBox = (props) => {
-    return (React.createElement("div", { className: "nav-item", style: {
-            width: "20%",
-            minWidth: "220px",
+    return (React.createElement("div", { className: "nav-item ", style: {
+            width: "180px",
+            paddingRight: "1rem",
             paddingLeft: "1rem",
             paddingTop: "0.5rem",
         } },

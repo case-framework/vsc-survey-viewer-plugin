@@ -14,10 +14,10 @@ interface UploadPrefillProps {
 const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
   const openDialogForFileSelection = () => {
     const inputRef = document.getElementById("input_file");
-        console.log(inputRef);
-        if (inputRef) {
-          inputRef.click();
-        }
+    console.log(inputRef);
+    if (inputRef) {
+      inputRef.click();
+    }
   };
 
   const uploadFileForPreFill = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,14 +39,20 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
       };
       reader.readAsText(prefills);
     } else {
-      props.giveCommandToVscode("PrefillFileSelectionError", "No appropriate file is selected");
+      props.giveCommandToVscode(
+        "PrefillFileSelectionError",
+        "No appropriate file is selected"
+      );
     }
   };
   return (
-    <div className="nav-item" style={{ width: "200px", height: "44px", paddingLeft: "1rem" , paddingRight: "1rem" }}>
-      <button style={{ width: "165px"}}
+    <div
+      className="nav-item"
+      style={{ minWidth: "160px", paddingRight: "1rem" }}
+    >
+      <button
         id="get_file"
-        className="btn btn-secondary"
+        className="btn btn-secondary shadow-none"
         onClick={() => openDialogForFileSelection()}
       >
         {" "}

@@ -19,7 +19,7 @@ import UploadPrefill from "./Components/UploadPrefill";
 import EnterFileNameDialog from "./Components/EnterFileNameDialog";
 import ChangeConfig from "./Components/ChangeConfig";
 import ChangeTheme from "./Components/ChangeTheme";
-import {  ThemeType } from "./AppConstants";
+import { ThemeType } from "./AppConstants";
 
 declare global {
   interface Window {
@@ -30,6 +30,7 @@ declare global {
     configFilesDir: ConfigFileStructure;
     changeInConfigFile: boolean;
     updatedConfigFileData: SurveyContext;
+    selectedTheme: ThemeType;
   }
 }
 
@@ -71,6 +72,7 @@ const SurveySimulator: React.FC = (props) => {
   const [configDirContentValue, setConfigDirContentValue] = useState(false);
 
   useEffect(() => {
+    console.log(window.selectedTheme);
     const interval = setInterval(() => {
       if (window.changeInSurvey) {
         setSurveyViewCred((prevState) => ({
@@ -103,110 +105,121 @@ const SurveySimulator: React.FC = (props) => {
 
   return (
     <div className="container-fluid">
-      <div className="container pt-2">
-        <nav className="navbar navbar-expand navbar-light bg-light ">
-          <div
-            className="collapse navbar-collapse justify-content-center order-2"
-            id="navbarNavAltMarkup"
-          >
-            <div className="navbar-nav">
-              <SelectFileToPreview
-                giveCommandToVscode={(command: string, data: string) => {
-                  giveCommandToVscode(command, data);
-                }}
-                setChangedSelectTheFileBtnText={(newText: string) => {
-                  setChangedSelectTheFileBtnText(newText);
-                }}
-                changedSelectTheFileBtnText={changedSelectTheFileBtnText}
-                setOutPutDirContentValue={(value: boolean) => {
-                  setOutPutDirContentValue(value);
-                }}
-                outPutDirContentValue={outPutDirContentValue}
-                onChangedSurveyViewCred={() => {
-                  setSurveyViewCred((prevState) => ({
-                    ...prevState,
-                    survey: undefined,
-                  }));
-                  
-                  setSurveyViewCred((prevState) => ({
-                    ...prevState,
-                    survey: window.surveyData
-                      ? window.surveyData.survey
-                      : undefined,
-                  }));
-                  
-                }}
-              />
-              <UploadPrefill
-                onPrefillChange={(
-                  preFillFile: File | undefined,
-                  preFillValues: SurveySingleItemResponse[]
-                ) => {
-                  setSurveyViewCred((prevState) => ({
-                    ...prevState,
-                    survey: undefined,
-                  }));
-                  setSurveyViewCred((prevState) => ({
-                    ...prevState,
-                    survey: window.surveyData
+      <nav className="navbar navbar-expand-lg navbar-light bg-secondary rounded mt-3">
+        <button
+          className="navbar-toggler shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav mr-auto mt-2 mt-lg-0 ">
+            <SelectFileToPreview
+              giveCommandToVscode={(command: string, data: string) => {
+                giveCommandToVscode(command, data);
+              }}
+              setChangedSelectTheFileBtnText={(newText: string) => {
+                setChangedSelectTheFileBtnText(newText);
+              }}
+              changedSelectTheFileBtnText={changedSelectTheFileBtnText}
+              setOutPutDirContentValue={(value: boolean) => {
+                setOutPutDirContentValue(value);
+              }}
+              outPutDirContentValue={outPutDirContentValue}
+              onChangedSurveyViewCred={() => {
+                setSurveyViewCred((prevState) => ({
+                  ...prevState,
+                  survey: undefined,
+                }));
+
+                setSurveyViewCred((prevState) => ({
+                  ...prevState,
+                  survey: window.surveyData
                     ? window.surveyData.survey
                     : undefined,
-                    prefillsFile: preFillFile,
-                    prefillValues: preFillValues,
-                  }));
-                } }
-                currentSelectFileName={surveyViewCred.prefillsFile
+                }));
+              }}
+            />
+            <UploadPrefill
+              onPrefillChange={(
+                preFillFile: File | undefined,
+                preFillValues: SurveySingleItemResponse[]
+              ) => {
+                setSurveyViewCred((prevState) => ({
+                  ...prevState,
+                  survey: undefined,
+                }));
+                setSurveyViewCred((prevState) => ({
+                  ...prevState,
+                  survey: window.surveyData
+                    ? window.surveyData.survey
+                    : undefined,
+                  prefillsFile: preFillFile,
+                  prefillValues: preFillValues,
+                }));
+              }}
+              currentSelectFileName={
+                surveyViewCred.prefillsFile
                   ? surveyViewCred.prefillsFile.name
-                  : "Upload Prefill"} 
-                  giveCommandToVscode={ (command: string, data: string) => {
-                    giveCommandToVscode(command,data);
-                  } }              />
-              <ChangeConfig
-                giveCommandToVscode={(command: string, data: string) => {
-                  giveCommandToVscode(command, data);
-                }}
-                setConfigDirContentValue={(value: boolean) => {
-                  setConfigDirContentValue(value);
-                }}
-                configDirContentValue={configDirContentValue}
-                onConfigChange={(context: SurveyContext) => {
-                  setSurveyViewCred((prevState) => ({
-                    ...prevState,
-                    survey: undefined,
-                  }));
-                  setSurveyViewCred((prevState) => ({
-                    ...prevState,
-                    survey: window.surveyData
-                      ? window.surveyData.survey
-                      : undefined,
-                    context: { ...context },
-                  }));
-                }}
-              />
-              <ShowKeysCheckBox
-                currentCheckBoxStatus={
-                  surveyViewCred.simulatorUIConfig.showKeys
-                }
-                onCheckBoxStausChange={(newStaus: boolean) => {
-                  setSurveyViewCred((prevState) => ({
-                    ...prevState,
-                    simulatorUIConfig: {
-                      texts: initialSurveyCred.simulatorUIConfig.texts,
-                      showKeys: newStaus,
-                    },
-                  }));
-                }}
-              />
-              <ChangeTheme
-                onThemeChange={(value: ThemeType) => {
-                  console.log(value);
-                  giveCommandToVscode("changeTheme", value);
-                }}
-              />
-            </div>
+                  : "Upload Prefill"
+              }
+              giveCommandToVscode={(command: string, data: string) => {
+                giveCommandToVscode(command, data);
+              }}
+            />
+            <ChangeConfig
+              giveCommandToVscode={(command: string, data: string) => {
+                giveCommandToVscode(command, data);
+              }}
+              setConfigDirContentValue={(value: boolean) => {
+                setConfigDirContentValue(value);
+              }}
+              configDirContentValue={configDirContentValue}
+              onConfigChange={(context: SurveyContext) => {
+                setSurveyViewCred((prevState) => ({
+                  ...prevState,
+                  survey: undefined,
+                }));
+                setSurveyViewCred((prevState) => ({
+                  ...prevState,
+                  survey: window.surveyData
+                    ? window.surveyData.survey
+                    : undefined,
+                  context: { ...context },
+                }));
+              }}
+            />
+            <ShowKeysCheckBox
+              currentCheckBoxStatus={surveyViewCred.simulatorUIConfig.showKeys}
+              onCheckBoxStausChange={(newStaus: boolean) => {
+                setSurveyViewCred((prevState) => ({
+                  ...prevState,
+                  simulatorUIConfig: {
+                    texts: initialSurveyCred.simulatorUIConfig.texts,
+                    showKeys: newStaus,
+                  },
+                }));
+              }}
+            />
+            <ChangeTheme
+              onThemeChange={(value: ThemeType) => {
+                console.log(value);
+                giveCommandToVscode("changeTheme", value);
+              }}
+              selectedTheme={
+                window.selectedTheme
+                  ? window.selectedTheme
+                  : ThemeType.defaultTheme
+              }
+            />
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
 
       <div className="row">
         <div className="col-12 col-lg-8 offset-lg-2">

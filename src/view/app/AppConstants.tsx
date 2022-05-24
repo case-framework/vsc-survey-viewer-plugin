@@ -1,6 +1,4 @@
-  export enum ThemeType {
-    defaultTheme = "surveyViewerDefaultTheme",
-   tekenradarTheme = "surveyViewerWithTekenradarTheme"
-    }
-    
-    
+export enum ThemeType {
+  defaultTheme = "surveyViewerDefaultTheme",
+  tekenradarTheme = "surveyViewerWithTekenradarTheme",
+}

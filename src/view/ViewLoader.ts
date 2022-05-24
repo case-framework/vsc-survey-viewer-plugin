@@ -23,7 +23,7 @@ export default class ViewLoader {
     this._panel = vscode.window.createWebviewPanel(
       "Survey Viewer",
       "Survey Viewer",
-      vscode.ViewColumn.One,
+      vscode.ViewColumn.Beside,
       {
         enableScripts: true,
         retainContextWhenHidden: true,
@@ -115,6 +115,10 @@ export default class ViewLoader {
                   if (this._panel) {
                     context.workspaceState.update("selectedTheme", message.data);
                   this._panel.webview.html = this.getWebviewContent(message.data);
+                  this._panel.webview.postMessage({
+                    command: "updateSelectedTheme",
+                    content: message.data,
+                  });
                   }
                 }
               }
@@ -177,6 +181,9 @@ export default class ViewLoader {
                       window.changeInConfigFile = true;
                       window.updatedConfigFileData = message.content;
                     break;
+                    case 'updateSelectedTheme':
+                      window.selectedTheme = message.content;
+                    break;
             }
         });
         </script>
@@ -231,6 +238,7 @@ export default class ViewLoader {
         );
         let newFiles: string[];
 
+        if(fs.existsSync(newPath)){
         newFiles = fs.readdirSync(newPath);
 
         let singleSurveyContent: SurveyDirectory = {
@@ -239,6 +247,7 @@ export default class ViewLoader {
           surveyFiles: newFiles,
         };
         fullContent.push(singleSurveyContent);
+      }
       });
 
       const content: OutputFileStructure = {

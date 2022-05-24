@@ -1,20 +1,13 @@
-
-import path = require('path');
-import * as vscode from 'vscode';
-import ViewLoader from './view/ViewLoader';
-
+import path = require("path");
+import * as vscode from "vscode";
+import ViewLoader from "./view/ViewLoader";
 
 export function activate(context: vscode.ExtensionContext) {
-	
-
-	context.subscriptions.push( vscode.commands.registerCommand('surveyviewer.preview', () => {
-
-		const view = new ViewLoader( context);	
-		}
-	));
+  context.subscriptions.push(
+    vscode.commands.registerCommand("surveyviewer.preview", () => {
+      const view = new ViewLoader(context);
+    })
+  );
 }
-	
-
-
 
 export function deactivate() {}

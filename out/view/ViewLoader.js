@@ -32,7 +32,7 @@ class ViewLoader {
         this._disposables = [];
         this._extensionPath = context.extensionPath;
         context.workspaceState.update("selectedTheme", AppConstants_1.ThemeType.defaultTheme);
-        this._panel = vscode.window.createWebviewPanel("Survey Viewer", "Survey Viewer", vscode.ViewColumn.One, {
+        this._panel = vscode.window.createWebviewPanel("Survey Viewer", "Survey Viewer", vscode.ViewColumn.Beside, {
             enableScripts: true,
             retainContextWhenHidden: true,
             localResourceRoots: [
@@ -120,6 +120,10 @@ class ViewLoader {
                                 if (this._panel) {
                                     context.workspaceState.update("selectedTheme", message.data);
                                     this._panel.webview.html = this.getWebviewContent(message.data);
+                                    this._panel.webview.postMessage({
+                                        command: "updateSelectedTheme",
+                                        content: message.data,
+                                    });
                                 }
                             }
                         });
@@ -173,6 +177,9 @@ class ViewLoader {
                       window.changeInConfigFile = true;
                       window.updatedConfigFileData = message.content;
                     break;
+                    case 'updateSelectedTheme':
+                      window.selectedTheme = message.content;
+                    break;
             }
         });
         </script>
@@ -210,13 +217,15 @@ class ViewLoader {
                     ? vscode.workspace.workspaceFolders[0].uri.path
                     : undefined}`, `output/${file}/surveys`);
                 let newFiles;
-                newFiles = fs.readdirSync(newPath);
-                let singleSurveyContent = {
-                    surveyPath: newPath,
-                    surveyName: file,
-                    surveyFiles: newFiles,
-                };
-                fullContent.push(singleSurveyContent);
+                if (fs.existsSync(newPath)) {
+                    newFiles = fs.readdirSync(newPath);
+                    let singleSurveyContent = {
+                        surveyPath: newPath,
+                        surveyName: file,
+                        surveyFiles: newFiles,
+                    };
+                    fullContent.push(singleSurveyContent);
+                }
             });
             const content = {
                 isOutputDirMissing: false,

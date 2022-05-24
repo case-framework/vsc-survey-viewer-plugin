@@ -1,25 +1,17 @@
 import * as React from "react";
 import { ThemeType } from "../AppConstants";
 
-
 interface ChangeThemeProps {
   onThemeChange: (value: ThemeType) => void;
+  selectedTheme: ThemeType;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
   return (
-    <div
-      className="dropdown nav-item"
-      style={{
-        width: "20%",
-        minWidth: "130px",
-        height: "44px",
-        paddingRight: "1rem",
-      }}
-    >
+    <div className="dropdown nav-item">
       <button
-        className="btn btn-secondary dropdown-toggle"
+        className="btn btn-secondary dropdown-toggle  shadow-none"
         type="button"
         id="ChangeTheme"
         data-bs-toggle="dropdown"
@@ -28,23 +20,23 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
       >
         Change Theme
       </button>
-      <div
-        className="dropdown-menu"
-        aria-labelledby="ChangeTheme"
-        style={{ width: "170px" }}
-      >
+      <div className="dropdown-menu" aria-labelledby="ChangeTheme">
         <button
-          className="dropdown-item text-center"
+          className={`${
+            props.selectedTheme === ThemeType.defaultTheme ? "fw-bold" : ""
+          } dropdown-item text-center `}
           type="button"
           onClick={() => {
             props.onThemeChange(ThemeType.defaultTheme);
           }}
         >
-          Default Theme
+          Default Theme 
         </button>
         <div className="dropdown-divider"></div>
         <button
-          className="dropdown-item text-center"
+          className={`${
+            props.selectedTheme === ThemeType.tekenradarTheme ? "fw-bold" : ""
+          } dropdown-item text-center `}
           type="button"
           onClick={() => {
             props.onThemeChange(ThemeType.tekenradarTheme);

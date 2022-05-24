@@ -18,9 +18,8 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
     return configFileList.map((item) => {
       return (
         <button
-          className="dropdown-item text-center"
+          className="dropdown-item text-center nav-item"
           type="button"
-          style={{ width: "165px" }}
           onClick={() => {
             props.giveCommandToVscode(
               "setTheConfigFileChangeWatcher",
@@ -40,15 +39,10 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
   return (
     <div
       className="dropdown nav-item"
-      style={{
-        width: "20%",
-        minWidth: "165px",
-        height: "44px",
-        paddingRight: "1rem",
-      }}
+      style={{ paddingRight: "1rem" }}
     >
       <button
-        className="btn btn-secondary dropdown-toggle"
+        className="btn btn-secondary dropdown-toggle  shadow-none"
         type="button"
         id="ChangeConfig"
         data-bs-toggle="dropdown"
@@ -70,7 +64,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
       <div
         className="dropdown-menu"
         aria-labelledby="ChangeConfig"
-        style={{ width: "165px" }}
+        
       >
         <button
           className="dropdown-item"
@@ -84,7 +78,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         {props.configDirContentValue ? (
           setConfigFilesList(window.configFilesDir.directoryContent)
         ) : (
-          <div className="text-center" style={{ width: "165px" }}>
+          <div className="text-center" >
             <div
               className="spinner-border text-secondary"
               style={{ width: "2rem", height: "2rem" }}

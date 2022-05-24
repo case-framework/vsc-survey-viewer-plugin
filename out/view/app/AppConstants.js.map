@@ -1,1 +1,1 @@
-{"version":3,"file":"AppConstants.js","sourceRoot":"","sources":["../../../src/view/app/AppConstants.tsx"],"names":[],"mappings":";;;AAAE,IAAY,SAGT;AAHH,WAAY,SAAS;IACnB,sDAAyC,CAAA;IAC1C,gEAAmD,CAAA;AAClD,CAAC,EAHS,SAAS,GAAT,iBAAS,KAAT,iBAAS,QAGlB"}
+{"version":3,"file":"AppConstants.js","sourceRoot":"","sources":["../../../src/view/app/AppConstants.tsx"],"names":[],"mappings":";;;AAAA,IAAY,SAGX;AAHD,WAAY,SAAS;IACnB,sDAAyC,CAAA;IACzC,gEAAmD,CAAA;AACrD,CAAC,EAHW,SAAS,GAAT,iBAAS,KAAT,iBAAS,QAGpB"}

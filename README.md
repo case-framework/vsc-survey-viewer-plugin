@@ -22,3 +22,6 @@
 4: User has option to show the keys of the survey by selecting the "Sjow Kays" checkbox.
 5: This extension also detects the change in the selected survey file and selected config file and reloads the survey when the change is found.
 
+# Creating Vsix File
+1: Install "Visual Studio Code Extensions" with command 'npm install -g vsce'.\
+2: run 'vsce package' command to package the extension.
