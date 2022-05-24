@@ -37,10 +37,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
     });
   };
   return (
-    <div
-      className="dropdown nav-item"
-      style={{ paddingRight: "1rem" }}
-    >
+    <div className="dropdown nav-item" style={{ paddingRight: "1rem" }}>
       <button
         className="btn btn-secondary dropdown-toggle  shadow-none"
         type="button"
@@ -61,11 +58,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
       >
         Change Config
       </button>
-      <div
-        className="dropdown-menu"
-        aria-labelledby="ChangeConfig"
-        
-      >
+      <div className="dropdown-menu" aria-labelledby="ChangeConfig">
         <button
           className="dropdown-item"
           type="button"
@@ -78,7 +71,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         {props.configDirContentValue ? (
           setConfigFilesList(window.configFilesDir.directoryContent)
         ) : (
-          <div className="text-center" >
+          <div className="text-center">
             <div
               className="spinner-border text-secondary"
               style={{ width: "2rem", height: "2rem" }}

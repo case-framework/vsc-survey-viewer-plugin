@@ -30,7 +30,7 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
             props.onThemeChange(ThemeType.defaultTheme);
           }}
         >
-          Default Theme 
+          Default Theme
         </button>
         <div className="dropdown-divider"></div>
         <button

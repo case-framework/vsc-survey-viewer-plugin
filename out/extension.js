@@ -31,7 +31,7 @@ const vscode = __importStar(require("vscode"));
 const ViewLoader_1 = __importDefault(require("./view/ViewLoader"));
 function activate(context) {
     context.subscriptions.push(vscode.commands.registerCommand("surveyviewer.preview", () => {
-        const view = new ViewLoader_1.default(context);
+        new ViewLoader_1.default(context);
     }));
 }
 exports.activate = activate;
