@@ -51,14 +51,14 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
           <div className="modal-footer">
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-outline-light"
               data-bs-dismiss="modal"
             >
               Close
             </button>
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-secondary"
               data-bs-dismiss="modal"
               onClick={() => {
                 props.giveCommandToVscode("createNewFile", fileName);

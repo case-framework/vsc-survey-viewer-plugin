@@ -42,8 +42,8 @@ const EnterFileNameDialog = (props) => {
                                 console.log(event.target.value);
                             }, id: "EnterFileNameTextfeild", "aria-describedby": "emailHelp", placeholder: "" }))),
                 React.createElement("div", { className: "modal-footer" },
-                    React.createElement("button", { type: "button", className: "btn btn-secondary", "data-bs-dismiss": "modal" }, "Close"),
-                    React.createElement("button", { type: "button", className: "btn btn-primary", "data-bs-dismiss": "modal", onClick: () => {
+                    React.createElement("button", { type: "button", className: "btn btn-outline-light", "data-bs-dismiss": "modal" }, "Close"),
+                    React.createElement("button", { type: "button", className: "btn btn-secondary", "data-bs-dismiss": "modal", onClick: () => {
                             props.giveCommandToVscode("createNewFile", fileName);
                         } }, "Create"))))));
 };

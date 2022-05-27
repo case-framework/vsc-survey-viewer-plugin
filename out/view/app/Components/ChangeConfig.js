@@ -24,19 +24,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
+require("../Css/Toolbar.css");
+const md_1 = require("react-icons/md");
+const io_1 = require("react-icons/io");
+const react_1 = require("react");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeConfig = (props) => {
+    const [selectedFile, setSelectedFile] = (0, react_1.useState)("Change Config");
     const setConfigFilesList = (configFileList) => {
         console.log(configFileList);
         return configFileList.map((item) => {
-            return (React.createElement("button", { className: "dropdown-item text-center nav-item", type: "button", onClick: () => {
+            return (React.createElement("button", { className: "dropdown-item text-center nav-item btn-custom", type: "button", onClick: () => {
                     props.giveCommandToVscode("setTheConfigFileChangeWatcher", item.configFilePath);
                     props.onConfigChange(item.configFileContent);
+                    setSelectedFile(item.configFileName);
                 } }, item.configFileName.substring(0, item.configFileName.lastIndexOf("."))));
         });
     };
-    return (React.createElement("div", { className: "dropdown nav-item", style: { paddingRight: "1rem" } },
-        React.createElement("button", { className: "btn btn-secondary dropdown-toggle  shadow-none", type: "button", id: "ChangeConfig", "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
+    return (React.createElement("div", { className: "dropdown nav-item" },
+        React.createElement("button", { className: "btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold", type: "button", id: "ChangeConfig", "data-bs-toggle": "dropdown", title: "Change Config: " + selectedFile, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setConfigDirContentValue(false);
                 props.giveCommandToVscode("getTheConfigFilesList", "");
                 const intervalId = setInterval(() => {
@@ -45,10 +51,16 @@ const ChangeConfig = (props) => {
                         clearInterval(intervalId);
                     }
                 }, 1000);
-            } }, "Change Config"),
-        React.createElement("div", { className: "dropdown-menu", "aria-labelledby": "ChangeConfig" },
-            React.createElement("button", { className: "dropdown-item", type: "button", "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" }, "Create New"),
-            React.createElement("div", { className: "dropdown-divider" }),
+            } },
+            React.createElement(md_1.MdSettingsSuggest, { className: "icons", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+            selectedFile.length <= 18
+                ? selectedFile
+                : selectedFile.substring(0, 17)),
+        React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg rounded", "aria-labelledby": "ChangeConfig", style: { minWidth: "180px", maxHeight: "260px" } },
+            React.createElement("button", { className: "dropdown-item btn-custom", type: "button", "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" },
+                React.createElement(io_1.IoIosCreate, { className: "themeIcon", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+                "Create New"),
+            React.createElement("div", { className: "dropdown-divider dividerColor" }),
             props.configDirContentValue ? (setConfigFilesList(window.configFilesDir.directoryContent)) : (React.createElement("div", { className: "text-center" },
                 React.createElement("div", { className: "spinner-border text-secondary", style: { width: "2rem", height: "2rem" }, role: "status" },
                     React.createElement("span", { className: "sr-only" })))))));

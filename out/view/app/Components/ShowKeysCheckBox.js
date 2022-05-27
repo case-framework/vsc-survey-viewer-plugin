@@ -23,19 +23,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const case_web_ui_1 = require("case-web-ui");
 const React = __importStar(require("react"));
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ShowKeysCheckBox = (props) => {
-    return (React.createElement("div", { className: "nav-item ", style: {
-            width: "180px",
-            paddingRight: "1rem",
-            paddingLeft: "1rem",
+    return (React.createElement("div", { className: "form-check nav-item ", style: {
+            width: "160px",
             paddingTop: "0.5rem",
+            paddingRight: "3rem",
+            marginLeft: "1.5rem"
         } },
-        React.createElement(case_web_ui_1.Checkbox, { id: "show-keys-checkbox", name: "show-keys-checkbox", checked: props.currentCheckBoxStatus, onChange: (value) => {
-                props.onCheckBoxStausChange(value);
-            }, label: "Show keys" })));
+        React.createElement("input", { className: "form-check-input shadow-none ", type: "checkbox", value: "", id: "flexCheckChecked", checked: props.currentCheckBoxStatus, onClick: () => {
+                props.onCheckBoxStausChange(!props.currentCheckBoxStatus);
+            } }),
+        React.createElement("label", { className: "form-check-label btn-custom fw-bold", htmlFor: "flexCheckChecked" }, "Show Keys")));
 };
 exports.default = ShowKeysCheckBox;
 //# sourceMappingURL=ShowKeysCheckBox.js.map

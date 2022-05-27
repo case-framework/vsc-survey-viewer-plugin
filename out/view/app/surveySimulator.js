@@ -37,6 +37,8 @@ const EnterFileNameDialog_1 = __importDefault(require("./Components/EnterFileNam
 const ChangeConfig_1 = __importDefault(require("./Components/ChangeConfig"));
 const ChangeTheme_1 = __importDefault(require("./Components/ChangeTheme"));
 const AppConstants_1 = require("./AppConstants");
+const vsc_1 = require("react-icons/vsc");
+const md_1 = require("react-icons/md");
 const vscode = window.acquireVsCodeApi();
 const defaultSurveyContext = {
     isLoggedIn: false,
@@ -68,6 +70,7 @@ const SurveySimulator = (props) => {
     const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] = (0, react_1.useState)("Select File To Preview");
     const [outPutDirContentValue, setOutPutDirContentValue] = (0, react_1.useState)(false);
     const [configDirContentValue, setConfigDirContentValue] = (0, react_1.useState)(false);
+    const [navbarToggleIsOpen, setNavbarToggleIsOpen] = (0, react_1.useState)(false);
     (0, react_1.useEffect)(() => {
         console.log(window.selectedTheme);
         const interval = setInterval(() => {
@@ -98,12 +101,13 @@ const SurveySimulator = (props) => {
             data: data,
         });
     };
-    return (React.createElement("div", { className: "container-fluid" },
-        React.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-secondary rounded mt-3" },
-            React.createElement("button", { className: "navbar-toggler shadow-none", type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNavAltMarkup", "aria-controls": "navbarNavAltMarkup", "aria-expanded": "false", "aria-label": "Toggle navigation" },
-                React.createElement("span", { className: "navbar-toggler-icon" })),
-            React.createElement("div", { className: "collapse navbar-collapse", id: "navbarNavAltMarkup" },
-                React.createElement("div", { className: "navbar-nav mr-auto mt-2 mt-lg-0 " },
+    return (React.createElement("div", null,
+        React.createElement("nav", { className: "navbar navbar-expand-lg sticky-top toolBarBg rounded py-0 " },
+            React.createElement("button", { className: " navbar-toggler shadow-none ", style: { width: "56px", height: "40px", borderStyle: "none" }, type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNavAltMarkup", "aria-controls": "navbarNavAltMarkup", "aria-expanded": "false", "aria-label": "Toggle navigation", onClick: () => {
+                    setNavbarToggleIsOpen(!navbarToggleIsOpen);
+                } }, navbarToggleIsOpen ? React.createElement(md_1.MdClose, { className: "icons", style: { width: "24px", height: "24px" } }) : React.createElement(vsc_1.VscListFlat, { className: "icons", style: { width: "24px", height: "24px" } })),
+            React.createElement("div", { className: "collapse navbar-collapse justify-content-center", id: "navbarNavAltMarkup" },
+                React.createElement("div", { className: "navbar-nav" },
                     React.createElement(SelectFileToPreview_1.default, { giveCommandToVscode: (command, data) => {
                             giveCommandToVscode(command, data);
                         }, setChangedSelectTheFileBtnText: (newText) => {
@@ -173,7 +177,7 @@ const SurveySimulator = (props) => {
                             ? window.selectedTheme
                             : AppConstants_1.ThemeType.defaultTheme })))),
         React.createElement("div", { className: "row" },
-            React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
+            React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2 mt-2" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
                     ? surveyViewCred.selectedLanguage
                     : "en", onSubmit: (responses) => {
                     const exportData = responses.slice();

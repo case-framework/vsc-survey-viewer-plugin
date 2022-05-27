@@ -20,6 +20,8 @@ import EnterFileNameDialog from "./Components/EnterFileNameDialog";
 import ChangeConfig from "./Components/ChangeConfig";
 import ChangeTheme from "./Components/ChangeTheme";
 import { ThemeType } from "./AppConstants";
+import {VscListFlat} from "react-icons/vsc";
+import {MdClose} from "react-icons/md";
 
 declare global {
   interface Window {
@@ -70,6 +72,7 @@ const SurveySimulator: React.FC = (props) => {
     useState("Select File To Preview");
   const [outPutDirContentValue, setOutPutDirContentValue] = useState(false);
   const [configDirContentValue, setConfigDirContentValue] = useState(false);
+  const [navbarToggleIsOpen, setNavbarToggleIsOpen] = useState(false);
 
   useEffect(() => {
     console.log(window.selectedTheme);
@@ -104,21 +107,26 @@ const SurveySimulator: React.FC = (props) => {
   };
 
   return (
-    <div className="container-fluid">
-      <nav className="navbar navbar-expand-lg navbar-light bg-secondary rounded mt-3">
+    <div >
+      <nav className="navbar navbar-expand-lg sticky-top toolBarBg rounded py-0 ">
         <button
-          className="navbar-toggler shadow-none"
+          className=" navbar-toggler shadow-none "
+          style={{width:"56px", height:"40px", borderStyle: "none"}}
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          onClick={()=>{
+            setNavbarToggleIsOpen(!navbarToggleIsOpen);
+          }}
         >
-          <span className="navbar-toggler-icon"></span>
+          {navbarToggleIsOpen?<MdClose className="icons" style={{width:"24px", height: "24px"}}/>:<VscListFlat className="icons" style={{width:"24px", height: "24px"}}/>}
+          
         </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav mr-auto mt-2 mt-lg-0 ">
+        <div className="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
             <SelectFileToPreview
               giveCommandToVscode={(command: string, data: string) => {
                 giveCommandToVscode(command, data);
@@ -222,7 +230,7 @@ const SurveySimulator: React.FC = (props) => {
       </nav>
 
       <div className="row">
-        <div className="col-12 col-lg-8 offset-lg-2">
+        <div className="col-12 col-lg-8 offset-lg-2 mt-2">
           {surveyViewCred.survey ? (
             <SurveyView
               loading={false}

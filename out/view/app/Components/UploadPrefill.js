@@ -24,10 +24,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
+require("../Css/Toolbar.css");
+const md_1 = require("react-icons/md");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const UploadPrefill = (props) => {
     const openDialogForFileSelection = () => {
-        const inputRef = document.getElementById("input_file");
+        const inputRef = document.getElementById("input_file_selector");
         console.log(inputRef);
         if (inputRef) {
             inputRef.click();
@@ -55,15 +57,13 @@ const UploadPrefill = (props) => {
             props.giveCommandToVscode("PrefillFileSelectionError", "No appropriate file is selected");
         }
     };
-    return (React.createElement("div", { className: "nav-item", style: { minWidth: "160px", paddingRight: "1rem" } },
-        React.createElement("button", { id: "get_file", className: "btn btn-secondary shadow-none", onClick: () => openDialogForFileSelection() },
-            " ",
-            React.createElement("p", null,
-                props.currentSelectFileName.length <= 18
-                    ? props.currentSelectFileName
-                    : props.currentSelectFileName.substring(0, 17),
-                " ")),
-        React.createElement("input", { type: "file", id: "input_file", accept: ".json", style: { display: "none" }, onChange: (event) => {
+    return (React.createElement("div", { className: "nav-item", style: { minWidth: "200px" } },
+        React.createElement("button", { id: "get_file", className: "btn toolBarBg shadow-none btn-custom fw-bold", title: "Upload Prefill: " + props.currentSelectFileName, onClick: () => openDialogForFileSelection() },
+            React.createElement(md_1.MdOutlineFactCheck, { className: "icons", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+            props.currentSelectFileName.length <= 18
+                ? props.currentSelectFileName
+                : props.currentSelectFileName.substring(0, 17)),
+        React.createElement("input", { type: "file", id: "input_file_selector", accept: ".json", style: { display: "none" }, onChange: (event) => {
                 uploadFileForPreFill(event);
             } })));
 };

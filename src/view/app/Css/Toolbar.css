@@ -1,0 +1,41 @@
+.btn-custom {
+    color: var(--vscode-activityBar-inactiveForeground);
+    font-size: var(--vscode-editor-font-size);
+    font-family: var(--vscode-editor-font-family);
+}
+.btn.btn-custom:hover {
+    color: var(--vscode-activityBar-foreground);
+    
+}
+
+.changeThemeBtn{
+    color: var(--vscode-button-background);
+    font-size: var(--vscode-editor-font-size);
+    font-family: var(--vscode-editor-font-family);
+}
+.btn.changeThemeBtn:hover {
+    color: var(--vscode-activityBar-foreground);
+    
+}
+.icons{
+    color: var(--vscode-activityBar-foreground);
+}
+.themeIcon{
+    color: var(--vscode-button-background);
+}
+.toolBarBg{
+    
+    background-color: var(--vscode-activityBar-background);
+}
+.toolBarDropdownBg{
+    border-color: var(--vscode-activityBar-activeBorder);
+    background: var(--vscode-activityBar-background);
+}
+
+.dropdown-item:hover {
+    background-image: none;
+    background-color: var(--vscode-activityBar-foreground);
+}
+.dividerColor{
+    background-color: var(--vscode-activityBar-foreground);
+}

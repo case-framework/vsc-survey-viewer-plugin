@@ -1,5 +1,8 @@
 import * as React from "react";
 import { SurveySingleItemResponse } from "survey-engine/data_types";
+import "../Css/Toolbar.css";
+import { MdOutlineFactCheck } from "react-icons/md";
+
 
 interface UploadPrefillProps {
   giveCommandToVscode: (command: string, data: string) => void;
@@ -7,13 +10,13 @@ interface UploadPrefillProps {
     preFillFile: File | undefined,
     preFillValues: SurveySingleItemResponse[]
   ) => void;
-  currentSelectFileName: String;
+  currentSelectFileName: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
   const openDialogForFileSelection = () => {
-    const inputRef = document.getElementById("input_file");
+    const inputRef = document.getElementById("input_file_selector");
     console.log(inputRef);
     if (inputRef) {
       inputRef.click();
@@ -46,25 +49,24 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
     }
   };
   return (
-    <div
-      className="nav-item"
-      style={{ minWidth: "160px", paddingRight: "1rem" }}
-    >
+    <div className="nav-item" style={{ minWidth: "200px" }}>
       <button
         id="get_file"
-        className="btn btn-secondary shadow-none"
+        className="btn toolBarBg shadow-none btn-custom fw-bold"
+        title={"Upload Prefill: " + props.currentSelectFileName}
         onClick={() => openDialogForFileSelection()}
       >
-        {" "}
-        <p>
-          {props.currentSelectFileName.length <= 18
-            ? props.currentSelectFileName
-            : props.currentSelectFileName.substring(0, 17)}{" "}
-        </p>
+        <MdOutlineFactCheck
+          className="icons"
+          style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+        />
+        {props.currentSelectFileName.length <= 18
+          ? props.currentSelectFileName
+          : props.currentSelectFileName.substring(0, 17)}
       </button>
       <input
         type="file"
-        id="input_file"
+        id="input_file_selector"
         accept=".json"
         style={{ display: "none" }}
         onChange={(event) => {

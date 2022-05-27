@@ -24,19 +24,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
+require("../Css/Toolbar.css");
+const md_1 = require("react-icons/md");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const SelectFileToPreview = (props) => {
     const setDropdowns = (items) => {
         return items.directoryContent.map((item) => {
-            return (React.createElement("div", null,
-                React.createElement("div", { className: "dropdown-divider" }),
-                React.createElement("p", { className: "h5", style: { paddingLeft: "1rem" } }, item.surveyName),
-                setDropdownItems(item.surveyFiles, item.surveyPath)));
+            return (React.createElement("div", { className: "btn-custom" },
+                React.createElement("p", { className: "fw-bold h4", style: { paddingLeft: "1rem" } }, item.surveyName),
+                setDropdownItems(item.surveyFiles, item.surveyPath),
+                React.createElement("div", { className: "dropdown-divider dividerColor" })));
         });
     };
     const setDropdownItems = (items, directoryPath) => {
         return items.map((item) => {
-            return (React.createElement("button", { className: "dropdown-item  ", style: { paddingLeft: "3rem" }, type: "button", id: item, onClick: () => {
+            return (React.createElement("button", { className: "dropdown-item btn-custom ", style: { paddingLeft: "1rem" }, type: "button", id: item, onClick: () => {
                     props.giveCommandToVscode("fileSelectedForPreview", directoryPath + "/" + item);
                     props.giveCommandToVscode("selectedFileToDetectChanges", directoryPath + "/" + item);
                     const intervalId = setInterval(() => {
@@ -46,11 +48,12 @@ const SelectFileToPreview = (props) => {
                             clearInterval(intervalId);
                         }
                     }, 1000);
-                } }, item.substring(0, item.lastIndexOf(".")).replace("_", " ")));
+                } },
+                React.createElement("p", { className: "h5 small" }, item.substring(0, item.lastIndexOf(".")).replace("_", " "))));
         });
     };
-    return (React.createElement("div", { className: "dropdown nav-item ", style: { paddingRight: "1rem" } },
-        React.createElement("button", { className: "btn btn-secondary dropdown-toggle shadow-none", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
+    return (React.createElement("div", { className: "dropdown nav-item", style: { paddingRight: "1rem" } },
+        React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Select File To Preview: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setOutPutDirContentValue(false);
                 props.giveCommandToVscode("getOutputFileContent", "");
                 const intervalId = setInterval(() => {
@@ -68,9 +71,11 @@ const SelectFileToPreview = (props) => {
                     console.log(window.outPutDirContent);
                 }, 1000);
             } },
-            " ",
-            props.changedSelectTheFileBtnText),
-        React.createElement("div", { className: "dropdown-menu overflow-auto", "aria-labelledby": "SelectFileDropdown", style: { maxHeight: "280px", background: "white" } }, props.outPutDirContentValue ? (setDropdowns(window.outPutDirContent)) : (React.createElement("div", { className: "text-center" },
+            React.createElement(md_1.MdTextSnippet, { className: "icons", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+            props.changedSelectTheFileBtnText.length <= 22
+                ? props.changedSelectTheFileBtnText
+                : props.changedSelectTheFileBtnText.substring(0, 21)),
+        React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg rounded", "aria-labelledby": "SelectFileDropdown", style: { minWidth: "228px", maxHeight: "260px" } }, props.outPutDirContentValue ? (setDropdowns(window.outPutDirContent)) : (React.createElement("div", { className: "text-center" },
             React.createElement("div", { className: "spinner-border text-secondary", style: { width: "2rem", height: "2rem" }, role: "status" },
                 React.createElement("span", { className: "sr-only" })))))));
 };
