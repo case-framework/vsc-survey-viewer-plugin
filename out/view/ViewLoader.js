@@ -115,7 +115,9 @@ class ViewLoader {
                     break;
                 case "changeTheme":
                     if (message.data !== context.workspaceState.get("selectedTheme")) {
-                        vscode.window.showInformationMessage("The Survey will restart. Would to still want to continue", "Yes", "No").then((value) => {
+                        vscode.window
+                            .showInformationMessage("The Survey will restart. Would to still want to continue", "Yes", "No")
+                            .then((value) => {
                             if (value === "Yes") {
                                 if (this._panel) {
                                     context.workspaceState.update("selectedTheme", message.data);
@@ -184,7 +186,7 @@ class ViewLoader {
         });
         </script>
     </head>
-    <body>
+    <body style="padding:0;">
         <div id="root"></div>
         <script src="${reactAppUri}"></script>
     </body>

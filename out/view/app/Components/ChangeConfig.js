@@ -62,7 +62,7 @@ const ChangeConfig = (props) => {
                 "Create New"),
             React.createElement("div", { className: "dropdown-divider dividerColor" }),
             props.configDirContentValue ? (setConfigFilesList(window.configFilesDir.directoryContent)) : (React.createElement("div", { className: "text-center" },
-                React.createElement("div", { className: "spinner-border text-secondary", style: { width: "2rem", height: "2rem" }, role: "status" },
+                React.createElement("div", { className: "spinner-border loaderColor", style: { width: "2rem", height: "2rem" }, role: "status" },
                     React.createElement("span", { className: "sr-only" })))))));
 };
 exports.default = ChangeConfig;

@@ -9,33 +9,49 @@
 }
 
 .changeThemeBtn{
-    color: var(--vscode-button-background);
+    color: rgb(53, 114, 227);
     font-size: var(--vscode-editor-font-size);
     font-family: var(--vscode-editor-font-family);
 }
 .btn.changeThemeBtn:hover {
-    color: var(--vscode-activityBar-foreground);
+    color: rgb(1, 76, 215);
     
 }
 .icons{
     color: var(--vscode-activityBar-foreground);
 }
 .themeIcon{
-    color: var(--vscode-button-background);
+    color: rgb(53, 114, 227);
 }
 .toolBarBg{
     
     background-color: var(--vscode-activityBar-background);
 }
 .toolBarDropdownBg{
-    border-color: var(--vscode-activityBar-activeBorder);
+    border-color: var(--vscode-activityBar-inactiveForeground);
     background: var(--vscode-activityBar-background);
 }
 
+.dropdown-menu[data-bs-popper] {
+    margin-top: 0rem;
+}
 .dropdown-item:hover {
     background-image: none;
-    background-color: var(--vscode-activityBar-foreground);
+    background-color: var(--vscode-button-secondaryHoverBackground);
+    color: var(--vscode-activityBar-foreground);
 }
+.dropdown-toggle[aria-expanded="true"]:after {
+    transform: rotate(180deg);
+  }
+  
+  .dropdown-toggle:after {
+    transition: 0.5s;
+  }
+ 
 .dividerColor{
-    background-color: var(--vscode-activityBar-foreground);
+    border-block-width: 1.5px;
+    background-color: var(--vscode-activityBar-inactiveForeground);
+}
+.loaderColor{
+    color: var(--vscode-activityBar-inactiveForeground);
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { OutputFileStructure } from "../model";
 import "../Css/Toolbar.css";
-import {MdTextSnippet} from "react-icons/md";
+import { MdTextSnippet } from "react-icons/md";
 
 interface SelectFileDropdownProps {
   giveCommandToVscode: (command: string, data: string) => void;
@@ -36,7 +36,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
       return (
         <button
           className="dropdown-item btn-custom "
-          style={{ paddingLeft: "1rem"}}
+          style={{ paddingLeft: "1rem" }}
           type="button"
           id={item}
           onClick={() => {
@@ -59,20 +59,22 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
             }, 1000);
           }}
         >
-          <p className="h5 small">{item.substring(0, item.lastIndexOf(".")).replace("_", " ")}</p>
+          <p className="h5 small">
+            {item.substring(0, item.lastIndexOf(".")).replace("_", " ")}
+          </p>
         </button>
       );
     });
   };
 
   return (
-    <div className="dropdown nav-item" style={{paddingRight: "1rem" }}>
+    <div className="dropdown nav-item">
       <button
         className="btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold"
         type="button"
         id="SelectFileDropdown"
         data-bs-toggle="dropdown"
-        title={"Select File To Preview: "+props.changedSelectTheFileBtnText}
+        title={"Select File To Preview: " + props.changedSelectTheFileBtnText}
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {
@@ -100,24 +102,26 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
           }, 1000);
         }}
       >
-        
-        <MdTextSnippet className="icons" style={{width:"24px", height: "24px",marginRight:"0.5rem"}}/>
+        <MdTextSnippet
+          className="icons"
+          style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+        />
         {props.changedSelectTheFileBtnText.length <= 22
-            ? props.changedSelectTheFileBtnText
-            : props.changedSelectTheFileBtnText.substring(0, 21)}
+          ? props.changedSelectTheFileBtnText
+          : props.changedSelectTheFileBtnText.substring(0, 21)}
       </button>
 
       <div
         className="dropdown-menu overflow-auto toolBarDropdownBg rounded"
         aria-labelledby="SelectFileDropdown"
-        style={{minWidth:"228px", maxHeight: "260px" }}
+        style={{ minWidth: "228px", maxHeight: "260px" }}
       >
         {props.outPutDirContentValue ? (
           setDropdowns(window.outPutDirContent)
         ) : (
           <div className="text-center">
             <div
-              className="spinner-border text-secondary"
+              className="spinner-border loaderColor"
               style={{ width: "2rem", height: "2rem" }}
               role="status"
             >

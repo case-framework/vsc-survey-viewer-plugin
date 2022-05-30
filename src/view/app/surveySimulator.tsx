@@ -20,8 +20,8 @@ import EnterFileNameDialog from "./Components/EnterFileNameDialog";
 import ChangeConfig from "./Components/ChangeConfig";
 import ChangeTheme from "./Components/ChangeTheme";
 import { ThemeType } from "./AppConstants";
-import {VscListFlat} from "react-icons/vsc";
-import {MdClose} from "react-icons/md";
+import { VscListFlat } from "react-icons/vsc";
+import { MdClose } from "react-icons/md";
 
 declare global {
   interface Window {
@@ -107,26 +107,49 @@ const SurveySimulator: React.FC = (props) => {
   };
 
   return (
-    <div >
-      <nav className="navbar navbar-expand-lg sticky-top toolBarBg rounded py-0 ">
+    <div>
+      <nav className="navbar navbar-expand-lg sticky-top toolBarBg py-0 ">
         <button
           className=" navbar-toggler shadow-none "
-          style={{width:"56px", height:"40px", borderStyle: "none"}}
+          style={{ width: "56px", height: "40px", borderStyle: "none" }}
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          onClick={()=>{
+          onClick={() => {
             setNavbarToggleIsOpen(!navbarToggleIsOpen);
           }}
         >
-          {navbarToggleIsOpen?<MdClose className="icons" style={{width:"24px", height: "24px"}}/>:<VscListFlat className="icons" style={{width:"24px", height: "24px"}}/>}
-          
+          {navbarToggleIsOpen ? (
+            <MdClose
+              className="icons"
+              style={{ width: "24px", height: "24px" }}
+            />
+          ) : (
+            <VscListFlat
+              className="icons"
+              style={{ width: "24px", height: "24px" }}
+            />
+          )}
         </button>
-        <div className="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+        <div
+          className="collapse navbar-collapse justify-content-center"
+          id="navbarNavAltMarkup"
+        >
           <div className="navbar-nav">
+            <ChangeTheme
+              onThemeChange={(value: ThemeType) => {
+                console.log(value);
+                giveCommandToVscode("changeTheme", value);
+              }}
+              selectedTheme={
+                window.selectedTheme
+                  ? window.selectedTheme
+                  : ThemeType.defaultTheme
+              }
+            />
             <SelectFileToPreview
               giveCommandToVscode={(command: string, data: string) => {
                 giveCommandToVscode(command, data);
@@ -214,23 +237,12 @@ const SurveySimulator: React.FC = (props) => {
                 }));
               }}
             />
-            <ChangeTheme
-              onThemeChange={(value: ThemeType) => {
-                console.log(value);
-                giveCommandToVscode("changeTheme", value);
-              }}
-              selectedTheme={
-                window.selectedTheme
-                  ? window.selectedTheme
-                  : ThemeType.defaultTheme
-              }
-            />
           </div>
         </div>
       </nav>
 
       <div className="row">
-        <div className="col-12 col-lg-8 offset-lg-2 mt-2">
+        <div className="col-12 col-lg-8 offset-lg-2 p-3">
           {surveyViewCred.survey ? (
             <SurveyView
               loading={false}
@@ -269,7 +281,7 @@ const SurveySimulator: React.FC = (props) => {
               dateLocales={dateLocales}
             />
           ) : (
-            <div className="mt-5">
+            <div className="p-3">
               <p className="text-center">
                 Please Select The File To Preview The Survey.
               </p>

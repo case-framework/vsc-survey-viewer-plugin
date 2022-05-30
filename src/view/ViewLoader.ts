@@ -9,7 +9,7 @@ import {
   SurveyFileContent,
 } from "./app/model";
 import { SurveyContext } from "survey-engine/data_types";
-import {  ThemeType } from "./app/AppConstants";
+import { ThemeType } from "./app/AppConstants";
 
 export default class ViewLoader {
   private readonly _panel: vscode.WebviewPanel | undefined;
@@ -108,28 +108,36 @@ export default class ViewLoader {
             }
             break;
           case "changeTheme":
-           
             if (message.data !== context.workspaceState.get("selectedTheme")) {
-              vscode.window.showInformationMessage("The Survey will restart. Would to still want to continue","Yes", "No").then((value) =>{
-                if(value === "Yes"){
-                  if (this._panel) {
-                    context.workspaceState.update("selectedTheme", message.data);
-                  this._panel.webview.html = this.getWebviewContent(message.data);
-                  this._panel.webview.postMessage({
-                    command: "updateSelectedTheme",
-                    content: message.data,
-                  });
+              vscode.window
+                .showInformationMessage(
+                  "The Survey will restart. Would to still want to continue",
+                  "Yes",
+                  "No"
+                )
+                .then((value) => {
+                  if (value === "Yes") {
+                    if (this._panel) {
+                      context.workspaceState.update(
+                        "selectedTheme",
+                        message.data
+                      );
+                      this._panel.webview.html = this.getWebviewContent(
+                        message.data
+                      );
+                      this._panel.webview.postMessage({
+                        command: "updateSelectedTheme",
+                        content: message.data,
+                      });
+                    }
                   }
-                }
-              }
-              );
-              
+                });
             } else {
               vscode.window.showErrorMessage("Alredy in use");
             }
-         
+
             break;
-            case "PrefillFileSelectionError":
+          case "PrefillFileSelectionError":
             if (this._panel) {
               vscode.window.showErrorMessage(message.data);
             }
@@ -188,7 +196,7 @@ export default class ViewLoader {
         });
         </script>
     </head>
-    <body>
+    <body style="padding:0;">
         <div id="root"></div>
         <script src="${reactAppUri}"></script>
     </body>
@@ -238,16 +246,16 @@ export default class ViewLoader {
         );
         let newFiles: string[];
 
-        if(fs.existsSync(newPath)){
-        newFiles = fs.readdirSync(newPath);
+        if (fs.existsSync(newPath)) {
+          newFiles = fs.readdirSync(newPath);
 
-        let singleSurveyContent: SurveyDirectory = {
-          surveyPath: newPath,
-          surveyName: file,
-          surveyFiles: newFiles,
-        };
-        fullContent.push(singleSurveyContent);
-      }
+          let singleSurveyContent: SurveyDirectory = {
+            surveyPath: newPath,
+            surveyName: file,
+            surveyFiles: newFiles,
+          };
+          fullContent.push(singleSurveyContent);
+        }
       });
 
       const content: OutputFileStructure = {

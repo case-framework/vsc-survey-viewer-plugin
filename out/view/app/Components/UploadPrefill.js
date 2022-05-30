@@ -57,7 +57,7 @@ const UploadPrefill = (props) => {
             props.giveCommandToVscode("PrefillFileSelectionError", "No appropriate file is selected");
         }
     };
-    return (React.createElement("div", { className: "nav-item", style: { minWidth: "200px" } },
+    return (React.createElement("div", { className: "nav-item" },
         React.createElement("button", { id: "get_file", className: "btn toolBarBg shadow-none btn-custom fw-bold", title: "Upload Prefill: " + props.currentSelectFileName, onClick: () => openDialogForFileSelection() },
             React.createElement(md_1.MdOutlineFactCheck, { className: "icons", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
             props.currentSelectFileName.length <= 18

@@ -52,7 +52,7 @@ const SelectFileToPreview = (props) => {
                 React.createElement("p", { className: "h5 small" }, item.substring(0, item.lastIndexOf(".")).replace("_", " "))));
         });
     };
-    return (React.createElement("div", { className: "dropdown nav-item", style: { paddingRight: "1rem" } },
+    return (React.createElement("div", { className: "dropdown nav-item" },
         React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Select File To Preview: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setOutPutDirContentValue(false);
                 props.giveCommandToVscode("getOutputFileContent", "");
@@ -76,7 +76,7 @@ const SelectFileToPreview = (props) => {
                 ? props.changedSelectTheFileBtnText
                 : props.changedSelectTheFileBtnText.substring(0, 21)),
         React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg rounded", "aria-labelledby": "SelectFileDropdown", style: { minWidth: "228px", maxHeight: "260px" } }, props.outPutDirContentValue ? (setDropdowns(window.outPutDirContent)) : (React.createElement("div", { className: "text-center" },
-            React.createElement("div", { className: "spinner-border text-secondary", style: { width: "2rem", height: "2rem" }, role: "status" },
+            React.createElement("div", { className: "spinner-border loaderColor", style: { width: "2rem", height: "2rem" }, role: "status" },
                 React.createElement("span", { className: "sr-only" })))))));
 };
 exports.default = SelectFileToPreview;

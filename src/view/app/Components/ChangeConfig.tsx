@@ -2,8 +2,8 @@ import * as React from "react";
 import { SurveyContext } from "survey-engine/data_types";
 import { ConfigFile } from "../model";
 import "../Css/Toolbar.css";
-import {MdSettingsSuggest} from "react-icons/md";
-import {IoIosCreate} from "react-icons/io";
+import { MdSettingsSuggest } from "react-icons/md";
+import { IoIosCreate } from "react-icons/io";
 import { useState } from "react";
 interface ChangeConfigProps {
   setConfigDirContentValue: (value: boolean) => void;
@@ -42,13 +42,13 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
     });
   };
   return (
-    <div className="dropdown nav-item" >
+    <div className="dropdown nav-item">
       <button
         className="btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold"
         type="button"
         id="ChangeConfig"
         data-bs-toggle="dropdown"
-        title={"Change Config: "+selectedFile}
+        title={"Change Config: " + selectedFile}
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {
@@ -62,20 +62,29 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           }, 1000);
         }}
       >
-        <MdSettingsSuggest className="icons" style={{width:"24px", height: "24px",marginRight:"0.5rem"}}/>
+        <MdSettingsSuggest
+          className="icons"
+          style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+        />
         {selectedFile.length <= 18
-            ? selectedFile
-            : selectedFile.substring(0, 17)}
+          ? selectedFile
+          : selectedFile.substring(0, 17)}
       </button>
-      <div className="dropdown-menu overflow-auto toolBarDropdownBg rounded" aria-labelledby="ChangeConfig"
-       style={{minWidth:"180px", maxHeight: "260px" }}>
+      <div
+        className="dropdown-menu overflow-auto toolBarDropdownBg rounded"
+        aria-labelledby="ChangeConfig"
+        style={{ minWidth: "180px", maxHeight: "260px" }}
+      >
         <button
           className="dropdown-item btn-custom"
           type="button"
           data-bs-toggle="modal"
           data-bs-target="#EnterFileNameDialog"
         >
-          <IoIosCreate className="themeIcon" style={{width:"24px", height: "24px",marginRight:"0.5rem"}}/>
+          <IoIosCreate
+            className="themeIcon"
+            style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+          />
           Create New
         </button>
         <div className="dropdown-divider dividerColor"></div>
@@ -84,7 +93,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         ) : (
           <div className="text-center">
             <div
-              className="spinner-border text-secondary"
+              className="spinner-border loaderColor"
               style={{ width: "2rem", height: "2rem" }}
               role="status"
             >

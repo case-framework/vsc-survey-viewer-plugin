@@ -26,16 +26,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ShowKeysCheckBox = (props) => {
-    return (React.createElement("div", { className: "form-check nav-item ", style: {
-            width: "160px",
-            paddingTop: "0.5rem",
-            paddingRight: "3rem",
-            marginLeft: "1.5rem"
-        } },
-        React.createElement("input", { className: "form-check-input shadow-none ", type: "checkbox", value: "", id: "flexCheckChecked", checked: props.currentCheckBoxStatus, onClick: () => {
-                props.onCheckBoxStausChange(!props.currentCheckBoxStatus);
-            } }),
-        React.createElement("label", { className: "form-check-label btn-custom fw-bold", htmlFor: "flexCheckChecked" }, "Show Keys")));
+    return (React.createElement("div", { className: "nav-item ", style: { paddingLeft: "1.5rem" } },
+        React.createElement("div", { className: "form-check ", style: {
+                paddingTop: "0.5rem",
+                paddingRight: "3rem",
+            } },
+            React.createElement("input", { className: "form-check-input shadow-none ", type: "checkbox", value: "", id: "flexCheckChecked", checked: props.currentCheckBoxStatus, onChange: () => {
+                    props.onCheckBoxStausChange(!props.currentCheckBoxStatus);
+                } }),
+            React.createElement("label", { className: "form-check-label btn-custom fw-bold", htmlFor: "flexCheckChecked" }, "Show Keys"))));
 };
 exports.default = ShowKeysCheckBox;
 //# sourceMappingURL=ShowKeysCheckBox.js.map

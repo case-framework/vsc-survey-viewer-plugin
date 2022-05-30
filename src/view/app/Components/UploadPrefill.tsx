@@ -3,7 +3,6 @@ import { SurveySingleItemResponse } from "survey-engine/data_types";
 import "../Css/Toolbar.css";
 import { MdOutlineFactCheck } from "react-icons/md";
 
-
 interface UploadPrefillProps {
   giveCommandToVscode: (command: string, data: string) => void;
   onPrefillChange: (
@@ -49,7 +48,7 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
     }
   };
   return (
-    <div className="nav-item" style={{ minWidth: "200px" }}>
+    <div className="nav-item">
       <button
         id="get_file"
         className="btn toolBarBg shadow-none btn-custom fw-bold"

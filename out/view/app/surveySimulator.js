@@ -102,12 +102,18 @@ const SurveySimulator = (props) => {
         });
     };
     return (React.createElement("div", null,
-        React.createElement("nav", { className: "navbar navbar-expand-lg sticky-top toolBarBg rounded py-0 " },
+        React.createElement("nav", { className: "navbar navbar-expand-lg sticky-top toolBarBg py-0 " },
             React.createElement("button", { className: " navbar-toggler shadow-none ", style: { width: "56px", height: "40px", borderStyle: "none" }, type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNavAltMarkup", "aria-controls": "navbarNavAltMarkup", "aria-expanded": "false", "aria-label": "Toggle navigation", onClick: () => {
                     setNavbarToggleIsOpen(!navbarToggleIsOpen);
-                } }, navbarToggleIsOpen ? React.createElement(md_1.MdClose, { className: "icons", style: { width: "24px", height: "24px" } }) : React.createElement(vsc_1.VscListFlat, { className: "icons", style: { width: "24px", height: "24px" } })),
+                } }, navbarToggleIsOpen ? (React.createElement(md_1.MdClose, { className: "icons", style: { width: "24px", height: "24px" } })) : (React.createElement(vsc_1.VscListFlat, { className: "icons", style: { width: "24px", height: "24px" } }))),
             React.createElement("div", { className: "collapse navbar-collapse justify-content-center", id: "navbarNavAltMarkup" },
                 React.createElement("div", { className: "navbar-nav" },
+                    React.createElement(ChangeTheme_1.default, { onThemeChange: (value) => {
+                            console.log(value);
+                            giveCommandToVscode("changeTheme", value);
+                        }, selectedTheme: window.selectedTheme
+                            ? window.selectedTheme
+                            : AppConstants_1.ThemeType.defaultTheme }),
                     React.createElement(SelectFileToPreview_1.default, { giveCommandToVscode: (command, data) => {
                             giveCommandToVscode(command, data);
                         }, setChangedSelectTheFileBtnText: (newText) => {
@@ -169,15 +175,9 @@ const SurveySimulator = (props) => {
                                     showKeys: newStaus,
                                 },
                             }));
-                        } }),
-                    React.createElement(ChangeTheme_1.default, { onThemeChange: (value) => {
-                            console.log(value);
-                            giveCommandToVscode("changeTheme", value);
-                        }, selectedTheme: window.selectedTheme
-                            ? window.selectedTheme
-                            : AppConstants_1.ThemeType.defaultTheme })))),
+                        } })))),
         React.createElement("div", { className: "row" },
-            React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2 mt-2" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
+            React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2 p-3" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
                     ? surveyViewCred.selectedLanguage
                     : "en", onSubmit: (responses) => {
                     const exportData = responses.slice();
@@ -190,11 +190,11 @@ const SurveySimulator = (props) => {
                     //   "showFileDownloadSuccessMsg",
                     //   "The file is saved"
                     // );
-                }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("div", { className: "mt-5" },
+                }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("div", { className: "p-3" },
                 React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))))),
         React.createElement(EnterFileNameDialog_1.default, { giveCommandToVscode: (command, data) => {
                 giveCommandToVscode(command, data);
             } })));
 };
 exports.default = SurveySimulator;
-//# sourceMappingURL=SurveySimulator.js.map
+//# sourceMappingURL=surveySimulator.js.map
