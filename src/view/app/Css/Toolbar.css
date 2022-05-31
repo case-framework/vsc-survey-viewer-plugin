@@ -28,8 +28,7 @@
     background-color: var(--vscode-activityBar-background);
 }
 .toolBarDropdownBg{
-    border-color: var(--vscode-activityBar-inactiveForeground);
-    background: var(--vscode-activityBar-background);
+    background: rgb(39, 38, 38)
 }
 
 .dropdown-menu[data-bs-popper] {
