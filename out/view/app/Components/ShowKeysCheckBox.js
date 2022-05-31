@@ -30,6 +30,7 @@ const ShowKeysCheckBox = (props) => {
         React.createElement("div", { className: "form-check ", style: {
                 paddingTop: "0.5rem",
                 paddingRight: "3rem",
+                paddingBottom: "0.6rem",
             } },
             React.createElement("input", { className: "form-check-input shadow-none ", type: "checkbox", value: "", id: "flexCheckChecked", checked: props.currentCheckBoxStatus, onChange: () => {
                     props.onCheckBoxStausChange(!props.currentCheckBoxStatus);

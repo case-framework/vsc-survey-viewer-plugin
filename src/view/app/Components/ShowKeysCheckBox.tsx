@@ -14,6 +14,7 @@ const ShowKeysCheckBox: React.FC<ShowsKeysCheckBoxProps> = (props) => {
         style={{
           paddingTop: "0.5rem",
           paddingRight: "3rem",
+          paddingBottom: "0.6rem",
         }}
       >
         <input
