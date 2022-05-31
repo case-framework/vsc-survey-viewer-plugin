@@ -1,8 +1,7 @@
 import * as React from "react";
 import { ThemeType } from "../AppConstants";
 import "../Css/Toolbar.css";
-import {BsFillFileRichtextFill} from "react-icons/bs";
-
+import { BsFillFileRichtextFill } from "react-icons/bs";
 
 interface ChangeThemeProps {
   onThemeChange: (value: ThemeType) => void;
@@ -17,19 +16,27 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
         className="btn toolBarBg dropdown-toggle shadow-none changeThemeBtn fw-bold"
         type="button"
         id="ChangeTheme"
-        title={"Change Theme: "+props.selectedTheme}
+        title={"Change Theme: " + props.selectedTheme}
         data-bs-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
       >
-         <BsFillFileRichtextFill className="themeIcon" style={{width:"24px", height: "24px",marginRight:"0.5rem"}}/>       
+        <BsFillFileRichtextFill
+          className="themeIcon"
+          style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+        />
         Change Theme
       </button>
-      <div className="dropdown-menu overflow-auto toolBarDropdownBg rounded" aria-labelledby="ChangeTheme"
-      style={{minWidth:"182px", maxHeight: "260px" }}>
+      <div
+        className="dropdown-menu overflow-auto toolBarDropdownBg"
+        aria-labelledby="ChangeTheme"
+        style={{ minWidth: "182px", maxHeight: "260px" }}
+      >
         <button
           className={`${
-            props.selectedTheme === ThemeType.defaultTheme ? "fw-bold themeIcon" : ""
+            props.selectedTheme === ThemeType.defaultTheme
+              ? "fw-bold themeIcon"
+              : ""
           } dropdown-item text-center btn-custom`}
           type="button"
           onClick={() => {
@@ -41,7 +48,9 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
         <div className="dropdown-divider dividerColor"></div>
         <button
           className={`${
-            props.selectedTheme === ThemeType.tekenradarTheme ? "fw-bold themeIcon" : ""
+            props.selectedTheme === ThemeType.tekenradarTheme
+              ? "fw-bold themeIcon"
+              : ""
           } dropdown-item text-center btn-custom`}
           type="button"
           onClick={() => {

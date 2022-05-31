@@ -71,7 +71,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           : selectedFile.substring(0, 17)}
       </button>
       <div
-        className="dropdown-menu overflow-auto toolBarDropdownBg rounded"
+        className="dropdown-menu overflow-auto toolBarDropdownBg"
         aria-labelledby="ChangeConfig"
         style={{ minWidth: "180px", maxHeight: "260px" }}
       >

@@ -56,7 +56,7 @@ const ChangeConfig = (props) => {
             selectedFile.length <= 18
                 ? selectedFile
                 : selectedFile.substring(0, 17)),
-        React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg rounded", "aria-labelledby": "ChangeConfig", style: { minWidth: "180px", maxHeight: "260px" } },
+        React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg", "aria-labelledby": "ChangeConfig", style: { minWidth: "180px", maxHeight: "260px" } },
             React.createElement("button", { className: "dropdown-item btn-custom", type: "button", "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" },
                 React.createElement(io_1.IoIosCreate, { className: "themeIcon", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
                 "Create New"),

@@ -75,7 +75,7 @@ const SelectFileToPreview = (props) => {
             props.changedSelectTheFileBtnText.length <= 22
                 ? props.changedSelectTheFileBtnText
                 : props.changedSelectTheFileBtnText.substring(0, 21)),
-        React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg rounded", "aria-labelledby": "SelectFileDropdown", style: { minWidth: "228px", maxHeight: "260px" } }, props.outPutDirContentValue ? (setDropdowns(window.outPutDirContent)) : (React.createElement("div", { className: "text-center" },
+        React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg", "aria-labelledby": "SelectFileDropdown", style: { minWidth: "228px", maxHeight: "260px" } }, props.outPutDirContentValue ? (setDropdowns(window.outPutDirContent)) : (React.createElement("div", { className: "text-center" },
             React.createElement("div", { className: "spinner-border loaderColor", style: { width: "2rem", height: "2rem" }, role: "status" },
                 React.createElement("span", { className: "sr-only" })))))));
 };

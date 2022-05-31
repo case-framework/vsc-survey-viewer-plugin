@@ -112,7 +112,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
       </button>
 
       <div
-        className="dropdown-menu overflow-auto toolBarDropdownBg rounded"
+        className="dropdown-menu overflow-auto toolBarDropdownBg"
         aria-labelledby="SelectFileDropdown"
         style={{ minWidth: "228px", maxHeight: "260px" }}
       >
