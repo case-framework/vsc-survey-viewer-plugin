@@ -59,7 +59,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
             }, 1000);
           }}
         >
-          <p className="h6 small">
+          <p className="h7 small">
             {item.substring(0, item.lastIndexOf(".")).replace("_", " ")}
           </p>
         </button>

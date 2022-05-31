@@ -49,7 +49,7 @@ const SelectFileToPreview = (props) => {
                         }
                     }, 1000);
                 } },
-                React.createElement("p", { className: "h6 small" }, item.substring(0, item.lastIndexOf(".")).replace("_", " "))));
+                React.createElement("p", { className: "h7 small" }, item.substring(0, item.lastIndexOf(".")).replace("_", " "))));
         });
     };
     return (React.createElement("div", { className: "dropdown nav-item" },
