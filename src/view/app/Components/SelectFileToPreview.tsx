@@ -18,7 +18,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
     return items.directoryContent.map((item) => {
       return (
         <div className="btn-custom">
-          <p className="fw-bold h4" style={{ paddingLeft: "1rem" }}>
+          <p className="fw-bold h7" style={{ paddingLeft: "1rem" }}>
             {item.surveyName}
           </p>
           {setDropdownItems(item.surveyFiles, item.surveyPath)}
@@ -59,7 +59,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
             }, 1000);
           }}
         >
-          <p className="h5 small">
+          <p className="h6 small">
             {item.substring(0, item.lastIndexOf(".")).replace("_", " ")}
           </p>
         </button>

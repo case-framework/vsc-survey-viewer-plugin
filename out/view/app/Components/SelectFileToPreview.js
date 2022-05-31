@@ -31,7 +31,7 @@ const SelectFileToPreview = (props) => {
     const setDropdowns = (items) => {
         return items.directoryContent.map((item) => {
             return (React.createElement("div", { className: "btn-custom" },
-                React.createElement("p", { className: "fw-bold h4", style: { paddingLeft: "1rem" } }, item.surveyName),
+                React.createElement("p", { className: "fw-bold h7", style: { paddingLeft: "1rem" } }, item.surveyName),
                 setDropdownItems(item.surveyFiles, item.surveyPath),
                 React.createElement("div", { className: "dropdown-divider dividerColor" })));
         });
@@ -49,7 +49,7 @@ const SelectFileToPreview = (props) => {
                         }
                     }, 1000);
                 } },
-                React.createElement("p", { className: "h5 small" }, item.substring(0, item.lastIndexOf(".")).replace("_", " "))));
+                React.createElement("p", { className: "h6 small" }, item.substring(0, item.lastIndexOf(".")).replace("_", " "))));
         });
     };
     return (React.createElement("div", { className: "dropdown nav-item" },
