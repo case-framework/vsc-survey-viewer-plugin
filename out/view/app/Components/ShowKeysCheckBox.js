@@ -24,12 +24,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
+require("../Css/Toolbar.css");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ShowKeysCheckBox = (props) => {
     return (React.createElement("div", { className: "nav-item ", style: { paddingLeft: "1.5rem" } },
         React.createElement("div", { className: "form-check ", style: {
-                paddingTop: "0.5rem",
-                paddingRight: "3rem",
+                paddingTop: "0.7rem",
                 paddingBottom: "0.6rem",
             } },
             React.createElement("input", { className: "form-check-input shadow-none ", type: "checkbox", value: "", id: "flexCheckChecked", checked: props.currentCheckBoxStatus, onChange: () => {

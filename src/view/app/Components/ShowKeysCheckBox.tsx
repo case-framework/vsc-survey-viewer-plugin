@@ -1,4 +1,5 @@
 import * as React from "react";
+import "../Css/Toolbar.css";
 
 interface ShowsKeysCheckBoxProps {
   currentCheckBoxStatus: boolean;
@@ -12,8 +13,7 @@ const ShowKeysCheckBox: React.FC<ShowsKeysCheckBoxProps> = (props) => {
       <div
         className="form-check "
         style={{
-          paddingTop: "0.5rem",
-          paddingRight: "3rem",
+          paddingTop: "0.7rem",
           paddingBottom: "0.6rem",
         }}
       >
