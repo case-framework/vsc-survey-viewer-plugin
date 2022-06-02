@@ -9,14 +9,8 @@ interface ShowsKeysCheckBoxProps {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ShowKeysCheckBox: React.FC<ShowsKeysCheckBoxProps> = (props) => {
   return (
-    <div className="nav-item " style={{ paddingLeft: "1.5rem" }}>
-      <div
-        className="form-check "
-        style={{
-          paddingTop: "0.7rem",
-          paddingBottom: "0.6rem",
-        }}
-      >
+    <div className="nav-item ">
+      <div className="form-check btn btn-custom">
         <input
           className="form-check-input shadow-none "
           type="checkbox"
@@ -27,10 +21,7 @@ const ShowKeysCheckBox: React.FC<ShowsKeysCheckBoxProps> = (props) => {
             props.onCheckBoxStausChange(!props.currentCheckBoxStatus);
           }}
         />
-        <label
-          className="form-check-label btn-custom fw-bold"
-          htmlFor="flexCheckChecked"
-        >
+        <label className="form-check-label fw-bold" htmlFor="flexCheckChecked">
           Show Keys
         </label>
       </div>
