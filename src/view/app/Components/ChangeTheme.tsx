@@ -29,7 +29,7 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
         Change Theme
       </button>
       <div
-        className="dropdown-menu overflow-auto toolBarDropdownBg"
+        className="dropdown-menu text-center overflow-auto toolBarDropdownBg"
         aria-labelledby="ChangeTheme"
         style={{ minWidth: "182px", maxHeight: "260px" }}
       >
@@ -38,7 +38,7 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
             props.selectedTheme === ThemeType.defaultTheme
               ? "fw-bold themeIcon"
               : ""
-          } dropdown-item text-center btn-custom`}
+          } dropdown-item btn-custom`}
           type="button"
           onClick={() => {
             props.onThemeChange(ThemeType.defaultTheme);
@@ -52,7 +52,7 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
             props.selectedTheme === ThemeType.tekenradarTheme
               ? "fw-bold themeIcon"
               : ""
-          } dropdown-item text-center btn-custom`}
+          } dropdown-item btn-custom`}
           type="button"
           onClick={() => {
             props.onThemeChange(ThemeType.tekenradarTheme);

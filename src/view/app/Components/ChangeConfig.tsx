@@ -24,8 +24,9 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
     return configFileList.map((item) => {
       return (
         <button
-          className="dropdown-item text-center nav-item btn-custom"
+          className="dropdown-item nav-item btn-custom"
           type="button"
+          style={{ paddingTop: "0.2rem", paddingBottom: "0.2rem" }}
           onClick={() => {
             props.giveCommandToVscode(
               "setTheConfigFileChangeWatcher",
@@ -73,13 +74,14 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           : selectedFile.substring(0, 17)}
       </button>
       <div
-        className="dropdown-menu overflow-auto toolBarDropdownBg"
+        className="dropdown-menu text-center overflow-auto toolBarDropdownBg"
         aria-labelledby="ChangeConfig"
         style={{ minWidth: "180px", maxHeight: "260px" }}
       >
         <button
-          className="dropdown-item btn-custom iconsAndTextAlign"
+          className="dropdown-item justify-content-center  btn-custom iconsAndTextAlign "
           type="button"
+          style={{ paddingTop: "0.2rem", paddingBottom: "0.2rem" }}
           data-bs-toggle="modal"
           data-bs-target="#EnterFileNameDialog"
         >
