@@ -2,9 +2,11 @@ import * as React from "react";
 import { SurveyContext } from "survey-engine/data_types";
 import { ConfigFile } from "../model";
 import "../Css/Toolbar.css";
-import { MdSettingsSuggest } from "react-icons/md";
-import { IoIosCreate } from "react-icons/io";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+
 interface ChangeConfigProps {
   setConfigDirContentValue: (value: boolean) => void;
   configDirContentValue: boolean;
@@ -44,7 +46,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
   return (
     <div className="dropdown nav-item">
       <button
-        className="btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold"
+        className="btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold iconsAndTextAlign"
         type="button"
         id="ChangeConfig"
         data-bs-toggle="dropdown"
@@ -62,9 +64,9 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           }, 1000);
         }}
       >
-        <MdSettingsSuggest
-          className="icons"
-          style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+        <FontAwesomeIcon
+          icon={faGear}
+          style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
         {selectedFile.length <= 18
           ? selectedFile
@@ -76,14 +78,14 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         style={{ minWidth: "180px", maxHeight: "260px" }}
       >
         <button
-          className="dropdown-item btn-custom"
+          className="dropdown-item btn-custom iconsAndTextAlign"
           type="button"
           data-bs-toggle="modal"
           data-bs-target="#EnterFileNameDialog"
         >
-          <IoIosCreate
-            className="themeIcon"
-            style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+          <FontAwesomeIcon
+            icon={faPenToSquare}
+            style={{ width: "18px", height: "18px", paddingRight: "0.3rem" }}
           />
           Create New
         </button>

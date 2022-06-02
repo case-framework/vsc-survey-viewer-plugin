@@ -25,9 +25,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 require("../Css/Toolbar.css");
-const md_1 = require("react-icons/md");
-const io_1 = require("react-icons/io");
 const react_1 = require("react");
+const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
+const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
+const free_solid_svg_icons_2 = require("@fortawesome/free-solid-svg-icons");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeConfig = (props) => {
     const [selectedFile, setSelectedFile] = (0, react_1.useState)("Change Config");
@@ -42,7 +43,7 @@ const ChangeConfig = (props) => {
         });
     };
     return (React.createElement("div", { className: "dropdown nav-item" },
-        React.createElement("button", { className: "btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold", type: "button", id: "ChangeConfig", "data-bs-toggle": "dropdown", title: "Change Config: " + selectedFile, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
+        React.createElement("button", { className: "btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "ChangeConfig", "data-bs-toggle": "dropdown", title: "Change Config: " + selectedFile, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setConfigDirContentValue(false);
                 props.giveCommandToVscode("getTheConfigFilesList", "");
                 const intervalId = setInterval(() => {
@@ -52,13 +53,13 @@ const ChangeConfig = (props) => {
                     }
                 }, 1000);
             } },
-            React.createElement(md_1.MdSettingsSuggest, { className: "icons", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+            React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faGear, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
             selectedFile.length <= 18
                 ? selectedFile
                 : selectedFile.substring(0, 17)),
         React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg", "aria-labelledby": "ChangeConfig", style: { minWidth: "180px", maxHeight: "260px" } },
-            React.createElement("button", { className: "dropdown-item btn-custom", type: "button", "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" },
-                React.createElement(io_1.IoIosCreate, { className: "themeIcon", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+            React.createElement("button", { className: "dropdown-item btn-custom iconsAndTextAlign", type: "button", "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" },
+                React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_2.faPenToSquare, style: { width: "18px", height: "18px", paddingRight: "0.3rem" } }),
                 "Create New"),
             React.createElement("div", { className: "dropdown-divider dividerColor" }),
             props.configDirContentValue ? (setConfigFilesList(window.configFilesDir.directoryContent)) : (React.createElement("div", { className: "text-center" },

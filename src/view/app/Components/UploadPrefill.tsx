@@ -1,7 +1,8 @@
 import * as React from "react";
 import { SurveySingleItemResponse } from "survey-engine/data_types";
 import "../Css/Toolbar.css";
-import { MdOutlineFactCheck } from "react-icons/md";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileLines } from "@fortawesome/free-solid-svg-icons";
 
 interface UploadPrefillProps {
   giveCommandToVscode: (command: string, data: string) => void;
@@ -51,13 +52,13 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
     <div className="nav-item">
       <button
         id="get_file"
-        className="btn toolBarBg shadow-none btn-custom fw-bold"
+        className="btn toolBarBg shadow-none btn-custom fw-bold iconsAndTextAlign"
         title={"Upload Prefill: " + props.currentSelectFileName}
         onClick={() => openDialogForFileSelection()}
       >
-        <MdOutlineFactCheck
-          className="icons"
-          style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+        <FontAwesomeIcon
+          icon={faFileLines}
+          style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
         {props.currentSelectFileName.length <= 18
           ? props.currentSelectFileName

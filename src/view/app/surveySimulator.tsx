@@ -20,8 +20,9 @@ import EnterFileNameDialog from "./Components/EnterFileNameDialog";
 import ChangeConfig from "./Components/ChangeConfig";
 import ChangeTheme from "./Components/ChangeTheme";
 import { ThemeType } from "./AppConstants";
-import { VscListFlat } from "react-icons/vsc";
-import { MdClose } from "react-icons/md";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 declare global {
   interface Window {
@@ -110,7 +111,7 @@ const SurveySimulator: React.FC = (props) => {
     <div>
       <nav className="navbar navbar-expand-lg sticky-top toolBarBg py-0 ">
         <button
-          className=" navbar-toggler shadow-none "
+          className=" btn navbar-toggler shadow-none btn-custom"
           style={{ width: "56px", height: "40px", borderStyle: "none" }}
           type="button"
           data-bs-toggle="collapse"
@@ -123,14 +124,14 @@ const SurveySimulator: React.FC = (props) => {
           }}
         >
           {navbarToggleIsOpen ? (
-            <MdClose
-              className="icons"
-              style={{ width: "24px", height: "24px" }}
+            <FontAwesomeIcon
+              icon={faXmark}
+              style={{ width: "20px", height: "20px" }}
             />
           ) : (
-            <VscListFlat
-              className="icons"
-              style={{ width: "24px", height: "24px" }}
+            <FontAwesomeIcon
+              icon={faBars}
+              style={{ width: "20px", height: "20px" }}
             />
           )}
         </button>

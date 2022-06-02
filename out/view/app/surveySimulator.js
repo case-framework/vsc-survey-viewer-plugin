@@ -37,8 +37,9 @@ const EnterFileNameDialog_1 = __importDefault(require("./Components/EnterFileNam
 const ChangeConfig_1 = __importDefault(require("./Components/ChangeConfig"));
 const ChangeTheme_1 = __importDefault(require("./Components/ChangeTheme"));
 const AppConstants_1 = require("./AppConstants");
-const vsc_1 = require("react-icons/vsc");
-const md_1 = require("react-icons/md");
+const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
+const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
+const free_solid_svg_icons_2 = require("@fortawesome/free-solid-svg-icons");
 const vscode = window.acquireVsCodeApi();
 const defaultSurveyContext = {
     isLoggedIn: false,
@@ -103,9 +104,9 @@ const SurveySimulator = (props) => {
     };
     return (React.createElement("div", null,
         React.createElement("nav", { className: "navbar navbar-expand-lg sticky-top toolBarBg py-0 " },
-            React.createElement("button", { className: " navbar-toggler shadow-none ", style: { width: "56px", height: "40px", borderStyle: "none" }, type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNavAltMarkup", "aria-controls": "navbarNavAltMarkup", "aria-expanded": "false", "aria-label": "Toggle navigation", onClick: () => {
+            React.createElement("button", { className: " btn navbar-toggler shadow-none btn-custom", style: { width: "56px", height: "40px", borderStyle: "none" }, type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNavAltMarkup", "aria-controls": "navbarNavAltMarkup", "aria-expanded": "false", "aria-label": "Toggle navigation", onClick: () => {
                     setNavbarToggleIsOpen(!navbarToggleIsOpen);
-                } }, navbarToggleIsOpen ? (React.createElement(md_1.MdClose, { className: "icons", style: { width: "24px", height: "24px" } })) : (React.createElement(vsc_1.VscListFlat, { className: "icons", style: { width: "24px", height: "24px" } }))),
+                } }, navbarToggleIsOpen ? (React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faXmark, style: { width: "20px", height: "20px" } })) : (React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_2.faBars, style: { width: "20px", height: "20px" } }))),
             React.createElement("div", { className: "collapse navbar-collapse justify-content-center", id: "navbarNavAltMarkup" },
                 React.createElement("div", { className: "navbar-nav" },
                     React.createElement(ChangeTheme_1.default, { onThemeChange: (value) => {

@@ -1,7 +1,8 @@
 import * as React from "react";
 import { OutputFileStructure } from "../model";
 import "../Css/Toolbar.css";
-import { MdTextSnippet } from "react-icons/md";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFile } from "@fortawesome/free-solid-svg-icons";
 
 interface SelectFileDropdownProps {
   giveCommandToVscode: (command: string, data: string) => void;
@@ -70,7 +71,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
   return (
     <div className="dropdown nav-item">
       <button
-        className="btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold"
+        className="btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold iconsAndTextAlign"
         type="button"
         id="SelectFileDropdown"
         data-bs-toggle="dropdown"
@@ -102,9 +103,9 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
           }, 1000);
         }}
       >
-        <MdTextSnippet
-          className="icons"
-          style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+        <FontAwesomeIcon
+          icon={faFile}
+          style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
         {props.changedSelectTheFileBtnText.length <= 22
           ? props.changedSelectTheFileBtnText

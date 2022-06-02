@@ -25,7 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 require("../Css/Toolbar.css");
-const md_1 = require("react-icons/md");
+const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
+const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const UploadPrefill = (props) => {
     const openDialogForFileSelection = () => {
@@ -58,8 +59,8 @@ const UploadPrefill = (props) => {
         }
     };
     return (React.createElement("div", { className: "nav-item" },
-        React.createElement("button", { id: "get_file", className: "btn toolBarBg shadow-none btn-custom fw-bold", title: "Upload Prefill: " + props.currentSelectFileName, onClick: () => openDialogForFileSelection() },
-            React.createElement(md_1.MdOutlineFactCheck, { className: "icons", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+        React.createElement("button", { id: "get_file", className: "btn toolBarBg shadow-none btn-custom fw-bold iconsAndTextAlign", title: "Upload Prefill: " + props.currentSelectFileName, onClick: () => openDialogForFileSelection() },
+            React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faFileLines, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
             props.currentSelectFileName.length <= 18
                 ? props.currentSelectFileName
                 : props.currentSelectFileName.substring(0, 17)),

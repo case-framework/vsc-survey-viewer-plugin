@@ -25,7 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 require("../Css/Toolbar.css");
-const md_1 = require("react-icons/md");
+const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
+const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const SelectFileToPreview = (props) => {
     const setDropdowns = (items) => {
@@ -53,7 +54,7 @@ const SelectFileToPreview = (props) => {
         });
     };
     return (React.createElement("div", { className: "dropdown nav-item" },
-        React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Select File To Preview: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
+        React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Select File To Preview: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setOutPutDirContentValue(false);
                 props.giveCommandToVscode("getOutputFileContent", "");
                 const intervalId = setInterval(() => {
@@ -71,7 +72,7 @@ const SelectFileToPreview = (props) => {
                     console.log(window.outPutDirContent);
                 }, 1000);
             } },
-            React.createElement(md_1.MdTextSnippet, { className: "icons", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+            React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faFile, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
             props.changedSelectTheFileBtnText.length <= 22
                 ? props.changedSelectTheFileBtnText
                 : props.changedSelectTheFileBtnText.substring(0, 21)),

@@ -26,12 +26,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const AppConstants_1 = require("../AppConstants");
 require("../Css/Toolbar.css");
-const bs_1 = require("react-icons/bs");
+const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
+const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeTheme = (props) => {
     return (React.createElement("div", { className: "dropdown nav-item" },
-        React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none changeThemeBtn fw-bold", type: "button", id: "ChangeTheme", title: "Change Theme: " + props.selectedTheme, "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
-            React.createElement(bs_1.BsFillFileRichtextFill, { className: "themeIcon", style: { width: "24px", height: "24px", marginRight: "0.5rem" } }),
+        React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none changeThemeBtn fw-bold iconsAndTextAlign", type: "button", id: "ChangeTheme", title: "Change Theme: " + props.selectedTheme, "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
+            React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faImage, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
             "Change Theme"),
         React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg", "aria-labelledby": "ChangeTheme", style: { minWidth: "182px", maxHeight: "260px" } },
             React.createElement("button", { className: `${props.selectedTheme === AppConstants_1.ThemeType.defaultTheme

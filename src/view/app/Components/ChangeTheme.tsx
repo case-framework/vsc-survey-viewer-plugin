@@ -1,7 +1,8 @@
 import * as React from "react";
 import { ThemeType } from "../AppConstants";
 import "../Css/Toolbar.css";
-import { BsFillFileRichtextFill } from "react-icons/bs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 interface ChangeThemeProps {
   onThemeChange: (value: ThemeType) => void;
@@ -13,7 +14,7 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
   return (
     <div className="dropdown nav-item">
       <button
-        className="btn toolBarBg dropdown-toggle shadow-none changeThemeBtn fw-bold"
+        className="btn toolBarBg dropdown-toggle shadow-none changeThemeBtn fw-bold iconsAndTextAlign"
         type="button"
         id="ChangeTheme"
         title={"Change Theme: " + props.selectedTheme}
@@ -21,9 +22,9 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
         aria-haspopup="true"
         aria-expanded="false"
       >
-        <BsFillFileRichtextFill
-          className="themeIcon"
-          style={{ width: "24px", height: "24px", marginRight: "0.5rem" }}
+        <FontAwesomeIcon
+          icon={faImage}
+          style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
         Change Theme
       </button>
