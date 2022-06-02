@@ -37,13 +37,13 @@ const ChangeTheme = (props) => {
         React.createElement("div", { className: "dropdown-menu text-center overflow-auto toolBarDropdownBg", "aria-labelledby": "ChangeTheme", style: { minWidth: "182px", maxHeight: "260px" } },
             React.createElement("button", { className: `${props.selectedTheme === AppConstants_1.ThemeType.defaultTheme
                     ? "fw-bold themeIcon"
-                    : ""} dropdown-item btn-custom`, type: "button", onClick: () => {
+                    : ""} dropdown-item btn-custom`, type: "button", style: { paddingTop: "0.2rem", paddingBottom: "0.2rem" }, onClick: () => {
                     props.onThemeChange(AppConstants_1.ThemeType.defaultTheme);
                 } }, "Default Theme"),
             React.createElement("div", { className: "dropdown-divider dividerColor" }),
             React.createElement("button", { className: `${props.selectedTheme === AppConstants_1.ThemeType.tekenradarTheme
                     ? "fw-bold themeIcon"
-                    : ""} dropdown-item btn-custom`, type: "button", onClick: () => {
+                    : ""} dropdown-item btn-custom`, type: "button", style: { paddingTop: "0.2rem", paddingBottom: "0.2rem" }, onClick: () => {
                     props.onThemeChange(AppConstants_1.ThemeType.tekenradarTheme);
                 } }, "Tekenradar Theme"))));
 };
