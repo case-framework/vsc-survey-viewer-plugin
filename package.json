@@ -1,102 +1,102 @@
 {
-    "name": "surveyviewer",
-    "displayName": "surveyViewer",
-    "description": "",
-    "version": "0.0.1",
-    "engines": {
-        "vscode": "^1.64.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onCommand:surveyviewer.preview"
-    ],
-    "main": "./out/extension.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/case-framework/vsc-survey-viewer-plugin.git"
-    },
-    "contributes": {
-        "languages": [
-            {
-                "id": "JsonFile",
-                "aliases": [
-                    "JsonFile",
-                    "dc"
-                ],
-                "extensions": [
-                    ".json"
-                ]
-            }
+  "name": "surveyviewer",
+  "displayName": "surveyViewer",
+  "description": "",
+  "version": "0.0.2",
+  "engines": {
+    "vscode": "^1.64.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:surveyviewer.preview"
+  ],
+  "main": "./out/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/case-framework/vsc-survey-viewer-plugin.git"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "JsonFile",
+        "aliases": [
+          "JsonFile",
+          "dc"
         ],
-        "commands": [
-            {
-                "command": "surveyviewer.preview",
-                "category": "Survey Viewer",
-                "title": "Survey Preview"
-            }
+        "extensions": [
+          ".json"
         ]
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "npm-run-all compile:* && tsc -p . && webpack --mode development",
-        "watch": "npm-run-all -p watch:* && tsc -watch -p ./ && webpack --watch --mode development",
-        "compile:extension": "tsc -p ./",
-        "compile:views": "webpack --mode development",
-        "watch:extension": "tsc -watch -p ./",
-        "watch:views": "webpack --watch --mode development",
-        "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src --ext ts",
-        "test": "node ./out/test/runTest.js"
-    },
-    "devDependencies": {
-        "-": "^0.0.1",
-        "@fontsource/open-sans": "^4.5.6",
-        "@material-ui/core": "^4.12.3",
-        "@material-ui/icons": "^4.11.2",
-        "@types/glob": "^7.2.0",
-        "@types/mocha": "^9.1.0",
-        "@types/node": "14.x",
-        "@types/react": "^17.0.39",
-        "@types/react-dom": "^17.0.13",
-        "@types/vscode": "^1.64.0",
-        "@typescript-eslint/eslint-plugin": "^5.12.1",
-        "@typescript-eslint/parser": "^5.12.1",
-        "@vscode/test-electron": "^2.1.2",
-        "css-loader": "^6.6.0",
-        "eslint": "^8.9.0",
-        "file-loader": "^6.2.0",
-        "glob": "^7.2.0",
-        "mini-css-extract-plugin": "^2.6.0",
-        "mocha": "^9.2.1",
-        "npm-run-all": "^4.1.5",
-        "postcss-loader": "^6.2.1",
-        "resolve-url-loader": "^5.0.0",
-        "sass": "^1.49.9",
-        "sass-loader": "^12.6.0",
-        "save-dev": "^0.0.1-security",
-        "style-loader": "^3.3.1",
-        "ts-loader": "^9.2.7",
-        "typescript": "^4.5.5",
-        "url-loader": "^4.1.1",
-        "webpack": "^5.70.0",
-        "webpack-cli": "^4.9.2"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^6.1.1",
-        "@fortawesome/free-regular-svg-icons": "^6.1.1",
-        "@fortawesome/free-solid-svg-icons": "^6.1.1",
-        "@fortawesome/react-fontawesome": "^0.1.18",
-        "@monaco-editor/react": "^4.3.1",
-        "bootstrap": "^5.1.3",
-        "case-web-ui": "^1.10.2",
-        "clsx": "^1.1.1",
-        "date-fns": "^2.28.0",
-        "react": "^17.0.2",
-        "react-bootstrap": "^2.1.2",
-        "react-dom": "^17.0.2",
-        "react-dropzone": "^12.0.4",
-        "survey-engine": "^1.1.4"
-    }
+      }
+    ],
+    "commands": [
+      {
+        "command": "surveyviewer.preview",
+        "category": "Survey Viewer",
+        "title": "Survey Preview"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "npm-run-all compile:* && tsc -p . && webpack --mode development",
+    "watch": "npm-run-all -p watch:* && tsc -watch -p ./ && webpack --watch --mode development",
+    "compile:extension": "tsc -p ./",
+    "compile:views": "webpack --mode development",
+    "watch:extension": "tsc -watch -p ./",
+    "watch:views": "webpack --watch --mode development",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "-": "^0.0.1",
+    "@fontsource/open-sans": "^4.5.6",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "14.x",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.13",
+    "@types/vscode": "^1.64.0",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "@vscode/test-electron": "^2.1.2",
+    "css-loader": "^6.6.0",
+    "eslint": "^8.9.0",
+    "file-loader": "^6.2.0",
+    "glob": "^7.2.0",
+    "mini-css-extract-plugin": "^2.6.0",
+    "mocha": "^9.2.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-loader": "^6.2.1",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
+    "save-dev": "^0.0.1-security",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.7",
+    "typescript": "^4.5.5",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
+    "@monaco-editor/react": "^4.3.1",
+    "bootstrap": "^5.1.3",
+    "case-web-ui": "^1.10.2",
+    "clsx": "^1.1.1",
+    "date-fns": "^2.28.0",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.1.2",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^12.0.4",
+    "survey-engine": "^1.1.4"
+  }
 }
