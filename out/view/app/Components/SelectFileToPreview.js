@@ -30,11 +30,11 @@ const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const SelectFileToPreview = (props) => {
     const setDropdowns = (items) => {
-        return items.directoryContent.map((item) => {
+        return items.directoryContent.map((item, index, items) => {
             return (React.createElement("div", { className: "btn-custom" },
                 React.createElement("p", { className: "fw-bold h7", style: { paddingLeft: "1rem" } }, item.surveyName),
                 setDropdownItems(item.surveyFiles, item.surveyPath),
-                React.createElement("div", { className: "dropdown-divider dividerColor" })));
+                items.length !== index + 1 ? (React.createElement("div", { className: "dropdown-divider dividerColor" })) : null));
         });
     };
     const setDropdownItems = (items, directoryPath) => {

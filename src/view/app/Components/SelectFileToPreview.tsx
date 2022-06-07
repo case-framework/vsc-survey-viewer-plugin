@@ -16,14 +16,16 @@ interface SelectFileDropdownProps {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
   const setDropdowns = (items: OutputFileStructure): React.ReactNode => {
-    return items.directoryContent.map((item) => {
+    return items.directoryContent.map((item, index, items) => {
       return (
         <div className="btn-custom">
           <p className="fw-bold h7" style={{ paddingLeft: "1rem" }}>
             {item.surveyName}
           </p>
           {setDropdownItems(item.surveyFiles, item.surveyPath)}
-          <div className="dropdown-divider dividerColor"></div>
+          {items.length !== index + 1 ? (
+            <div className="dropdown-divider dividerColor"></div>
+          ) : null}
         </div>
       );
     });
