@@ -177,22 +177,22 @@ const SurveySimulator = (props) => {
                                 },
                             }));
                         } })))),
-        React.createElement("div", { className: "row" },
-            React.createElement("div", { className: "col-12 col-lg-8 offset-lg-2 p-3" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
-                    ? surveyViewCred.selectedLanguage
-                    : "en", onSubmit: (responses) => {
-                    const exportData = responses.slice();
-                    var a = document.createElement("a");
-                    var file = new Blob([JSON.stringify(exportData, undefined, 2)], { type: "json" });
-                    a.href = URL.createObjectURL(file);
-                    a.download = `${surveyViewCred.survey?.current.surveyDefinition.key}_responses_${new Date().toLocaleDateString()}.json`;
-                    a.click();
-                    // giveCommandToVscode(
-                    //   "showFileDownloadSuccessMsg",
-                    //   "The file is saved"
-                    // );
-                }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("div", { className: "p-3" },
-                React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))))),
+        React.createElement("div", { className: "container p-3" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
+                ? surveyViewCred.selectedLanguage
+                : "en", onSubmit: (responses) => {
+                const exportData = responses.slice();
+                var a = document.createElement("a");
+                var file = new Blob([JSON.stringify(exportData, undefined, 2)], {
+                    type: "json",
+                });
+                a.href = URL.createObjectURL(file);
+                a.download = `${surveyViewCred.survey?.current.surveyDefinition.key}_responses_${new Date().toLocaleDateString()}.json`;
+                a.click();
+                // giveCommandToVscode(
+                //   "showFileDownloadSuccessMsg",
+                //   "The file is saved"
+                // );
+            }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))),
         React.createElement(EnterFileNameDialog_1.default, { giveCommandToVscode: (command, data) => {
                 giveCommandToVscode(command, data);
             } })));

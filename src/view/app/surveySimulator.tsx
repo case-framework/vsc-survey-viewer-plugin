@@ -242,53 +242,48 @@ const SurveySimulator: React.FC = (props) => {
         </div>
       </nav>
 
-      <div className="row">
-        <div className="col-12 col-lg-8 offset-lg-2 p-3">
-          {surveyViewCred.survey ? (
-            <SurveyView
-              loading={false}
-              showKeys={surveyViewCred.simulatorUIConfig.showKeys}
-              survey={surveyViewCred.survey}
-              context={surveyViewCred.context}
-              prefills={surveyViewCred.prefillValues}
-              languageCode={
-                surveyViewCred.selectedLanguage
-                  ? surveyViewCred.selectedLanguage
-                  : "en"
-              }
-              onSubmit={(responses) => {
-                const exportData = responses.slice();
-                var a = document.createElement("a");
-                var file = new Blob(
-                  [JSON.stringify(exportData, undefined, 2)],
-                  { type: "json" }
-                );
-                a.href = URL.createObjectURL(file);
-                a.download = `${
-                  surveyViewCred.survey?.current.surveyDefinition.key
-                }_responses_${new Date().toLocaleDateString()}.json`;
-                a.click();
-                // giveCommandToVscode(
-                //   "showFileDownloadSuccessMsg",
-                //   "The file is saved"
-                // );
-              }}
-              nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
-              backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}
-              submitBtnText={surveyViewCred.simulatorUIConfig.texts.submitBtn}
-              invalidResponseText={
-                surveyViewCred.simulatorUIConfig.texts.invalidResponseText
-              }
-              dateLocales={dateLocales}
-            />
-          ) : (
-            <div className="p-3">
-              <p className="text-center">
-                Please Select The File To Preview The Survey.
-              </p>
-            </div>
-          )}
-        </div>
+      <div className="container p-3">
+        {surveyViewCred.survey ? (
+          <SurveyView
+            loading={false}
+            showKeys={surveyViewCred.simulatorUIConfig.showKeys}
+            survey={surveyViewCred.survey}
+            context={surveyViewCred.context}
+            prefills={surveyViewCred.prefillValues}
+            languageCode={
+              surveyViewCred.selectedLanguage
+                ? surveyViewCred.selectedLanguage
+                : "en"
+            }
+            onSubmit={(responses) => {
+              const exportData = responses.slice();
+              var a = document.createElement("a");
+              var file = new Blob([JSON.stringify(exportData, undefined, 2)], {
+                type: "json",
+              });
+              a.href = URL.createObjectURL(file);
+              a.download = `${
+                surveyViewCred.survey?.current.surveyDefinition.key
+              }_responses_${new Date().toLocaleDateString()}.json`;
+              a.click();
+              // giveCommandToVscode(
+              //   "showFileDownloadSuccessMsg",
+              //   "The file is saved"
+              // );
+            }}
+            nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
+            backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}
+            submitBtnText={surveyViewCred.simulatorUIConfig.texts.submitBtn}
+            invalidResponseText={
+              surveyViewCred.simulatorUIConfig.texts.invalidResponseText
+            }
+            dateLocales={dateLocales}
+          />
+        ) : (
+          <p className="text-center">
+            Please Select The File To Preview The Survey.
+          </p>
+        )}
       </div>
       <EnterFileNameDialog
         giveCommandToVscode={(command: string, data: string) => {
