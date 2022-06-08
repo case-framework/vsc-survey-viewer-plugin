@@ -71,7 +71,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
   };
 
   return (
-    <div className="dropdown nav-item">
+    <div className="dropdown nav-item" style={{ marginLeft: "1rem" }}>
       <button
         className="btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold iconsAndTextAlign"
         type="button"

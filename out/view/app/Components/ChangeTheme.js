@@ -30,7 +30,7 @@ const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
 const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeTheme = (props) => {
-    return (React.createElement("div", { className: "dropdown nav-item" },
+    return (React.createElement("div", { className: "dropdown nav-item", style: { marginRight: "2rem" } },
         React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none changeThemeBtn fw-bold iconsAndTextAlign", type: "button", id: "ChangeTheme", title: "Change Theme: " + props.selectedTheme, "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
             React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faImage, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
             "Change Theme"),

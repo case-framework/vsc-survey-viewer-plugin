@@ -53,7 +53,7 @@ const SelectFileToPreview = (props) => {
                 React.createElement("p", { className: "h7 small" }, item.substring(0, item.lastIndexOf(".")).replace("_", " "))));
         });
     };
-    return (React.createElement("div", { className: "dropdown nav-item" },
+    return (React.createElement("div", { className: "dropdown nav-item", style: { marginLeft: "1rem" } },
         React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Select File To Preview: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setOutPutDirContentValue(false);
                 props.giveCommandToVscode("getOutputFileContent", "");
