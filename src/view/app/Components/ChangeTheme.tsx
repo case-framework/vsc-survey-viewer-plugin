@@ -12,7 +12,7 @@ interface ChangeThemeProps {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
   return (
-    <div className="dropdown nav-item" style={{ marginRight: "2rem" }}>
+    <div className="dropdown nav-item">
       <button
         className="btn toolBarBg dropdown-toggle shadow-none changeThemeBtn fw-bold iconsAndTextAlign"
         type="button"
