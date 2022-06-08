@@ -109,7 +109,7 @@ const SurveySimulator: React.FC = (props) => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg sticky-top toolBarBg py-0 ">
+      <nav className="navbar navbar-expand-lg sticky-top toolBarBg py-0">
         <button
           className=" btn navbar-toggler shadow-none btn-custom"
           style={{ width: "56px", height: "40px", borderStyle: "none" }}
@@ -137,17 +137,6 @@ const SurveySimulator: React.FC = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <ChangeTheme
-              onThemeChange={(value: ThemeType) => {
-                console.log(value);
-                giveCommandToVscode("changeTheme", value);
-              }}
-              selectedTheme={
-                window.selectedTheme
-                  ? window.selectedTheme
-                  : ThemeType.defaultTheme
-              }
-            />
             <SelectFileToPreview
               giveCommandToVscode={(command: string, data: string) => {
                 giveCommandToVscode(command, data);
@@ -234,6 +223,17 @@ const SurveySimulator: React.FC = (props) => {
                   },
                 }));
               }}
+            />
+            <ChangeTheme
+              onThemeChange={(value: ThemeType) => {
+                console.log(value);
+                giveCommandToVscode("changeTheme", value);
+              }}
+              selectedTheme={
+                window.selectedTheme
+                  ? window.selectedTheme
+                  : ThemeType.defaultTheme
+              }
             />
           </div>
         </div>

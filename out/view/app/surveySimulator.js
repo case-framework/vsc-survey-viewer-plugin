@@ -103,18 +103,12 @@ const SurveySimulator = (props) => {
         });
     };
     return (React.createElement("div", null,
-        React.createElement("nav", { className: "navbar navbar-expand-lg sticky-top toolBarBg py-0 " },
+        React.createElement("nav", { className: "navbar navbar-expand-lg sticky-top toolBarBg py-0" },
             React.createElement("button", { className: " btn navbar-toggler shadow-none btn-custom", style: { width: "56px", height: "40px", borderStyle: "none" }, type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNavAltMarkup", "aria-controls": "navbarNavAltMarkup", "aria-expanded": "false", "aria-label": "Toggle navigation", onClick: () => {
                     setNavbarToggleIsOpen(!navbarToggleIsOpen);
                 } }, navbarToggleIsOpen ? (React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faXmark, style: { width: "20px", height: "20px" } })) : (React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_2.faBars, style: { width: "20px", height: "20px" } }))),
             React.createElement("div", { className: "collapse navbar-collapse", id: "navbarNavAltMarkup" },
                 React.createElement("div", { className: "navbar-nav" },
-                    React.createElement(ChangeTheme_1.default, { onThemeChange: (value) => {
-                            console.log(value);
-                            giveCommandToVscode("changeTheme", value);
-                        }, selectedTheme: window.selectedTheme
-                            ? window.selectedTheme
-                            : AppConstants_1.ThemeType.defaultTheme }),
                     React.createElement(SelectFileToPreview_1.default, { giveCommandToVscode: (command, data) => {
                             giveCommandToVscode(command, data);
                         }, setChangedSelectTheFileBtnText: (newText) => {
@@ -176,7 +170,13 @@ const SurveySimulator = (props) => {
                                     showKeys: newStaus,
                                 },
                             }));
-                        } })))),
+                        } }),
+                    React.createElement(ChangeTheme_1.default, { onThemeChange: (value) => {
+                            console.log(value);
+                            giveCommandToVscode("changeTheme", value);
+                        }, selectedTheme: window.selectedTheme
+                            ? window.selectedTheme
+                            : AppConstants_1.ThemeType.defaultTheme })))),
         React.createElement("div", { className: "container p-3" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
                 ? surveyViewCred.selectedLanguage
                 : "en", onSubmit: (responses) => {
