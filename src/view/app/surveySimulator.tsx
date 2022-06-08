@@ -135,10 +135,7 @@ const SurveySimulator: React.FC = (props) => {
             />
           )}
         </button>
-        <div
-          className="collapse navbar-collapse justify-content-center"
-          id="navbarNavAltMarkup"
-        >
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             <ChangeTheme
               onThemeChange={(value: ThemeType) => {
