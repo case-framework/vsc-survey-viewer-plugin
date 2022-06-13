@@ -29,7 +29,7 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
         Theme
       </button>
       <div
-        className="dropdown-menu text-center overflow-auto toolBarDropdownBg"
+        className="dropdown-menu dropdown-menu-end text-center overflow-auto toolBarDropdownBg"
         aria-labelledby="ChangeTheme"
         style={{ minWidth: "182px", maxHeight: "260px" }}
       >
