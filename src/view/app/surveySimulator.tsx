@@ -109,7 +109,7 @@ const SurveySimulator: React.FC = (props) => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg sticky-top toolBarBg py-0">
+      <nav className="navbar navbar-expand-md sticky-top toolBarBg py-0">
         <button
           className=" btn navbar-toggler shadow-none btn-custom"
           style={{ width: "56px", height: "40px", borderStyle: "none" }}

@@ -103,7 +103,7 @@ const SurveySimulator = (props) => {
         });
     };
     return (React.createElement("div", null,
-        React.createElement("nav", { className: "navbar navbar-expand-lg sticky-top toolBarBg py-0" },
+        React.createElement("nav", { className: "navbar navbar-expand-md sticky-top toolBarBg py-0" },
             React.createElement("button", { className: " btn navbar-toggler shadow-none btn-custom", style: { width: "56px", height: "40px", borderStyle: "none" }, type: "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNavAltMarkup", "aria-controls": "navbarNavAltMarkup", "aria-expanded": "false", "aria-label": "Toggle navigation", onClick: () => {
                     setNavbarToggleIsOpen(!navbarToggleIsOpen);
                 } }, navbarToggleIsOpen ? (React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faXmark, style: { width: "20px", height: "20px" } })) : (React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_2.faBars, style: { width: "20px", height: "20px" } }))),
