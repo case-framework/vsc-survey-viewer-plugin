@@ -69,9 +69,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           icon={faGear}
           style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
-        {selectedFile.length <= 18
-          ? selectedFile
-          : selectedFile.substring(0, 17)}
+        {selectedFile.length <= 6 ? selectedFile : selectedFile.substring(0, 5)}
       </button>
       <div
         className="dropdown-menu text-center overflow-auto toolBarDropdownBg"

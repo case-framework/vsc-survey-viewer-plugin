@@ -109,9 +109,9 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
           icon={faFile}
           style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
-        {props.changedSelectTheFileBtnText.length <= 22
+        {props.changedSelectTheFileBtnText.length <= 16
           ? props.changedSelectTheFileBtnText
-          : props.changedSelectTheFileBtnText.substring(0, 21)}
+          : props.changedSelectTheFileBtnText.substring(0, 15)}
       </button>
 
       <div

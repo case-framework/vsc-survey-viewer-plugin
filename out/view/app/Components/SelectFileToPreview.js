@@ -73,9 +73,9 @@ const SelectFileToPreview = (props) => {
                 }, 1000);
             } },
             React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faFile, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
-            props.changedSelectTheFileBtnText.length <= 22
+            props.changedSelectTheFileBtnText.length <= 16
                 ? props.changedSelectTheFileBtnText
-                : props.changedSelectTheFileBtnText.substring(0, 21)),
+                : props.changedSelectTheFileBtnText.substring(0, 15)),
         React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg", "aria-labelledby": "SelectFileDropdown", style: { minWidth: "228px", maxHeight: "260px" } }, props.outPutDirContentValue ? (setDropdowns(window.outPutDirContent)) : (React.createElement("div", { className: "text-center" },
             React.createElement("div", { className: "spinner-border loaderColor", style: { width: "2rem", height: "2rem" }, role: "status" },
                 React.createElement("span", { className: "sr-only" })))))));

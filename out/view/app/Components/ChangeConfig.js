@@ -54,9 +54,7 @@ const ChangeConfig = (props) => {
                 }, 1000);
             } },
             React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faGear, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
-            selectedFile.length <= 18
-                ? selectedFile
-                : selectedFile.substring(0, 17)),
+            selectedFile.length <= 6 ? selectedFile : selectedFile.substring(0, 5)),
         React.createElement("div", { className: "dropdown-menu text-center overflow-auto toolBarDropdownBg", "aria-labelledby": "ChangeConfig", style: { minWidth: "180px", maxHeight: "260px" } },
             React.createElement("button", { className: "dropdown-item justify-content-center  btn-custom iconsAndTextAlign ", type: "button", style: { paddingTop: "0.2rem", paddingBottom: "0.2rem" }, "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" },
                 React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_2.faPenToSquare, style: { width: "18px", height: "18px", paddingRight: "0.3rem" } }),
