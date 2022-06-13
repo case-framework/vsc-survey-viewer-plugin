@@ -33,7 +33,7 @@ const ChangeTheme = (props) => {
     return (React.createElement("div", { className: "dropdown nav-item" },
         React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none changeThemeBtn fw-bold iconsAndTextAlign", type: "button", id: "ChangeTheme", title: "Change Theme: " + props.selectedTheme, "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
             React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faImage, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
-            "Change Theme"),
+            "Theme"),
         React.createElement("div", { className: "dropdown-menu text-center overflow-auto toolBarDropdownBg", "aria-labelledby": "ChangeTheme", style: { minWidth: "182px", maxHeight: "260px" } },
             React.createElement("button", { className: `${props.selectedTheme === AppConstants_1.ThemeType.defaultTheme
                     ? "fw-bold themeIcon"

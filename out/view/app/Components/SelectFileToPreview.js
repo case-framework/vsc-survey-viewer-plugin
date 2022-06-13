@@ -54,7 +54,7 @@ const SelectFileToPreview = (props) => {
         });
     };
     return (React.createElement("div", { className: "dropdown nav-item" },
-        React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Select File To Preview: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
+        React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Survey Selection: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setOutPutDirContentValue(false);
                 props.giveCommandToVscode("getOutputFileContent", "");
                 const intervalId = setInterval(() => {

@@ -68,7 +68,7 @@ const SurveySimulator = (props) => {
     const [surveyViewCred, setSurveyViewCred] = (0, react_1.useState)({
         ...initialSurveyCred,
     });
-    const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] = (0, react_1.useState)("Select File To Preview");
+    const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] = (0, react_1.useState)("Survey Selection");
     const [outPutDirContentValue, setOutPutDirContentValue] = (0, react_1.useState)(false);
     const [configDirContentValue, setConfigDirContentValue] = (0, react_1.useState)(false);
     const [navbarToggleIsOpen, setNavbarToggleIsOpen] = (0, react_1.useState)(false);

@@ -70,7 +70,7 @@ const SurveySimulator: React.FC = (props) => {
     ...initialSurveyCred,
   });
   const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] =
-    useState("Select File To Preview");
+    useState("Survey Selection");
   const [outPutDirContentValue, setOutPutDirContentValue] = useState(false);
   const [configDirContentValue, setConfigDirContentValue] = useState(false);
   const [navbarToggleIsOpen, setNavbarToggleIsOpen] = useState(false);

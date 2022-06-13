@@ -31,7 +31,7 @@ const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 const free_solid_svg_icons_2 = require("@fortawesome/free-solid-svg-icons");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeConfig = (props) => {
-    const [selectedFile, setSelectedFile] = (0, react_1.useState)("Change Config");
+    const [selectedFile, setSelectedFile] = (0, react_1.useState)("Config");
     const setConfigFilesList = (configFileList) => {
         console.log(configFileList);
         return configFileList.map((item) => {
@@ -43,7 +43,7 @@ const ChangeConfig = (props) => {
         });
     };
     return (React.createElement("div", { className: "dropdown nav-item" },
-        React.createElement("button", { className: "btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "ChangeConfig", "data-bs-toggle": "dropdown", title: "Change Config: " + selectedFile, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
+        React.createElement("button", { className: "btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "ChangeConfig", "data-bs-toggle": "dropdown", title: "Config: " + selectedFile, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setConfigDirContentValue(false);
                 props.giveCommandToVscode("getTheConfigFilesList", "");
                 const intervalId = setInterval(() => {

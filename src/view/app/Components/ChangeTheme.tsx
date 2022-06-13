@@ -26,7 +26,7 @@ const ChangeTheme: React.FC<ChangeThemeProps> = (props) => {
           icon={faImage}
           style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
-        Change Theme
+        Theme
       </button>
       <div
         className="dropdown-menu text-center overflow-auto toolBarDropdownBg"

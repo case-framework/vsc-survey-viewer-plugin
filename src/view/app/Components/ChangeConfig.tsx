@@ -16,7 +16,7 @@ interface ChangeConfigProps {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
-  const [selectedFile, setSelectedFile] = useState("Change Config");
+  const [selectedFile, setSelectedFile] = useState("Config");
   const setConfigFilesList = (
     configFileList: ConfigFile[]
   ): React.ReactNode => {
@@ -51,7 +51,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         type="button"
         id="ChangeConfig"
         data-bs-toggle="dropdown"
-        title={"Change Config: " + selectedFile}
+        title={"Config: " + selectedFile}
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {

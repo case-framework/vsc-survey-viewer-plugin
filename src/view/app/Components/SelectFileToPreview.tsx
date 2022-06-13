@@ -77,7 +77,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         type="button"
         id="SelectFileDropdown"
         data-bs-toggle="dropdown"
-        title={"Select File To Preview: " + props.changedSelectTheFileBtnText}
+        title={"Survey Selection: " + props.changedSelectTheFileBtnText}
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {
