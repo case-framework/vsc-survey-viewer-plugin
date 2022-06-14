@@ -199,7 +199,7 @@ const SurveySimulator = (props) => {
                 //   "showFileDownloadSuccessMsg",
                 //   "The file is saved"
                 // );
-            }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))) : (React.createElement("div", { className: "text-center" },
+            }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("p", { className: "p-5 text-center" }, "Please Select The File To Preview The Survey."))) : (React.createElement("div", { className: "p-5 text-center" },
             React.createElement("div", { className: "spinner-border", style: { width: "2rem", height: "2rem", color: "black" }, role: "status" })))),
         React.createElement(EnterFileNameDialog_1.default, { giveCommandToVscode: (command, data) => {
                 giveCommandToVscode(command, data);

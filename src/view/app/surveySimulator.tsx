@@ -293,12 +293,12 @@ const SurveySimulator: React.FC = (props) => {
               dateLocales={dateLocales}
             />
           ) : (
-            <p className="text-center">
+            <p className="p-5 text-center">
               Please Select The File To Preview The Survey.
             </p>
           )
         ) : (
-          <div className="text-center">
+          <div className="p-5 text-center">
             <div
               className="spinner-border"
               style={{ width: "2rem", height: "2rem", color: "black" }}
