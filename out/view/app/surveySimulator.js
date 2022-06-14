@@ -62,6 +62,7 @@ const initialSurveyCred = {
     selectedLanguage: "en",
     prefillValues: [],
     prefillsFile: undefined,
+    inLoadingState: false,
 };
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const SurveySimulator = (props) => {
@@ -126,6 +127,11 @@ const SurveySimulator = (props) => {
                                     ? window.surveyData.survey
                                     : undefined,
                             }));
+                        }, onChangedSurveyViewCredLoadingState: (state) => {
+                            setSurveyViewCred((prevState) => ({
+                                ...prevState,
+                                inLoadingState: state,
+                            }));
                         } }),
                     React.createElement(UploadPrefill_1.default, { onPrefillChange: (preFillFile, preFillValues) => {
                             setSurveyViewCred((prevState) => ({
@@ -178,7 +184,7 @@ const SurveySimulator = (props) => {
                         }, selectedTheme: window.selectedTheme
                             ? window.selectedTheme
                             : AppConstants_1.ThemeType.defaultTheme })))),
-        React.createElement("div", { className: "container p-3" }, surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
+        React.createElement("div", { className: "container p-3" }, !surveyViewCred.inLoadingState ? (surveyViewCred.survey ? (React.createElement(case_web_ui_1.SurveyView, { loading: false, showKeys: surveyViewCred.simulatorUIConfig.showKeys, survey: surveyViewCred.survey, context: surveyViewCred.context, prefills: surveyViewCred.prefillValues, languageCode: surveyViewCred.selectedLanguage
                 ? surveyViewCred.selectedLanguage
                 : "en", onSubmit: (responses) => {
                 const exportData = responses.slice();
@@ -193,7 +199,8 @@ const SurveySimulator = (props) => {
                 //   "showFileDownloadSuccessMsg",
                 //   "The file is saved"
                 // );
-            }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))),
+            }, nextBtnText: surveyViewCred.simulatorUIConfig.texts.nextBtn, backBtnText: surveyViewCred.simulatorUIConfig.texts.backBtn, submitBtnText: surveyViewCred.simulatorUIConfig.texts.submitBtn, invalidResponseText: surveyViewCred.simulatorUIConfig.texts.invalidResponseText, dateLocales: model_1.dateLocales })) : (React.createElement("p", { className: "text-center" }, "Please Select The File To Preview The Survey."))) : (React.createElement("div", { className: "text-center" },
+            React.createElement("div", { className: "spinner-border", style: { width: "2rem", height: "2rem", color: "black" }, role: "status" })))),
         React.createElement(EnterFileNameDialog_1.default, { giveCommandToVscode: (command, data) => {
                 giveCommandToVscode(command, data);
             } })));

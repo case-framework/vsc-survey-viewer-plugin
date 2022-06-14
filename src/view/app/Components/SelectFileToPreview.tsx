@@ -11,6 +11,7 @@ interface SelectFileDropdownProps {
   setOutPutDirContentValue: (value: boolean) => void;
   outPutDirContentValue: boolean;
   onChangedSurveyViewCred: () => void;
+  onChangedSurveyViewCredLoadingState: (state: boolean) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -51,11 +52,14 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
               "selectedFileToDetectChanges",
               directoryPath + "/" + item
             );
+            props.setChangedSelectTheFileBtnText("loading");
+            props.onChangedSurveyViewCredLoadingState(true);
             const intervalId = setInterval(() => {
               if (window.surveyData) {
                 props.setChangedSelectTheFileBtnText(
                   item.substring(0, item.lastIndexOf(".")).replace("_", " ")
                 );
+                props.onChangedSurveyViewCredLoadingState(false);
                 props.onChangedSurveyViewCred();
                 clearInterval(intervalId);
               }
@@ -109,9 +113,19 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
           icon={faFile}
           style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
-        {props.changedSelectTheFileBtnText.length <= 16
-          ? props.changedSelectTheFileBtnText
-          : props.changedSelectTheFileBtnText.substring(0, 15)}
+        {props.changedSelectTheFileBtnText === "loading" ? (
+          <div style={{ width: "80px" }}>
+            <div
+              className="spinner-border loaderColor"
+              style={{ width: "1rem", height: "1rem" }}
+              role="status"
+            ></div>
+          </div>
+        ) : props.changedSelectTheFileBtnText.length <= 16 ? (
+          props.changedSelectTheFileBtnText
+        ) : (
+          props.changedSelectTheFileBtnText.substring(0, 15)
+        )}
       </button>
 
       <div

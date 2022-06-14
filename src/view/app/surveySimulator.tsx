@@ -62,6 +62,7 @@ const initialSurveyCred: SurveyViewCred = {
   selectedLanguage: "en",
   prefillValues: [],
   prefillsFile: undefined,
+  inLoadingState: false,
 };
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -165,6 +166,12 @@ const SurveySimulator: React.FC = (props) => {
                     : undefined,
                 }));
               }}
+              onChangedSurveyViewCredLoadingState={(state: boolean) => {
+                setSurveyViewCred((prevState) => ({
+                  ...prevState,
+                  inLoadingState: state,
+                }));
+              }}
             />
             <UploadPrefill
               onPrefillChange={(
@@ -245,46 +252,59 @@ const SurveySimulator: React.FC = (props) => {
       </nav>
 
       <div className="container p-3">
-        {surveyViewCred.survey ? (
-          <SurveyView
-            loading={false}
-            showKeys={surveyViewCred.simulatorUIConfig.showKeys}
-            survey={surveyViewCred.survey}
-            context={surveyViewCred.context}
-            prefills={surveyViewCred.prefillValues}
-            languageCode={
-              surveyViewCred.selectedLanguage
-                ? surveyViewCred.selectedLanguage
-                : "en"
-            }
-            onSubmit={(responses) => {
-              const exportData = responses.slice();
-              var a = document.createElement("a");
-              var file = new Blob([JSON.stringify(exportData, undefined, 2)], {
-                type: "json",
-              });
-              a.href = URL.createObjectURL(file);
-              a.download = `${
-                surveyViewCred.survey?.current.surveyDefinition.key
-              }_responses_${new Date().toLocaleDateString()}.json`;
-              a.click();
-              // giveCommandToVscode(
-              //   "showFileDownloadSuccessMsg",
-              //   "The file is saved"
-              // );
-            }}
-            nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
-            backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}
-            submitBtnText={surveyViewCred.simulatorUIConfig.texts.submitBtn}
-            invalidResponseText={
-              surveyViewCred.simulatorUIConfig.texts.invalidResponseText
-            }
-            dateLocales={dateLocales}
-          />
+        {!surveyViewCred.inLoadingState ? (
+          surveyViewCred.survey ? (
+            <SurveyView
+              loading={false}
+              showKeys={surveyViewCred.simulatorUIConfig.showKeys}
+              survey={surveyViewCred.survey}
+              context={surveyViewCred.context}
+              prefills={surveyViewCred.prefillValues}
+              languageCode={
+                surveyViewCred.selectedLanguage
+                  ? surveyViewCred.selectedLanguage
+                  : "en"
+              }
+              onSubmit={(responses) => {
+                const exportData = responses.slice();
+                var a = document.createElement("a");
+                var file = new Blob(
+                  [JSON.stringify(exportData, undefined, 2)],
+                  {
+                    type: "json",
+                  }
+                );
+                a.href = URL.createObjectURL(file);
+                a.download = `${
+                  surveyViewCred.survey?.current.surveyDefinition.key
+                }_responses_${new Date().toLocaleDateString()}.json`;
+                a.click();
+                // giveCommandToVscode(
+                //   "showFileDownloadSuccessMsg",
+                //   "The file is saved"
+                // );
+              }}
+              nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
+              backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}
+              submitBtnText={surveyViewCred.simulatorUIConfig.texts.submitBtn}
+              invalidResponseText={
+                surveyViewCred.simulatorUIConfig.texts.invalidResponseText
+              }
+              dateLocales={dateLocales}
+            />
+          ) : (
+            <p className="text-center">
+              Please Select The File To Preview The Survey.
+            </p>
+          )
         ) : (
-          <p className="text-center">
-            Please Select The File To Preview The Survey.
-          </p>
+          <div className="text-center">
+            <div
+              className="spinner-border"
+              style={{ width: "2rem", height: "2rem", color: "black" }}
+              role="status"
+            ></div>
+          </div>
         )}
       </div>
       <EnterFileNameDialog

@@ -18,6 +18,7 @@ export interface SurveyViewCred {
   prefillsFile?: File;
   prefillValues?: SurveySingleItemResponse[];
   simulatorUIConfig: SimulatorUIConfig;
+  inLoadingState: boolean;
 }
 export interface SimulatorUIConfig {
   texts: SurveyUILabels;
