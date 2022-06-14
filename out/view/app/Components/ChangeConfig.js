@@ -51,7 +51,7 @@ const ChangeConfig = (props) => {
                         props.setConfigDirContentValue(true);
                         clearInterval(intervalId);
                     }
-                }, 1000);
+                }, 10);
             } },
             React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faGear, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
             selectedFile.length <= 6 ? selectedFile : selectedFile.substring(0, 5)),
@@ -60,9 +60,7 @@ const ChangeConfig = (props) => {
                 React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_2.faPenToSquare, style: { width: "18px", height: "18px", paddingRight: "0.3rem" } }),
                 "Create New"),
             React.createElement("div", { className: "dropdown-divider dividerColor" }),
-            props.configDirContentValue ? (setConfigFilesList(window.configFilesDir.directoryContent)) : (React.createElement("div", { className: "text-center" },
-                React.createElement("div", { className: "spinner-border loaderColor", style: { width: "2rem", height: "2rem" }, role: "status" },
-                    React.createElement("span", { className: "sr-only" })))))));
+            props.configDirContentValue ? (setConfigFilesList(window.configFilesDir.directoryContent)) : (React.createElement("div", null)))));
 };
 exports.default = ChangeConfig;
 //# sourceMappingURL=ChangeConfig.js.map

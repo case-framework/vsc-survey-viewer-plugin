@@ -63,7 +63,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
                 props.onChangedSurveyViewCred();
                 clearInterval(intervalId);
               }
-            }, 1000);
+            }, 10);
           }}
         >
           <p className="h7 small">
@@ -106,7 +106,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
               clearInterval(intervalId);
             }
             console.log(window.outPutDirContent);
-          }, 1000);
+          }, 10);
         }}
       >
         <FontAwesomeIcon
@@ -136,15 +136,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         {props.outPutDirContentValue ? (
           setDropdowns(window.outPutDirContent)
         ) : (
-          <div className="text-center">
-            <div
-              className="spinner-border loaderColor"
-              style={{ width: "2rem", height: "2rem" }}
-              role="status"
-            >
-              <span className="sr-only"></span>
-            </div>
-          </div>
+          <div></div>
         )}
       </div>
     </div>

@@ -97,7 +97,7 @@ const SurveySimulator: React.FC = (props) => {
         }));
         window.changeInConfigFile = false;
       }
-    }, 1000);
+    }, 10);
     return () => clearInterval(interval);
   }, []);
 

@@ -38,7 +38,9 @@ export default class ViewLoader {
         switch (message.command) {
           case "getOutputFileContent":
             if (this._panel) {
+              console.log("pre");
               const content = this.getOutputFileContent();
+              console.log("post");
               this._panel.webview.postMessage({
                 command: "sendTheOutputFileContent",
                 content: content,

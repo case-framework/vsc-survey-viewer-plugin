@@ -51,7 +51,7 @@ const SelectFileToPreview = (props) => {
                             props.onChangedSurveyViewCred();
                             clearInterval(intervalId);
                         }
-                    }, 1000);
+                    }, 10);
                 } },
                 React.createElement("p", { className: "h7 small" }, item.substring(0, item.lastIndexOf(".")).replace("_", " "))));
         });
@@ -73,14 +73,12 @@ const SelectFileToPreview = (props) => {
                         clearInterval(intervalId);
                     }
                     console.log(window.outPutDirContent);
-                }, 1000);
+                }, 10);
             } },
             React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faFile, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),
             props.changedSelectTheFileBtnText === "loading" ? (React.createElement("div", { style: { width: "80px" } },
                 React.createElement("div", { className: "spinner-border loaderColor", style: { width: "1rem", height: "1rem" }, role: "status" }))) : props.changedSelectTheFileBtnText.length <= 16 ? (props.changedSelectTheFileBtnText) : (props.changedSelectTheFileBtnText.substring(0, 15))),
-        React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg", "aria-labelledby": "SelectFileDropdown", style: { minWidth: "228px", maxHeight: "260px" } }, props.outPutDirContentValue ? (setDropdowns(window.outPutDirContent)) : (React.createElement("div", { className: "text-center" },
-            React.createElement("div", { className: "spinner-border loaderColor", style: { width: "2rem", height: "2rem" }, role: "status" },
-                React.createElement("span", { className: "sr-only" })))))));
+        React.createElement("div", { className: "dropdown-menu overflow-auto toolBarDropdownBg", "aria-labelledby": "SelectFileDropdown", style: { minWidth: "228px", maxHeight: "260px" } }, props.outPutDirContentValue ? (setDropdowns(window.outPutDirContent)) : (React.createElement("div", null)))));
 };
 exports.default = SelectFileToPreview;
 //# sourceMappingURL=SelectFileToPreview.js.map

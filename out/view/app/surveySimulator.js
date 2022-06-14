@@ -94,7 +94,7 @@ const SurveySimulator = (props) => {
                 }));
                 window.changeInConfigFile = false;
             }
-        }, 1000);
+        }, 10);
         return () => clearInterval(interval);
     }, []);
     const giveCommandToVscode = (command, data) => {
