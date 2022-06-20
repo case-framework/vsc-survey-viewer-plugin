@@ -73,12 +73,12 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         {selectedFile.length <= 6 ? selectedFile : selectedFile.substring(0, 5)}
       </button>
       <div
-        className="dropdown-menu text-center overflow-auto toolBarDropdownBg"
+        className="dropdown-menu  overflow-auto toolBarDropdownBg"
         aria-labelledby="ChangeConfig"
         style={{ minWidth: "180px", maxHeight: "260px" }}
       >
         <button
-          className="dropdown-item justify-content-center  btn-custom iconsAndTextAlign "
+          className="dropdown-item  btn-custom iconsAndTextAlign "
           type="button"
           style={{ paddingTop: "0.2rem", paddingBottom: "0.2rem" }}
           data-bs-toggle="modal"
@@ -92,7 +92,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         </button>
         <div className="dropdown-divider dividerColor"></div>
         <button
-          className="dropdown-item justify-content-center  btn-custom iconsAndTextAlign "
+          className="dropdown-item   btn-custom iconsAndTextAlign "
           type="button"
           style={{ paddingTop: "0.2rem", paddingBottom: "0.2rem" }}
           onClick={() => {
