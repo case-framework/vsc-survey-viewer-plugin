@@ -80,10 +80,12 @@ const SurveySimulator = (props) => {
                 setSurveyViewCred((prevState) => ({
                     ...prevState,
                     survey: undefined,
+                    inLoadingState: false,
                 }));
                 setSurveyViewCred((prevState) => ({
                     ...prevState,
                     survey: window.surveyData ? window.surveyData.survey : undefined,
+                    inLoadingState: false,
                 }));
                 window.changeInSurvey = false;
             }
@@ -91,6 +93,7 @@ const SurveySimulator = (props) => {
                 setSurveyViewCred((prevState) => ({
                     ...prevState,
                     context: window.updatedConfigFileData,
+                    inLoadingState: false,
                 }));
                 window.changeInConfigFile = false;
             }
@@ -120,12 +123,14 @@ const SurveySimulator = (props) => {
                             setSurveyViewCred((prevState) => ({
                                 ...prevState,
                                 survey: undefined,
+                                inLoadingState: false,
                             }));
                             setSurveyViewCred((prevState) => ({
                                 ...prevState,
                                 survey: window.surveyData
                                     ? window.surveyData.survey
                                     : undefined,
+                                inLoadingState: false,
                             }));
                         }, onChangedSurveyViewCredLoadingState: (state) => {
                             setSurveyViewCred((prevState) => ({
@@ -137,6 +142,7 @@ const SurveySimulator = (props) => {
                             setSurveyViewCred((prevState) => ({
                                 ...prevState,
                                 survey: undefined,
+                                inLoadingState: false,
                             }));
                             setSurveyViewCred((prevState) => ({
                                 ...prevState,
@@ -145,6 +151,7 @@ const SurveySimulator = (props) => {
                                     : undefined,
                                 prefillsFile: preFillFile,
                                 prefillValues: preFillValues,
+                                inLoadingState: false,
                             }));
                         }, currentSelectFileName: surveyViewCred.prefillsFile
                             ? surveyViewCred.prefillsFile.name
@@ -159,6 +166,7 @@ const SurveySimulator = (props) => {
                             setSurveyViewCred((prevState) => ({
                                 ...prevState,
                                 survey: undefined,
+                                inLoadingState: false,
                             }));
                             setSurveyViewCred((prevState) => ({
                                 ...prevState,
@@ -166,6 +174,7 @@ const SurveySimulator = (props) => {
                                     ? window.surveyData.survey
                                     : undefined,
                                 context: { ...context },
+                                inLoadingState: false,
                             }));
                         } }),
                     React.createElement(ShowKeysCheckBox_1.default, { currentCheckBoxStatus: surveyViewCred.simulatorUIConfig.showKeys, onCheckBoxStausChange: (newStaus) => {
@@ -174,6 +183,7 @@ const SurveySimulator = (props) => {
                                 simulatorUIConfig: {
                                     texts: initialSurveyCred.simulatorUIConfig.texts,
                                     showKeys: newStaus,
+                                    inLoadingState: false,
                                 },
                             }));
                         } })),

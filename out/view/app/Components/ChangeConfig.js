@@ -29,6 +29,7 @@ const react_1 = require("react");
 const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
 const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 const free_solid_svg_icons_2 = require("@fortawesome/free-solid-svg-icons");
+const free_solid_svg_icons_3 = require("@fortawesome/free-solid-svg-icons");
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeConfig = (props) => {
     const [selectedFile, setSelectedFile] = (0, react_1.useState)("Config");
@@ -59,6 +60,16 @@ const ChangeConfig = (props) => {
             React.createElement("button", { className: "dropdown-item justify-content-center  btn-custom iconsAndTextAlign ", type: "button", style: { paddingTop: "0.2rem", paddingBottom: "0.2rem" }, "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" },
                 React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_2.faPenToSquare, style: { width: "18px", height: "18px", paddingRight: "0.3rem" } }),
                 "Create New"),
+            React.createElement("div", { className: "dropdown-divider dividerColor" }),
+            React.createElement("button", { className: "dropdown-item justify-content-center  btn-custom iconsAndTextAlign ", type: "button", style: { paddingTop: "0.2rem", paddingBottom: "0.2rem" }, onClick: () => {
+                    props.onConfigChange({
+                        isLoggedIn: false,
+                        participantFlags: {},
+                    });
+                    setSelectedFile("Config");
+                } },
+                React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_3.faUndo, style: { width: "18px", height: "18px", paddingRight: "0.3rem" } }),
+                "Default Config"),
             React.createElement("div", { className: "dropdown-divider dividerColor" }),
             props.configDirContentValue ? (setConfigFilesList(window.configFilesDir.directoryContent)) : (React.createElement("div", null)))));
 };

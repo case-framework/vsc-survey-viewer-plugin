@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 interface ChangeConfigProps {
   setConfigDirContentValue: (value: boolean) => void;
@@ -88,6 +89,25 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
             style={{ width: "18px", height: "18px", paddingRight: "0.3rem" }}
           />
           Create New
+        </button>
+        <div className="dropdown-divider dividerColor"></div>
+        <button
+          className="dropdown-item justify-content-center  btn-custom iconsAndTextAlign "
+          type="button"
+          style={{ paddingTop: "0.2rem", paddingBottom: "0.2rem" }}
+          onClick={() => {
+            props.onConfigChange({
+              isLoggedIn: false,
+              participantFlags: {},
+            });
+            setSelectedFile("Config");
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faUndo}
+            style={{ width: "18px", height: "18px", paddingRight: "0.3rem" }}
+          />
+          Default Config
         </button>
         <div className="dropdown-divider dividerColor"></div>
         {props.configDirContentValue ? (

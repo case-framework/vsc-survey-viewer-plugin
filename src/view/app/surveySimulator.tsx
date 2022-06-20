@@ -83,10 +83,12 @@ const SurveySimulator: React.FC = (props) => {
         setSurveyViewCred((prevState) => ({
           ...prevState,
           survey: undefined,
+          inLoadingState: false,
         }));
         setSurveyViewCred((prevState) => ({
           ...prevState,
           survey: window.surveyData ? window.surveyData.survey : undefined,
+          inLoadingState: false,
         }));
         window.changeInSurvey = false;
       }
@@ -94,6 +96,7 @@ const SurveySimulator: React.FC = (props) => {
         setSurveyViewCred((prevState) => ({
           ...prevState,
           context: window.updatedConfigFileData,
+          inLoadingState: false,
         }));
         window.changeInConfigFile = false;
       }
@@ -157,6 +160,7 @@ const SurveySimulator: React.FC = (props) => {
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
                   survey: undefined,
+                  inLoadingState: false,
                 }));
 
                 setSurveyViewCred((prevState) => ({
@@ -164,6 +168,7 @@ const SurveySimulator: React.FC = (props) => {
                   survey: window.surveyData
                     ? window.surveyData.survey
                     : undefined,
+                  inLoadingState: false,
                 }));
               }}
               onChangedSurveyViewCredLoadingState={(state: boolean) => {
@@ -181,6 +186,7 @@ const SurveySimulator: React.FC = (props) => {
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
                   survey: undefined,
+                  inLoadingState: false,
                 }));
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
@@ -189,6 +195,7 @@ const SurveySimulator: React.FC = (props) => {
                     : undefined,
                   prefillsFile: preFillFile,
                   prefillValues: preFillValues,
+                  inLoadingState: false,
                 }));
               }}
               currentSelectFileName={
@@ -212,6 +219,7 @@ const SurveySimulator: React.FC = (props) => {
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
                   survey: undefined,
+                  inLoadingState: false,
                 }));
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
@@ -219,6 +227,7 @@ const SurveySimulator: React.FC = (props) => {
                     ? window.surveyData.survey
                     : undefined,
                   context: { ...context },
+                  inLoadingState: false,
                 }));
               }}
             />
@@ -230,6 +239,7 @@ const SurveySimulator: React.FC = (props) => {
                   simulatorUIConfig: {
                     texts: initialSurveyCred.simulatorUIConfig.texts,
                     showKeys: newStaus,
+                    inLoadingState: false,
                   },
                 }));
               }}
