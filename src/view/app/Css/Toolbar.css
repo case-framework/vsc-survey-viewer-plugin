@@ -46,7 +46,9 @@
   .dropdown-toggle:after {
     transition: 0.5s;
   }
- 
+  .dropdown-divider{
+    margin: 0.5rem 0;
+  }
 .dividerColor{
     border-block-width: 1.5px;
     background-color: var(--vscode-activityBar-inactiveForeground);
