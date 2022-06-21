@@ -59,11 +59,10 @@ const ChangeConfig = (props) => {
                 ? selectedFile
                 : selectedFile.substring(0, 10)),
         React.createElement("div", { className: "dropdown-menu  overflow-auto toolBarDropdownBg", "aria-labelledby": "ChangeConfig", style: { minWidth: "180px", maxHeight: "260px" } },
-            React.createElement("button", { className: "dropdown-item  btn-custom iconsAndTextAlign ", type: "button", style: { paddingTop: "0.2rem", paddingBottom: "0.2rem" }, "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" },
+            React.createElement("button", { className: "dropdown-item  btn-custom iconsAndTextAlign ", type: "button", "data-bs-toggle": "modal", "data-bs-target": "#EnterFileNameDialog" },
                 React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_2.faPenToSquare, style: { width: "18px", height: "18px", paddingRight: "0.3rem" } }),
                 "Create New"),
-            React.createElement("div", { className: "dropdown-divider dividerColor" }),
-            React.createElement("button", { className: "dropdown-item   btn-custom iconsAndTextAlign ", type: "button", style: { paddingTop: "0.2rem", paddingBottom: "0.2rem" }, onClick: () => {
+            React.createElement("button", { className: "dropdown-item   btn-custom iconsAndTextAlign ", type: "button", onClick: () => {
                     props.onConfigChange({
                         isLoggedIn: false,
                         participantFlags: {},

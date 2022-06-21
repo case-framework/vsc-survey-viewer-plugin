@@ -81,7 +81,6 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         <button
           className="dropdown-item  btn-custom iconsAndTextAlign "
           type="button"
-          style={{ paddingTop: "0.2rem", paddingBottom: "0.2rem" }}
           data-bs-toggle="modal"
           data-bs-target="#EnterFileNameDialog"
         >
@@ -91,11 +90,9 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           />
           Create New
         </button>
-        <div className="dropdown-divider dividerColor"></div>
         <button
           className="dropdown-item   btn-custom iconsAndTextAlign "
           type="button"
-          style={{ paddingTop: "0.2rem", paddingBottom: "0.2rem" }}
           onClick={() => {
             props.onConfigChange({
               isLoggedIn: false,
