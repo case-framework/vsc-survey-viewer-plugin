@@ -36,7 +36,7 @@ const ChangeConfig = (props) => {
     const setConfigFilesList = (configFileList) => {
         console.log(configFileList);
         return configFileList.map((item) => {
-            return (React.createElement("button", { className: "dropdown-item nav-item btn-custom", type: "button", style: { paddingTop: "0.2rem", paddingBottom: "0.2rem" }, onClick: () => {
+            return (React.createElement("button", { className: "dropdown-item nav-item btn-custom", type: "button", onClick: () => {
                     props.giveCommandToVscode("setTheConfigFileChangeWatcher", item.configFilePath);
                     props.onConfigChange(item.configFileContent);
                     setSelectedFile(item.configFileName);

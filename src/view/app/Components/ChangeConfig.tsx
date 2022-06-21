@@ -27,7 +27,6 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         <button
           className="dropdown-item nav-item btn-custom"
           type="button"
-          style={{ paddingTop: "0.2rem", paddingBottom: "0.2rem" }}
           onClick={() => {
             props.giveCommandToVscode(
               "setTheConfigFileChangeWatcher",
