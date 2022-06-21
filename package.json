@@ -1,6 +1,7 @@
 {
   "name": "surveyviewer",
-  "displayName": "surveyViewer",
+  "displayName": "CASE Survey Viewer",
+  "publisher": "coneno",
   "description": "",
   "version": "0.1.0",
   "engines": {
