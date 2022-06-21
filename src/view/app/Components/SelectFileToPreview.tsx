@@ -44,6 +44,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
           type="button"
           id={item}
           onClick={() => {
+            window.surveyData = undefined;
             props.giveCommandToVscode(
               "fileSelectedForPreview",
               directoryPath + "/" + item

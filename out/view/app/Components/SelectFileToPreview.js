@@ -40,6 +40,7 @@ const SelectFileToPreview = (props) => {
     const setDropdownItems = (items, directoryPath) => {
         return items.map((item) => {
             return (React.createElement("button", { className: "dropdown-item btn-custom ", style: { paddingLeft: "1rem" }, type: "button", id: item, onClick: () => {
+                    window.surveyData = undefined;
                     props.giveCommandToVscode("fileSelectedForPreview", directoryPath + "/" + item);
                     props.giveCommandToVscode("selectedFileToDetectChanges", directoryPath + "/" + item);
                     props.setChangedSelectTheFileBtnText("loading");
