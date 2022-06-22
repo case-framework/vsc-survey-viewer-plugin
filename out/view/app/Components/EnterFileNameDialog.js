@@ -32,20 +32,30 @@ const EnterFileNameDialog = (props) => {
     return (React.createElement("div", { className: "modal fade ", id: "EnterFileNameDialog", tabIndex: -1, role: "dialog", "aria-labelledby": "DialogTitle", "aria-hidden": "true" },
         React.createElement("div", { className: "modal-dialog modal-dialog-centered ", role: "document" },
             React.createElement("div", { className: "modal-content", style: { borderRadius: "0.6rem" } },
-                React.createElement("div", { className: "modal-header", style: { padding: "1rem 1rem 1rem 1rem" } },
+                React.createElement("div", { className: "modal-header", style: {
+                        paddingTop: "0.5rem",
+                        paddingRight: "0rem",
+                        paddingLeft: "1.2rem",
+                        paddingBottom: "0.5rem",
+                    } },
                     React.createElement("h5", { className: "modal-title", id: "DialogTitle" }, "Create a new file"),
                     React.createElement("button", { type: "button", className: "btn shadow-none", "data-bs-dismiss": "modal", "aria-label": "Close" },
                         React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faXmark, style: { width: "20px", height: "20px" } }))),
-                React.createElement("div", { className: "modal-body", style: { padding: "1rem 1rem 1rem 1rem" } },
+                React.createElement("div", { className: "modal-body", style: {
+                        paddingTop: "1rem",
+                        paddingRight: "1.2rem",
+                        paddingLeft: "1.2rem",
+                        paddingBottom: "1.4rem",
+                    } },
                     React.createElement("div", { className: "form-group" },
                         React.createElement("label", { htmlFor: "EnterFileNameTextfeild" }, "Enter File name"),
                         React.createElement("input", { type: "email", style: { backgroundColor: "#edeff4" }, className: "form-control", onChange: (event) => {
                                 setFileName(event.target.value);
                                 console.log(event.target.value);
                             }, id: "EnterFileNameTextfeild", "aria-describedby": "emailHelp", placeholder: "" }))),
-                React.createElement("div", { className: "modal-footer", style: { padding: "0.5rem 0.5rem 0.5rem 0.5rem" } },
+                React.createElement("div", { className: "modal-footer p-2" },
                     React.createElement("button", { type: "button", className: "btn btn-secondary rounded", "data-bs-dismiss": "modal" }, "Close"),
-                    React.createElement("button", { type: "button", className: "btn btn-primary rounded", "data-bs-dismiss": "modal", onClick: () => {
+                    React.createElement("button", { type: "button", className: "btn btn-primary rounded", style: { marginLeft: "0.937rem" }, "data-bs-dismiss": "modal", onClick: () => {
                             props.giveCommandToVscode("createNewFile", fileName);
                         } }, "Create"))))));
 };

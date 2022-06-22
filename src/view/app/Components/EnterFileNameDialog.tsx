@@ -22,7 +22,12 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
         <div className="modal-content" style={{ borderRadius: "0.6rem" }}>
           <div
             className="modal-header"
-            style={{ padding: "1rem 1rem 1rem 1rem" }}
+            style={{
+              paddingTop: "0.5rem",
+              paddingRight: "0rem",
+              paddingLeft: "1.2rem",
+              paddingBottom: "0.5rem",
+            }}
           >
             <h5 className="modal-title" id="DialogTitle">
               Create a new file
@@ -41,7 +46,12 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
           </div>
           <div
             className="modal-body"
-            style={{ padding: "1rem 1rem 1rem 1rem" }}
+            style={{
+              paddingTop: "1rem",
+              paddingRight: "1.2rem",
+              paddingLeft: "1.2rem",
+              paddingBottom: "1.4rem",
+            }}
           >
             <div className="form-group">
               <label htmlFor="EnterFileNameTextfeild">Enter File name</label>
@@ -59,10 +69,7 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
               />
             </div>
           </div>
-          <div
-            className="modal-footer"
-            style={{ padding: "0.5rem 0.5rem 0.5rem 0.5rem" }}
-          >
+          <div className="modal-footer p-2">
             <button
               type="button"
               className="btn btn-secondary rounded"
@@ -73,6 +80,7 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
             <button
               type="button"
               className="btn btn-primary rounded"
+              style={{ marginLeft: "0.937rem" }}
               data-bs-dismiss="modal"
               onClick={() => {
                 props.giveCommandToVscode("createNewFile", fileName);

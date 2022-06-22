@@ -71,6 +71,7 @@ class ViewLoader {
                     if (this._panel) {
                         vscode.window.showInformationMessage(message.data);
                     }
+                    break;
                 case "getConfigFilesList":
                     if (this._panel) {
                         const content = this.getConfigFilesList();
