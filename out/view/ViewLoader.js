@@ -118,7 +118,7 @@ class ViewLoader {
                 case "changeTheme":
                     if (message.data !== context.workspaceState.get("selectedTheme")) {
                         vscode.window
-                            .showInformationMessage("The Survey will restart. Would you still want to continue", "Yes", "No")
+                            .showInformationMessage("The survey will restart. Would you still want to continue", "Yes", "No")
                             .then((value) => {
                             if (value === "Yes") {
                                 if (this._panel) {
@@ -267,7 +267,7 @@ class ViewLoader {
                 });
             }
             else {
-                vscode.window.showErrorMessage("File name Already exists");
+                vscode.window.showErrorMessage("File name already exists");
             }
         }
         else {
