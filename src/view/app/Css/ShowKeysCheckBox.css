@@ -1,0 +1,20 @@
+.form-check-custom {
+    display: flex;
+    align-items: center;
+}
+.form-check-custom label {
+    margin: 0;
+    padding-left: 0.3rem;
+}
+.form-check-custom .form-check-custom-input[type=checkbox] {
+    margin: 0;
+    border-radius: .2em;
+    border-color: rgb(55, 52, 52);
+    height: 15px;
+    width: 15px;
+}
+
+.form-check-custom .form-check-custom-input:checked{
+    border-color: rgb(53, 114, 227);
+    background-color: rgb(53, 114, 227);
+}

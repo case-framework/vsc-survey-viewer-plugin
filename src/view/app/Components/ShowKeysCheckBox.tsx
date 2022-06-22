@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../Css/Toolbar.css";
+import "../Css/ShowKeysCheckBox.css";
 
 interface ShowsKeysCheckBoxProps {
   currentCheckBoxStatus: boolean;
@@ -9,10 +9,10 @@ interface ShowsKeysCheckBoxProps {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ShowKeysCheckBox: React.FC<ShowsKeysCheckBoxProps> = (props) => {
   return (
-    <div className="nav-item ">
-      <div className="form-check btn btn-custom">
+    <div className="nav-item">
+      <div className="form-check-custom btn btn-custom">
         <input
-          className="form-check-input shadow-none "
+          className="form-check-custom-input shadow-none "
           type="checkbox"
           value=""
           id="flexCheckChecked"
@@ -21,7 +21,10 @@ const ShowKeysCheckBox: React.FC<ShowsKeysCheckBoxProps> = (props) => {
             props.onCheckBoxStausChange(!props.currentCheckBoxStatus);
           }}
         />
-        <label className="form-check-label fw-bold" htmlFor="flexCheckChecked">
+        <label
+          className="form-check-custom-label fw-bold"
+          htmlFor="flexCheckChecked"
+        >
           Show Keys
         </label>
       </div>

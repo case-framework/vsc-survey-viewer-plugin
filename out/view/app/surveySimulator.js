@@ -40,6 +40,7 @@ const AppConstants_1 = require("./AppConstants");
 const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
 const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 const free_solid_svg_icons_2 = require("@fortawesome/free-solid-svg-icons");
+require("./Css/Toolbar.css");
 const vscode = window.acquireVsCodeApi();
 const defaultSurveyContext = {
     isLoggedIn: false,

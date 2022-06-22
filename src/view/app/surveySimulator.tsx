@@ -23,11 +23,12 @@ import { ThemeType } from "./AppConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import "./Css/Toolbar.css";
 
 declare global {
   interface Window {
     acquireVsCodeApi(): any;
-    surveyData: SurveyFileContent;
+    surveyData: SurveyFileContent | undefined;
     outPutDirContent: OutputFileStructure;
     changeInSurvey: boolean;
     configFilesDir: ConfigFileStructure;
