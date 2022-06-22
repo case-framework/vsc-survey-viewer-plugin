@@ -244,7 +244,9 @@ export default class ViewLoader {
               ? vscode.workspace.workspaceFolders[0].uri.path
               : undefined
           }`,
-          `output/${file}/surveys`
+          `output`,
+          `${file}`,
+          `surveys`
         );
         let newFiles: string[];
 
@@ -328,7 +330,8 @@ export default class ViewLoader {
               ? vscode.workspace.workspaceFolders[0].uri.path
               : undefined
           }`,
-          `config/${file}`
+          `config`,
+          `${file}`
         );
         let content = fs.readFileSync(filePath, "utf8");
         let config: SurveyContext = JSON.parse(content);

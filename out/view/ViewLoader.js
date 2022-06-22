@@ -219,7 +219,7 @@ class ViewLoader {
             fs.readdirSync(outputFolderPath).forEach((file) => {
                 let newPath = path.join(`${vscode.workspace.workspaceFolders
                     ? vscode.workspace.workspaceFolders[0].uri.path
-                    : undefined}`, `output/${file}/surveys`);
+                    : undefined}`, `output`, `${file}`, `surveys`);
                 let newFiles;
                 if (fs.existsSync(newPath)) {
                     newFiles = fs.readdirSync(newPath);
@@ -283,7 +283,7 @@ class ViewLoader {
             fs.readdirSync(configFilePath).forEach((file) => {
                 let filePath = path.join(`${vscode.workspace.workspaceFolders
                     ? vscode.workspace.workspaceFolders[0].uri.path
-                    : undefined}`, `config/${file}`);
+                    : undefined}`, `config`, `${file}`);
                 let content = fs.readFileSync(filePath, "utf8");
                 let config = JSON.parse(content);
                 const singleFileContent = {
