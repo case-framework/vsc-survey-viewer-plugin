@@ -39,12 +39,14 @@ class ViewLoader {
                 vscode.Uri.file(path.join(context.extensionPath, "surveyViewer")),
             ],
         });
+        // Gets the content to load in webview
         this._panel.webview.html = this.getWebviewContent(AppConstants_1.ThemeType.defaultTheme);
+        // Recieves mesages from react app
         this._panel.webview.onDidReceiveMessage((message) => {
             switch (message.command) {
-                case "getOutputFileContent":
+                case "getOutputDirFiles":
                     if (this._panel) {
-                        const content = this.getOutputFileContent();
+                        const content = this.getOutputDirFiles();
                         this._panel.webview.postMessage({
                             command: "sendOutputFileContent",
                             content: content,
@@ -143,6 +145,7 @@ class ViewLoader {
             }
         }, undefined, context.subscriptions);
     }
+    // Returns the content for webview of vscode
     getWebviewContent(themeType) {
         // Local path to main script run in the webview
         const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, "surveyViewer", themeType + ".js"));
@@ -158,10 +161,12 @@ class ViewLoader {
         <script>
           window.acquireVsCodeApi = acquireVsCodeApi;
           window.surveyData = undefined;
+
+          //listener for messages from the vscode
           window.addEventListener('message', event => {
 
-            const message = event.data; // The JSON data our extension sent
-
+            const message = event.data;
+            // Sets the values for the globel object in react app
             switch (message.command) {
                 case 'sendOutputFileContent':
                   window.outPutDirContent = message.content;
@@ -198,6 +203,7 @@ class ViewLoader {
     </body>
     </html>`;
     }
+    // Returns the content of the survey file
     getSurveyFileContent(filePath) {
         if (fs.existsSync(filePath)) {
             let content = fs.readFileSync(filePath, "utf8");
@@ -206,6 +212,7 @@ class ViewLoader {
         }
         return undefined;
     }
+    // Returns the content of the config file
     getConfigFileContent(filePath) {
         if (fs.existsSync(filePath)) {
             let content = fs.readFileSync(filePath, "utf8");
@@ -214,7 +221,8 @@ class ViewLoader {
         }
         return undefined;
     }
-    getOutputFileContent() {
+    // Returns the survey files from output directory
+    getOutputDirFiles() {
         const fullContent = [];
         const outputFolderPath = path.join(`${vscode.workspace.workspaceFolders
             ? vscode.workspace.workspaceFolders[0].uri.path
@@ -254,6 +262,7 @@ class ViewLoader {
             return contentWithError;
         }
     }
+    // Creats a new file for config and opens it in new tab
     createNewConfigFile(fileName) {
         const configFilePath = path.join(`${vscode.workspace.workspaceFolders
             ? vscode.workspace.workspaceFolders[0].uri.path
@@ -283,6 +292,7 @@ class ViewLoader {
             vscode.window.showErrorMessage("File name should not be empty");
         }
     }
+    // Returns the files from the config directory
     getConfigFilesList() {
         const configFilePath = path.join(`${vscode.workspace.workspaceFolders
             ? vscode.workspace.workspaceFolders[0].uri.path

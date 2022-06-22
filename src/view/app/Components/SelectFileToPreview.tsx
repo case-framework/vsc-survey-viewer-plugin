@@ -88,7 +88,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         onClick={() => {
           window.outPutDirContent = undefined;
           props.setOutPutDirContentValue(false);
-          props.giveCommandToVscode("getOutputFileContent", "");
+          props.giveCommandToVscode("getOutputDirFiles", "");
           const intervalId = setInterval(() => {
             if (window.outPutDirContent) {
               if (

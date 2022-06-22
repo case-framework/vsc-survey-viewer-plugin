@@ -61,7 +61,7 @@ const SelectFileToPreview = (props) => {
         React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Survey Selection: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 window.outPutDirContent = undefined;
                 props.setOutPutDirContentValue(false);
-                props.giveCommandToVscode("getOutputFileContent", "");
+                props.giveCommandToVscode("getOutputDirFiles", "");
                 const intervalId = setInterval(() => {
                     if (window.outPutDirContent) {
                         if (window.outPutDirContent.directoryContent.length &&
