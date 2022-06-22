@@ -29,7 +29,7 @@ declare global {
   interface Window {
     acquireVsCodeApi(): any;
     surveyData: SurveyFileContent | undefined;
-    outPutDirContent: OutputFileStructure;
+    outPutDirContent: OutputFileStructure | undefined;
     changeInSurvey: boolean;
     configFilesDir: ConfigFileStructure;
     changeInConfigFile: boolean;

@@ -38,9 +38,7 @@ export default class ViewLoader {
         switch (message.command) {
           case "getOutputFileContent":
             if (this._panel) {
-              console.log("pre");
               const content = this.getOutputFileContent();
-              console.log("post");
               this._panel.webview.postMessage({
                 command: "sendOutputFileContent",
                 content: content,
@@ -237,6 +235,13 @@ export default class ViewLoader {
       }`,
       `output`
     );
+    console.log(
+      vscode.workspace.workspaceFolders
+        ? "workspace path: " + vscode.workspace.workspaceFolders[0].uri.path
+        : "workspace path: " + undefined
+    );
+    console.log("output folder path: " + outputFolderPath);
+    console.log("does the path exist: " + fs.existsSync(outputFolderPath));
     if (fs.existsSync(outputFolderPath)) {
       fs.readdirSync(outputFolderPath).forEach((file) => {
         let newPath = path.join(

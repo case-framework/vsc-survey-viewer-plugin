@@ -59,21 +59,25 @@ const SelectFileToPreview = (props) => {
     };
     return (React.createElement("div", { className: "dropdown nav-item" },
         React.createElement("button", { className: "btn toolBarBg dropdown-toggle shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "SelectFileDropdown", "data-bs-toggle": "dropdown", title: "Survey Selection: " + props.changedSelectTheFileBtnText, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
+                window.outPutDirContent = undefined;
                 props.setOutPutDirContentValue(false);
                 props.giveCommandToVscode("getOutputFileContent", "");
                 const intervalId = setInterval(() => {
-                    if (window.outPutDirContent.directoryContent.length &&
-                        window.outPutDirContent.isOutputDirMissing === false) {
-                        props.setOutPutDirContentValue(true);
-                        clearInterval(intervalId);
+                    if (window.outPutDirContent) {
+                        if (window.outPutDirContent.directoryContent.length &&
+                            window.outPutDirContent.isOutputDirMissing === false) {
+                            console.log(window.outPutDirContent);
+                            props.setOutPutDirContentValue(true);
+                            clearInterval(intervalId);
+                        }
+                        else if (!window.outPutDirContent.directoryContent.length &&
+                            window.outPutDirContent.isOutputDirMissing === true) {
+                            props.setOutPutDirContentValue(true);
+                            console.log(window.outPutDirContent);
+                            props.giveCommandToVscode("showError", "The Output Directory is not yet generated for the project or the opened project is not appropriate.");
+                            clearInterval(intervalId);
+                        }
                     }
-                    else if (!window.outPutDirContent.directoryContent.length &&
-                        window.outPutDirContent.isOutputDirMissing === true) {
-                        props.setOutPutDirContentValue(true);
-                        props.giveCommandToVscode("showError", "The Output Directory is not yet generated for the project or the opened project is not appropriate.");
-                        clearInterval(intervalId);
-                    }
-                    console.log(window.outPutDirContent);
                 }, 10);
             } },
             React.createElement(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faFile, style: { width: "20px", height: "20px", paddingRight: "0.3rem" } }),

@@ -86,27 +86,31 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {
+          window.outPutDirContent = undefined;
           props.setOutPutDirContentValue(false);
           props.giveCommandToVscode("getOutputFileContent", "");
           const intervalId = setInterval(() => {
-            if (
-              window.outPutDirContent.directoryContent.length &&
-              window.outPutDirContent.isOutputDirMissing === false
-            ) {
-              props.setOutPutDirContentValue(true);
-              clearInterval(intervalId);
-            } else if (
-              !window.outPutDirContent.directoryContent.length &&
-              window.outPutDirContent.isOutputDirMissing === true
-            ) {
-              props.setOutPutDirContentValue(true);
-              props.giveCommandToVscode(
-                "showError",
-                "The Output Directory is not yet generated for the project or the opened project is not appropriate."
-              );
-              clearInterval(intervalId);
+            if (window.outPutDirContent) {
+              if (
+                window.outPutDirContent.directoryContent.length &&
+                window.outPutDirContent.isOutputDirMissing === false
+              ) {
+                console.log(window.outPutDirContent);
+                props.setOutPutDirContentValue(true);
+                clearInterval(intervalId);
+              } else if (
+                !window.outPutDirContent.directoryContent.length &&
+                window.outPutDirContent.isOutputDirMissing === true
+              ) {
+                props.setOutPutDirContentValue(true);
+                console.log(window.outPutDirContent);
+                props.giveCommandToVscode(
+                  "showError",
+                  "The Output Directory is not yet generated for the project or the opened project is not appropriate."
+                );
+                clearInterval(intervalId);
+              }
             }
-            console.log(window.outPutDirContent);
           }, 10);
         }}
       >
