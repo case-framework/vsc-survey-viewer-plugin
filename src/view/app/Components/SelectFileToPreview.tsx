@@ -102,7 +102,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
               props.setOutPutDirContentValue(true);
               props.giveCommandToVscode(
                 "showError",
-                "The Output Directory is not yet generated for the project or the opened prject is not appropraite"
+                "The Output Directory is not yet generated for the project or the opened project is not appropriate."
               );
               clearInterval(intervalId);
             }

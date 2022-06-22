@@ -113,7 +113,7 @@ export default class ViewLoader {
             if (message.data !== context.workspaceState.get("selectedTheme")) {
               vscode.window
                 .showInformationMessage(
-                  "The Survey will restart. Would to still want to continue",
+                  "The Survey will restart. Would you still want to continue",
                   "Yes",
                   "No"
                 )
@@ -305,7 +305,7 @@ export default class ViewLoader {
             vscode.window.showTextDocument(fileUri, { preview: false });
           });
       } else {
-        vscode.window.showErrorMessage("File Name Already exists");
+        vscode.window.showErrorMessage("File name Already exists");
       }
     } else {
       vscode.window.showErrorMessage("File name should not be empty");

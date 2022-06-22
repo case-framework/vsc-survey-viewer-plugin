@@ -70,7 +70,7 @@ const SelectFileToPreview = (props) => {
                     else if (!window.outPutDirContent.directoryContent.length &&
                         window.outPutDirContent.isOutputDirMissing === true) {
                         props.setOutPutDirContentValue(true);
-                        props.giveCommandToVscode("showError", "The Output Directory is not yet generated for the project or the opened prject is not appropraite");
+                        props.giveCommandToVscode("showError", "The Output Directory is not yet generated for the project or the opened project is not appropriate.");
                         clearInterval(intervalId);
                     }
                     console.log(window.outPutDirContent);
