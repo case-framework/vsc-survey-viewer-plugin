@@ -32,7 +32,9 @@ export default class ViewLoader {
         ],
       }
     );
+
     this._panel.webview.html = this.getWebviewContent(ThemeType.defaultTheme);
+
     this._panel.webview.onDidReceiveMessage(
       (message) => {
         switch (message.command) {
@@ -45,6 +47,7 @@ export default class ViewLoader {
               });
             }
             break;
+
           case "fileSelectedForPreview":
             if (this._panel) {
               const survey = this.getSurveyFileContent(message.data);
@@ -54,16 +57,19 @@ export default class ViewLoader {
               });
             }
             break;
+
           case "showError":
             if (this._panel) {
               vscode.window.showErrorMessage(message.data);
             }
             break;
+
           case "showFileDownloadSuccessMsg":
             if (this._panel) {
               vscode.window.showInformationMessage(message.data);
             }
             break;
+
           case "getConfigFilesList":
             if (this._panel) {
               const content = this.getConfigFilesList();
@@ -73,11 +79,13 @@ export default class ViewLoader {
               });
             }
             break;
+
           case "createNewFile":
             if (this._panel) {
               this.createNewConfigFile(message.data);
             }
             break;
+
           case "selectedFileToDetectChanges":
             if (vscode.workspace.workspaceFolders) {
               vscode.workspace
@@ -93,6 +101,7 @@ export default class ViewLoader {
                 });
             }
             break;
+
           case "setConfigFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
               vscode.workspace
@@ -108,6 +117,7 @@ export default class ViewLoader {
                 });
             }
             break;
+
           case "changeTheme":
             if (message.data !== context.workspaceState.get("selectedTheme")) {
               vscode.window
@@ -136,8 +146,8 @@ export default class ViewLoader {
             } else {
               vscode.window.showErrorMessage("Alredy in use");
             }
-
             break;
+
           case "PrefillFileSelectionError":
             if (this._panel) {
               vscode.window.showErrorMessage(message.data);
@@ -176,20 +186,25 @@ export default class ViewLoader {
                 case 'sendOutputFileContent':
                   window.outPutDirContent = message.content;
                     break;
+
                     case 'setNewSurvey':
                   window.surveyData = message.content;
                     break;
+
                     case 'setUpdatedSurvey':
                     window.changeInSurvey=true;
                   window.surveyData = message.content;
                     break;
+
                     case 'setConfigFilesList':
                   window.configFilesDir = message.content;
                     break;
+
                     case 'setUpdatedConfigFileData':
                       window.changeInConfigFile = true;
                       window.updatedConfigFileData = message.content;
                     break;
+
                     case 'updateSelectedTheme':
                       window.selectedTheme = message.content;
                     break;
@@ -210,16 +225,15 @@ export default class ViewLoader {
     if (fs.existsSync(filePath)) {
       let content = fs.readFileSync(filePath, "utf8");
       let surveyData: SurveyFileContent = JSON.parse(content);
-
       return surveyData;
     }
     return undefined;
   }
+
   private getConfigFileContent(filePath: string): SurveyContext | undefined {
     if (fs.existsSync(filePath)) {
       let content = fs.readFileSync(filePath, "utf8");
       let configData: SurveyContext = JSON.parse(content);
-
       return configData;
     }
     return undefined;
@@ -282,6 +296,7 @@ export default class ViewLoader {
       return contentWithError;
     }
   }
+
   private createNewConfigFile(fileName: string) {
     const configFilePath = path.join(
       `${
