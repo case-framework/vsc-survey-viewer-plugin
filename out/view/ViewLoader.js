@@ -93,7 +93,7 @@ class ViewLoader {
                             if (this._panel) {
                                 const survey = this.getSurveyFileContent(message.data);
                                 this._panel.webview.postMessage({
-                                    command: "setTheUpdatedSurvey",
+                                    command: "setUpdatedSurvey",
                                     content: survey,
                                 });
                             }
@@ -170,7 +170,7 @@ class ViewLoader {
                     case 'setNewSurvey':
                   window.surveyData = message.content;
                     break;
-                    case 'setTheUpdatedSurvey':
+                    case 'setUpdatedSurvey':
                     window.changeInSurvey=true;
                   window.surveyData = message.content;
                     break;
