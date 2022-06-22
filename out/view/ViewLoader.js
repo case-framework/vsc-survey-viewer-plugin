@@ -48,7 +48,7 @@ class ViewLoader {
                         const content = this.getOutputFileContent();
                         console.log("post");
                         this._panel.webview.postMessage({
-                            command: "sendTheOutputFileContent",
+                            command: "sendOutputFileContent",
                             content: content,
                         });
                     }
@@ -57,7 +57,7 @@ class ViewLoader {
                     if (this._panel) {
                         const survey = this.getSurveyFileContent(message.data);
                         this._panel.webview.postMessage({
-                            command: "setTheNewSurvey",
+                            command: "setNewSurvey",
                             content: survey,
                         });
                     }
@@ -71,9 +71,9 @@ class ViewLoader {
                     if (this._panel) {
                         vscode.window.showInformationMessage(message.data);
                     }
-                case "getTheConfigFilesList":
+                case "getConfigFilesList":
                     if (this._panel) {
-                        const content = this.getTheConfigFilesList();
+                        const content = this.getConfigFilesList();
                         this._panel.webview.postMessage({
                             command: "setConfigFilesList",
                             content: content,
@@ -100,7 +100,7 @@ class ViewLoader {
                         });
                     }
                     break;
-                case "setTheConfigFileChangeWatcher":
+                case "setConfigFileChangeWatcher":
                     if (vscode.workspace.workspaceFolders) {
                         vscode.workspace
                             .createFileSystemWatcher(message.data)
@@ -108,7 +108,7 @@ class ViewLoader {
                             if (this._panel) {
                                 const configData = this.getConfigFileContent(message.data);
                                 this._panel.webview.postMessage({
-                                    command: "setTheUpdatedConfigFileData",
+                                    command: "setUpdatedConfigFileData",
                                     content: configData,
                                 });
                             }
@@ -164,10 +164,10 @@ class ViewLoader {
             const message = event.data; // The JSON data our extension sent
 
             switch (message.command) {
-                case 'sendTheOutputFileContent':
+                case 'sendOutputFileContent':
                   window.outPutDirContent = message.content;
                     break;
-                    case 'setTheNewSurvey':
+                    case 'setNewSurvey':
                   window.surveyData = message.content;
                     break;
                     case 'setTheUpdatedSurvey':
@@ -177,7 +177,7 @@ class ViewLoader {
                     case 'setConfigFilesList':
                   window.configFilesDir = message.content;
                     break;
-                    case 'setTheUpdatedConfigFileData':
+                    case 'setUpdatedConfigFileData':
                       window.changeInConfigFile = true;
                       window.updatedConfigFileData = message.content;
                     break;
@@ -274,7 +274,7 @@ class ViewLoader {
             vscode.window.showErrorMessage("File name should not be empty");
         }
     }
-    getTheConfigFilesList() {
+    getConfigFilesList() {
         const configFilePath = path.join(`${vscode.workspace.workspaceFolders
             ? vscode.workspace.workspaceFolders[0].uri.path
             : undefined}`, `config`);

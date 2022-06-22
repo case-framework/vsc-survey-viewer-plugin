@@ -37,7 +37,7 @@ const ChangeConfig = (props) => {
         console.log(configFileList);
         return configFileList.map((item) => {
             return (React.createElement("button", { className: "dropdown-item nav-item btn-custom", type: "button", onClick: () => {
-                    props.giveCommandToVscode("setTheConfigFileChangeWatcher", item.configFilePath);
+                    props.giveCommandToVscode("setConfigFileChangeWatcher", item.configFilePath);
                     props.onConfigChange(item.configFileContent);
                     setSelectedFile(item.configFileName);
                 } }, item.configFileName.substring(0, item.configFileName.lastIndexOf("."))));
@@ -46,7 +46,7 @@ const ChangeConfig = (props) => {
     return (React.createElement("div", { className: "dropdown nav-item" },
         React.createElement("button", { className: "btn toolBarBg dropdown-toggle  shadow-none btn-custom fw-bold iconsAndTextAlign", type: "button", id: "ChangeConfig", "data-bs-toggle": "dropdown", title: "Config: " + selectedFile, "aria-haspopup": "true", "aria-expanded": "false", onClick: () => {
                 props.setConfigDirContentValue(false);
-                props.giveCommandToVscode("getTheConfigFilesList", "");
+                props.giveCommandToVscode("getConfigFilesList", "");
                 const intervalId = setInterval(() => {
                     if (window.configFilesDir) {
                         props.setConfigDirContentValue(true);

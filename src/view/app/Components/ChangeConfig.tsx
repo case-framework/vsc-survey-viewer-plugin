@@ -29,7 +29,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           type="button"
           onClick={() => {
             props.giveCommandToVscode(
-              "setTheConfigFileChangeWatcher",
+              "setConfigFileChangeWatcher",
               item.configFilePath
             );
             props.onConfigChange(item.configFileContent);
@@ -56,7 +56,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         aria-expanded="false"
         onClick={() => {
           props.setConfigDirContentValue(false);
-          props.giveCommandToVscode("getTheConfigFilesList", "");
+          props.giveCommandToVscode("getConfigFilesList", "");
           const intervalId = setInterval(() => {
             if (window.configFilesDir) {
               props.setConfigDirContentValue(true);

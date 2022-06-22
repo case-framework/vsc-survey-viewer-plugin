@@ -42,7 +42,7 @@ export default class ViewLoader {
               const content = this.getOutputFileContent();
               console.log("post");
               this._panel.webview.postMessage({
-                command: "sendTheOutputFileContent",
+                command: "sendOutputFileContent",
                 content: content,
               });
             }
@@ -51,7 +51,7 @@ export default class ViewLoader {
             if (this._panel) {
               const survey = this.getSurveyFileContent(message.data);
               this._panel.webview.postMessage({
-                command: "setTheNewSurvey",
+                command: "setNewSurvey",
                 content: survey,
               });
             }
@@ -65,9 +65,9 @@ export default class ViewLoader {
             if (this._panel) {
               vscode.window.showInformationMessage(message.data);
             }
-          case "getTheConfigFilesList":
+          case "getConfigFilesList":
             if (this._panel) {
-              const content = this.getTheConfigFilesList();
+              const content = this.getConfigFilesList();
               this._panel.webview.postMessage({
                 command: "setConfigFilesList",
                 content: content,
@@ -94,7 +94,7 @@ export default class ViewLoader {
                 });
             }
             break;
-          case "setTheConfigFileChangeWatcher":
+          case "setConfigFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
               vscode.workspace
                 .createFileSystemWatcher(message.data)
@@ -102,7 +102,7 @@ export default class ViewLoader {
                   if (this._panel) {
                     const configData = this.getConfigFileContent(message.data);
                     this._panel.webview.postMessage({
-                      command: "setTheUpdatedConfigFileData",
+                      command: "setUpdatedConfigFileData",
                       content: configData,
                     });
                   }
@@ -174,10 +174,10 @@ export default class ViewLoader {
             const message = event.data; // The JSON data our extension sent
 
             switch (message.command) {
-                case 'sendTheOutputFileContent':
+                case 'sendOutputFileContent':
                   window.outPutDirContent = message.content;
                     break;
-                    case 'setTheNewSurvey':
+                    case 'setNewSurvey':
                   window.surveyData = message.content;
                     break;
                     case 'setTheUpdatedSurvey':
@@ -187,7 +187,7 @@ export default class ViewLoader {
                     case 'setConfigFilesList':
                   window.configFilesDir = message.content;
                     break;
-                    case 'setTheUpdatedConfigFileData':
+                    case 'setUpdatedConfigFileData':
                       window.changeInConfigFile = true;
                       window.updatedConfigFileData = message.content;
                     break;
@@ -312,7 +312,7 @@ export default class ViewLoader {
     }
   }
 
-  private getTheConfigFilesList(): ConfigFileStructure {
+  private getConfigFilesList(): ConfigFileStructure {
     const configFilePath = path.join(
       `${
         vscode.workspace.workspaceFolders
