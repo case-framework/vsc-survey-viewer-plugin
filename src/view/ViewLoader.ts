@@ -133,7 +133,7 @@ export default class ViewLoader {
                   "Yes",
                   "No"
                 )
-                .then((value) => {
+                .then((value: string | undefined) => {
                   if (value === "Yes") {
                     if (this._panel) {
                       context.workspaceState.update(
@@ -349,7 +349,7 @@ export default class ViewLoader {
             fileUri,
             new TextEncoder().encode(JSON.stringify(defaultDataForTheFile))
           )
-          .then((doc) => {
+          .then(() => {
             vscode.window.showTextDocument(fileUri, { preview: false });
           });
       } else {

@@ -298,7 +298,7 @@ class ViewLoader {
                 const fileUri = vscode.Uri.file(filePath);
                 vscode.workspace.fs
                     .writeFile(fileUri, new TextEncoder().encode(JSON.stringify(defaultDataForTheFile)))
-                    .then((doc) => {
+                    .then(() => {
                     vscode.window.showTextDocument(fileUri, { preview: false });
                 });
             }
