@@ -138,8 +138,12 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         aria-labelledby="SelectFileDropdown"
         style={{ minWidth: "228px", maxHeight: "260px" }}
       >
-        {props.outPutDirContentValue ? (
-          setDropdowns(window.outPutDirContent)
+        {window.outPutDirContent ? (
+          props.outPutDirContentValue ? (
+            setDropdowns(window.outPutDirContent)
+          ) : (
+            <div></div>
+          )
         ) : (
           <div></div>
         )}
