@@ -79,7 +79,6 @@ const SurveySimulator: React.FC = (props) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log(version);
       if (window.changeInSurvey) {
         setSurveyViewCred((prevState) => ({
           ...prevState,
