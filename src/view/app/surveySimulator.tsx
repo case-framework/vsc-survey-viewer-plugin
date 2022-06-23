@@ -24,7 +24,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "./Css/Toolbar.css";
-
+import { version } from "../../../package.json";
 declare global {
   interface Window {
     acquireVsCodeApi(): any;
@@ -78,8 +78,8 @@ const SurveySimulator: React.FC = (props) => {
   const [navbarToggleIsOpen, setNavbarToggleIsOpen] = useState(false);
 
   useEffect(() => {
-    console.log(window.selectedTheme);
     const interval = setInterval(() => {
+      console.log(version);
       if (window.changeInSurvey) {
         setSurveyViewCred((prevState) => ({
           ...prevState,
@@ -318,6 +318,7 @@ const SurveySimulator: React.FC = (props) => {
           </div>
         )}
       </div>
+      <p className="text-muted mt-5 text-center ">{version}</p>
       <EnterFileNameDialog
         giveCommandToVscode={(command: string, data: string) => {
           giveCommandToVscode(command, data);
