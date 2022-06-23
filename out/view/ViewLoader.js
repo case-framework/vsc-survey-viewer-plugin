@@ -36,7 +36,10 @@ class ViewLoader {
             enableScripts: true,
             retainContextWhenHidden: true,
             localResourceRoots: [
-                vscode.Uri.file(path.join(context.extensionPath, "surveyViewer")),
+                vscode.Uri.file(path
+                    .join(context.extensionPath, "surveyViewer")
+                    .split("\\")
+                    .join("/")),
             ],
         });
         // Gets the content to load in webview
@@ -148,7 +151,10 @@ class ViewLoader {
     // Returns the content for webview of vscode
     getWebviewContent(themeType) {
         // Local path to main script run in the webview
-        const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, "surveyViewer", themeType + ".js"));
+        const reactAppPathOnDisk = vscode.Uri.file(path
+            .join(this._extensionPath, "surveyViewer", themeType + ".js")
+            .split("\\")
+            .join("/"));
         const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
         return `<!DOCTYPE html>
     <html lang="en">
@@ -224,9 +230,12 @@ class ViewLoader {
     // Returns the survey files from output directory
     getOutputDirFiles() {
         const fullContent = [];
-        const outputFolderPath = path.join(`${vscode.workspace.workspaceFolders
+        const outputFolderPath = path
+            .join(`${vscode.workspace.workspaceFolders
             ? vscode.workspace.workspaceFolders[0].uri.path
-            : undefined}`, `output`);
+            : undefined}`, `output`)
+            .split("\\")
+            .join("/");
         console.log(vscode.workspace.workspaceFolders
             ? "workspace path: " + vscode.workspace.workspaceFolders[0].uri.path
             : "workspace path: " + undefined);
@@ -234,9 +243,12 @@ class ViewLoader {
         console.log("does the path exist: " + fs.existsSync(outputFolderPath));
         if (fs.existsSync(outputFolderPath)) {
             fs.readdirSync(outputFolderPath).forEach((file) => {
-                let newPath = path.join(`${vscode.workspace.workspaceFolders
+                let newPath = path
+                    .join(`${vscode.workspace.workspaceFolders
                     ? vscode.workspace.workspaceFolders[0].uri.path
-                    : undefined}`, `output`, `${file}`, `surveys`);
+                    : undefined}`, `output`, `${file}`, `surveys`)
+                    .split("\\")
+                    .join("/");
                 let newFiles;
                 if (fs.existsSync(newPath)) {
                     newFiles = fs.readdirSync(newPath);
@@ -264,14 +276,20 @@ class ViewLoader {
     }
     // Creats a new file for config and opens it in new tab
     createNewConfigFile(fileName) {
-        const configFilePath = path.join(`${vscode.workspace.workspaceFolders
+        const configFilePath = path
+            .join(`${vscode.workspace.workspaceFolders
             ? vscode.workspace.workspaceFolders[0].uri.path
-            : undefined}`, `config`);
+            : undefined}`, `config`)
+            .split("\\")
+            .join("/");
         if (fileName !== "") {
             if (!fs.existsSync(configFilePath)) {
                 vscode.workspace.fs.createDirectory(vscode.Uri.file(configFilePath));
             }
-            const filePath = path.join(configFilePath, fileName + ".json");
+            const filePath = path
+                .join(configFilePath, fileName + ".json")
+                .split("\\")
+                .join("/");
             if (!fs.existsSync(filePath)) {
                 const defaultDataForTheFile = {
                     isLoggedIn: false,
@@ -294,15 +312,21 @@ class ViewLoader {
     }
     // Returns the files from the config directory
     getConfigFilesList() {
-        const configFilePath = path.join(`${vscode.workspace.workspaceFolders
+        const configFilePath = path
+            .join(`${vscode.workspace.workspaceFolders
             ? vscode.workspace.workspaceFolders[0].uri.path
-            : undefined}`, `config`);
+            : undefined}`, `config`)
+            .split("\\")
+            .join("/");
         if (fs.existsSync(configFilePath)) {
             const fullContent = [];
             fs.readdirSync(configFilePath).forEach((file) => {
-                let filePath = path.join(`${vscode.workspace.workspaceFolders
+                let filePath = path
+                    .join(`${vscode.workspace.workspaceFolders
                     ? vscode.workspace.workspaceFolders[0].uri.path
-                    : undefined}`, `config`, `${file}`);
+                    : undefined}`, `config`, `${file}`)
+                    .split("\\")
+                    .join("/");
                 let content = fs.readFileSync(filePath, "utf8");
                 let config = JSON.parse(content);
                 const singleFileContent = {
