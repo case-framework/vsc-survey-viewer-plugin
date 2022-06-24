@@ -187,6 +187,7 @@ const SurveySimulator: React.FC = (props) => {
                 preFillFile: File | undefined,
                 preFillValues: SurveySingleItemResponse[]
               ) => {
+                const lastSelectedSurvey = surveyViewCred.survey;
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
                   survey: undefined,
@@ -194,9 +195,7 @@ const SurveySimulator: React.FC = (props) => {
                 }));
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
-                  survey: window.surveyData
-                    ? window.surveyData.survey
-                    : undefined,
+                  survey: lastSelectedSurvey ? lastSelectedSurvey : undefined,
                   prefillsFile: preFillFile,
                   prefillValues: preFillValues,
                   inLoadingState: false,
