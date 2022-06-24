@@ -142,10 +142,6 @@ export default class ViewLoader {
                         message.data,
                         versionNumber
                       );
-                      this._panel.webview.postMessage({
-                        command: "updateSelectedTheme",
-                        content: message.data,
-                      });
                     }
                   }
                 });
@@ -188,6 +184,7 @@ export default class ViewLoader {
         <script>
           window.acquireVsCodeApi = acquireVsCodeApi;
           window.versionNumber = "${versionNumber}";
+          window.selectedTheme = "${themeType}";
 
          
         </script>

@@ -120,10 +120,6 @@ const SurveySimulator: React.FC = (props) => {
             inLoadingState: false,
           }));
           break;
-
-        case "updateSelectedTheme":
-          window.selectedTheme = message.content;
-          break;
       }
     });
   }, []);
