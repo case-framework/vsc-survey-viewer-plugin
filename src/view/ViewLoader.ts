@@ -28,7 +28,7 @@ export default class ViewLoader {
         enableScripts: true,
         retainContextWhenHidden: true,
         localResourceRoots: [
-          vscode.Uri.file(context.extensionPath + "surveyViewer"),
+          vscode.Uri.file(path.join(context.extensionPath, "surveyViewer")),
         ],
       }
     );
@@ -217,27 +217,23 @@ export default class ViewLoader {
   // Returns the survey files from output directory
   private getOutputDirFiles(): Error | OutputFileStructure | undefined {
     const fullContent: SurveyDirectory[] = [];
-    
-    if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length < 1) {
+
+    if (
+      !vscode.workspace.workspaceFolders ||
+      vscode.workspace.workspaceFolders.length < 1
+    ) {
       // TODO: display error and return if no workspace found:
       return;
     }
-    
-    const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.fsPath;   
-    const outputFolderPath = path.join(
-      workspaceFolder,
-      'output'
-    );
-   
+
+    const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.fsPath;
+    const outputFolderPath = path.join(workspaceFolder, "output");
+
     console.log("output folder path: " + outputFolderPath);
     console.log("does the path exist: " + fs.existsSync(outputFolderPath));
     if (fs.existsSync(outputFolderPath)) {
       fs.readdirSync(outputFolderPath).forEach((file) => {
-        const surveyFolder = path.join(
-          outputFolderPath,
-          file,
-          'surveys'
-        );        
+        const surveyFolder = path.join(outputFolderPath, file, "surveys");
 
         let newFiles: string[];
         if (fs.existsSync(surveyFolder)) {
