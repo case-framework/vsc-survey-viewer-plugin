@@ -136,7 +136,7 @@ const SurveySimulator: React.FC = (props) => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-md sticky-top toolBarBg py-0">
+      <nav className="navbar navbar-expand-md toolBarBg py-0">
         <button
           className=" btn navbar-toggler shadow-none btn-custom"
           style={{ width: "56px", height: "40px", borderStyle: "none" }}
@@ -288,9 +288,8 @@ const SurveySimulator: React.FC = (props) => {
                   }
                 );
                 a.href = URL.createObjectURL(file);
-                a.download = `${
-                  surveyViewCred.survey?.current.surveyDefinition.key
-                }_responses_${new Date().toLocaleDateString()}.json`;
+                a.download = `${surveyViewCred.survey?.current.surveyDefinition.key
+                  }_responses_${new Date().toLocaleDateString()}.json`;
                 a.click();
                 // giveCommandToVscode(
                 //   "showFileDownloadSuccessMsg",
