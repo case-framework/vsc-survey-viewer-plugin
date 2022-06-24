@@ -229,7 +229,9 @@ export default class ViewLoader {
       !vscode.workspace.workspaceFolders ||
       vscode.workspace.workspaceFolders.length < 1
     ) {
-      // TODO: display error and return if no workspace found:
+      vscode.window.showErrorMessage(
+        "No project opened currently! Please open the appropriate project."
+      );
       return;
     }
 
@@ -274,7 +276,7 @@ export default class ViewLoader {
     const configFilePath = path.join(
       `${
         vscode.workspace.workspaceFolders
-          ? vscode.workspace.workspaceFolders[0].uri.path
+          ? vscode.workspace.workspaceFolders[0].uri.fsPath
           : undefined
       }`,
       "config"
@@ -312,7 +314,7 @@ export default class ViewLoader {
     const configFilePath = path.join(
       `${
         vscode.workspace.workspaceFolders
-          ? vscode.workspace.workspaceFolders[0].uri.path
+          ? vscode.workspace.workspaceFolders[0].uri.fsPath
           : undefined
       }`,
       "config"
@@ -324,7 +326,7 @@ export default class ViewLoader {
         let filePath = path.join(
           `${
             vscode.workspace.workspaceFolders
-              ? vscode.workspace.workspaceFolders[0].uri.path
+              ? vscode.workspace.workspaceFolders[0].uri.fsPath
               : undefined
           }`,
           "config",
