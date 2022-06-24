@@ -2,7 +2,6 @@ import * as React from "react";
 import { SurveyContext } from "survey-engine/data_types";
 import { ConfigFile, ConfigFileStructure } from "../model";
 import "../Css/Toolbar.css";
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
@@ -12,11 +11,12 @@ interface ChangeConfigProps {
   configDirList: ConfigFileStructure;
   onConfigChange: (context: SurveyContext) => void;
   giveCommandToVscode: (command: string, data: string) => void;
+  currentConfigFileText: string;
+  setSelectedConfigFileText: (fileName: string) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
-  const [selectedFile, setSelectedFile] = useState("Config");
   const setConfigFilesList = (
     configFileList: ConfigFile[]
   ): React.ReactNode => {
@@ -35,7 +35,8 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
               "setConfigFileChangeWatcher",
               item.configFilePath
             );
-            setSelectedFile(item.configFileName);
+
+            props.setSelectedConfigFileText(item.configFileName);
           }}
         >
           {item.configFileName.substring(
@@ -53,7 +54,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         type="button"
         id="ChangeConfig"
         data-bs-toggle="dropdown"
-        title={"Config: " + selectedFile}
+        title={"Config: " + props.currentConfigFileText}
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {
@@ -64,9 +65,9 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           icon={faGear}
           style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
-        {selectedFile.length <= 11
-          ? selectedFile
-          : selectedFile.substring(0, 10)}
+        {props.currentConfigFileText.length <= 11
+          ? props.currentConfigFileText
+          : props.currentConfigFileText.substring(0, 10)}
       </button>
       <div
         className="dropdown-menu  overflow-auto toolBarDropdownBg"
@@ -95,7 +96,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
               isLoggedIn: false,
               participantFlags: {},
             });
-            setSelectedFile("Config");
+            props.setSelectedConfigFileText("Config");
           }}
         >
           <FontAwesomeIcon

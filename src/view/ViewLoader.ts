@@ -223,6 +223,12 @@ export default class ViewLoader {
   private getConfigFileContent(filePath: string): SurveyContext | undefined {
     if (fs.existsSync(filePath)) {
       let content = fs.readFileSync(filePath, "utf8");
+      try {
+        JSON.parse(content);
+      } catch (e) {
+        vscode.window.showErrorMessage("JSON syntax error");
+        return undefined;
+      }
       let configData: SurveyContext = JSON.parse(content);
       return configData;
     }

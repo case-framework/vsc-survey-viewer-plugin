@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SurveyView } from "case-web-ui";
 import {
-  ConfigFileStructure,
   dateLocales,
   SimulatorUIConfig,
   SurveyFileContent,
@@ -26,9 +25,6 @@ import "./Css/Toolbar.css";
 declare global {
   interface Window {
     acquireVsCodeApi(): any;
-    surveyData: SurveyFileContent | undefined;
-    configFilesDir: ConfigFileStructure;
-    updatedConfigFileData: SurveyContext;
     selectedTheme: ThemeType;
     versionNumber: string;
   }
@@ -68,8 +64,10 @@ const SurveySimulator: React.FC = (props) => {
   });
   const [navbarToggleIsOpen, setNavbarToggleIsOpen] = useState(false);
   const [outputDirFiles, setoutputDirFiles] = useState(undefined);
+  const [currentConfigFileText, setCurrentConfigFileText] = useState("Config");
   const [selectSurveyBtnLoadingState, setselectSurveyBtnLoadingState] =
     useState(false);
+
   const [configDirList, setconfigDirList] = useState({
     isConfigDirMissing: true,
     directoryContent: [],
@@ -102,6 +100,7 @@ const SurveySimulator: React.FC = (props) => {
           break;
 
         case "setUpdatedSurvey":
+          const newSurveyData = message.content as SurveyFileContent;
           setSurveyViewCred((prevState) => ({
             ...prevState,
             survey: undefined,
@@ -109,7 +108,7 @@ const SurveySimulator: React.FC = (props) => {
           }));
           setSurveyViewCred((prevState) => ({
             ...prevState,
-            survey: message.content,
+            survey: newSurveyData.survey,
             inLoadingState: false,
           }));
           console.log(surveyViewCred);
@@ -122,16 +121,26 @@ const SurveySimulator: React.FC = (props) => {
         case "setConfigData":
           setSurveyViewCred((prevState) => ({
             ...prevState,
-            context: message.content,
+            context: message.content
+              ? message.content
+              : defaultSimulatorUIConfig,
           }));
+          if (message.content === undefined) {
+            setCurrentConfigFileText("Config");
+          }
           break;
 
         case "setUpdatedConfigFileData":
           setSurveyViewCred((prevState) => ({
             ...prevState,
-            context: window.updatedConfigFileData,
+            context: message.content
+              ? message.content
+              : defaultSimulatorUIConfig,
             inLoadingState: false,
           }));
+          if (message.content === undefined) {
+            setCurrentConfigFileText("Config");
+          }
           break;
       }
     });
@@ -230,6 +239,10 @@ const SurveySimulator: React.FC = (props) => {
                 }));
               }}
               configDirList={configDirList}
+              currentConfigFileText={currentConfigFileText}
+              setSelectedConfigFileText={(fileName: string) => {
+                setCurrentConfigFileText(fileName);
+              }}
             />
             <ShowKeysCheckBox
               currentCheckBoxStatus={surveyViewCred.simulatorUIConfig.showKeys}
