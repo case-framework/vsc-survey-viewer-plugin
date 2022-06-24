@@ -19,39 +19,27 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
       aria-hidden="true"
     >
       <div className="modal-dialog modal-dialog-centered " role="document">
-        <div className="modal-content" style={{ borderRadius: "0.6rem" }}>
+        <div className="modal-content">
           <div
-            className="modal-header"
-            style={{
-              paddingTop: "0.5rem",
-              paddingRight: "0rem",
-              paddingLeft: "1.2rem",
-              paddingBottom: "0.5rem",
-            }}
+            className="modal-header p-2"            
           >
             <h5 className="modal-title" id="DialogTitle">
               Create a new file
             </h5>
             <button
               type="button"
-              className="btn shadow-none"
+              className="btn shadow-none pe-0"
               data-bs-dismiss="modal"
               aria-label="Close"
             >
               <FontAwesomeIcon
+                size="lg"
                 icon={faXmark}
-                style={{ width: "20px", height: "20px" }}
               />
             </button>
           </div>
           <div
-            className="modal-body"
-            style={{
-              paddingTop: "1rem",
-              paddingRight: "1.2rem",
-              paddingLeft: "1.2rem",
-              paddingBottom: "1.4rem",
-            }}
+            className="modal-body p-2"           
           >
             <div className="form-group">
               <label htmlFor="EnterFileNameTextfeild">Enter File name</label>
@@ -72,15 +60,14 @@ const EnterFileNameDialog: React.FC<EnterFileNameDialogProps> = (props) => {
           <div className="modal-footer p-2">
             <button
               type="button"
-              className="btn btn-secondary rounded"
+              className="btn btn-secondary m-0"
               data-bs-dismiss="modal"
             >
               Close
             </button>
             <button
               type="button"
-              className="btn btn-primary rounded"
-              style={{ marginLeft: "0.937rem" }}
+              className="btn btn-primary m-0 ms-2"
               data-bs-dismiss="modal"
               onClick={() => {
                 props.giveCommandToVscode("createNewFile", fileName);
