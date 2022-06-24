@@ -28,6 +28,10 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           type="button"
           onClick={() => {
             props.giveCommandToVscode(
+              "getSelectedConfigFileContent",
+              item.configFilePath
+            );
+            props.giveCommandToVscode(
               "setConfigFileChangeWatcher",
               item.configFilePath
             );

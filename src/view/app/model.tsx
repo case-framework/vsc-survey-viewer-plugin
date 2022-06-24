@@ -58,7 +58,6 @@ export interface ConfigFileStructure {
 export interface ConfigFile {
   configFilePath: string;
   configFileName: string;
-  configFileContent: SurveyContext;
 }
 export const dateLocales = [
   { code: "nl", locale: nl, format: "dd-MM-yyyy" },

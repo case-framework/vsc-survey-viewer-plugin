@@ -98,6 +98,7 @@ const SurveySimulator: React.FC = (props) => {
             inLoadingState: false,
           }));
           setselectSurveyBtnLoadingState(false);
+          console.log(surveyViewCred);
           break;
 
         case "setUpdatedSurvey":
@@ -111,11 +112,18 @@ const SurveySimulator: React.FC = (props) => {
             survey: message.content,
             inLoadingState: false,
           }));
+          console.log(surveyViewCred);
           break;
 
         case "setConfigFilesList":
-          console.log(message.content);
           setconfigDirList(message.content);
+          break;
+
+        case "setConfigData":
+          setSurveyViewCred((prevState) => ({
+            ...prevState,
+            context: message.content,
+          }));
           break;
 
         case "setUpdatedConfigFileData":
@@ -218,16 +226,7 @@ const SurveySimulator: React.FC = (props) => {
               onConfigChange={(context: SurveyContext) => {
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
-                  survey: undefined,
-                  inLoadingState: false,
-                }));
-                setSurveyViewCred((prevState) => ({
-                  ...prevState,
-                  survey: window.surveyData
-                    ? window.surveyData.survey
-                    : undefined,
                   context: { ...context },
-                  inLoadingState: false,
                 }));
               }}
               configDirList={configDirList}

@@ -107,6 +107,17 @@ export default class ViewLoader {
             }
             break;
 
+          case "getSelectedConfigFileContent":
+            if (this._panel) {
+              const configData = this.getConfigFileContent(message.data);
+              this._panel.webview.postMessage({
+                command: "setConfigData",
+                content: configData,
+              });
+            }
+
+            break;
+
           case "setConfigFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
               vscode.workspace
@@ -329,13 +340,9 @@ export default class ViewLoader {
           "config",
           `${file}`
         );
-
-        let content = fs.readFileSync(filePath, "utf8");
-        let config: SurveyContext = JSON.parse(content);
         const singleFileContent: ConfigFile = {
           configFilePath: filePath,
           configFileName: file,
-          configFileContent: config,
         };
         fullContent.push(singleFileContent);
       });
