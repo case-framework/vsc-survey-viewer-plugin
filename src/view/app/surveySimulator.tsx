@@ -66,11 +66,15 @@ const SurveySimulator: React.FC = (props) => {
   const [surveyViewCred, setSurveyViewCred] = useState<SurveyViewCred>({
     ...initialSurveyCred,
   });
-  const [configDirContentValue, setConfigDirContentValue] = useState(false);
   const [navbarToggleIsOpen, setNavbarToggleIsOpen] = useState(false);
   const [outputDirFiles, setoutputDirFiles] = useState(undefined);
   const [selectSurveyBtnLoadingState, setselectSurveyBtnLoadingState] =
     useState(false);
+  const [configDirList, setconfigDirList] = useState({
+    isConfigDirMissing: true,
+    directoryContent: [],
+  });
+
   useEffect(() => {
     //listener for messages from the vscode
     window.addEventListener("message", (event) => {
@@ -110,7 +114,8 @@ const SurveySimulator: React.FC = (props) => {
           break;
 
         case "setConfigFilesList":
-          window.configFilesDir = message.content;
+          console.log(message.content);
+          setconfigDirList(message.content);
           break;
 
         case "setUpdatedConfigFileData":
@@ -210,10 +215,6 @@ const SurveySimulator: React.FC = (props) => {
               giveCommandToVscode={(command: string, data: string) => {
                 giveCommandToVscode(command, data);
               }}
-              setConfigDirContentValue={(value: boolean) => {
-                setConfigDirContentValue(value);
-              }}
-              configDirContentValue={configDirContentValue}
               onConfigChange={(context: SurveyContext) => {
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
@@ -229,6 +230,7 @@ const SurveySimulator: React.FC = (props) => {
                   inLoadingState: false,
                 }));
               }}
+              configDirList={configDirList}
             />
             <ShowKeysCheckBox
               currentCheckBoxStatus={surveyViewCred.simulatorUIConfig.showKeys}

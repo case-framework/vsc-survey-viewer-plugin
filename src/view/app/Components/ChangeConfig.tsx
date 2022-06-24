@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SurveyContext } from "survey-engine/data_types";
-import { ConfigFile } from "../model";
+import { ConfigFile, ConfigFileStructure } from "../model";
 import "../Css/Toolbar.css";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +9,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 interface ChangeConfigProps {
-  setConfigDirContentValue: (value: boolean) => void;
-  configDirContentValue: boolean;
+  configDirList: ConfigFileStructure;
   onConfigChange: (context: SurveyContext) => void;
   giveCommandToVscode: (command: string, data: string) => void;
 }
@@ -32,7 +31,6 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
               "setConfigFileChangeWatcher",
               item.configFilePath
             );
-            props.onConfigChange(item.configFileContent);
             setSelectedFile(item.configFileName);
           }}
         >
@@ -55,14 +53,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {
-          props.setConfigDirContentValue(false);
           props.giveCommandToVscode("getConfigFilesList", "");
-          const intervalId = setInterval(() => {
-            if (window.configFilesDir) {
-              props.setConfigDirContentValue(true);
-              clearInterval(intervalId);
-            }
-          }, 10);
         }}
       >
         <FontAwesomeIcon
@@ -92,7 +83,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           Create New
         </button>
         <button
-          className="dropdown-item   btn-custom iconsAndTextAlign "
+          className="dropdown-item btn-custom iconsAndTextAlign "
           type="button"
           style={{ paddingLeft: "1rem" }}
           onClick={() => {
@@ -110,8 +101,8 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           Default Config
         </button>
         <div className="dropdown-divider dividerColor"></div>
-        {props.configDirContentValue ? (
-          setConfigFilesList(window.configFilesDir.directoryContent)
+        {!props.configDirList.isConfigDirMissing ? (
+          setConfigFilesList(props.configDirList.directoryContent)
         ) : (
           <div></div>
         )}
