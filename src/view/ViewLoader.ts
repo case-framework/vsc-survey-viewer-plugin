@@ -233,7 +233,7 @@ export default class ViewLoader {
     console.log("does the path exist: " + fs.existsSync(outputFolderPath));
     if (fs.existsSync(outputFolderPath)) {
       fs.readdirSync(outputFolderPath).forEach((file) => {
-        const surveyFolder = path.join(outputFolderPath, file, "surveys");
+        const surveyFolder = path.join(outputFolderPath, `${file}`, "surveys");
 
         let newFiles: string[];
         if (fs.existsSync(surveyFolder)) {
