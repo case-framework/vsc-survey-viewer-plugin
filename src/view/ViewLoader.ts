@@ -182,39 +182,7 @@ export default class ViewLoader {
           window.acquireVsCodeApi = acquireVsCodeApi;
           window.surveyData = undefined;
 
-          //listener for messages from the vscode
-          window.addEventListener('message', event => {
-
-            const message = event.data;
-            // Sets the values for the globel object in react app
-            switch (message.command) {
-                case 'sendOutputFileContent':
-                  window.outPutDirContent = message.content;
-                    break;
-
-                    case 'setNewSurvey':
-                  window.surveyData = message.content;
-                    break;
-
-                    case 'setUpdatedSurvey':
-                    window.changeInSurvey=true;
-                  window.surveyData = message.content;
-                    break;
-
-                    case 'setConfigFilesList':
-                  window.configFilesDir = message.content;
-                    break;
-
-                    case 'setUpdatedConfigFileData':
-                      window.changeInConfigFile = true;
-                      window.updatedConfigFileData = message.content;
-                    break;
-
-                    case 'updateSelectedTheme':
-                      window.selectedTheme = message.content;
-                    break;
-            }
-        });
+         
         </script>
     </head>
     <body style="padding:0;">

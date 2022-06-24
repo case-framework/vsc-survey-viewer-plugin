@@ -3,7 +3,6 @@ import { SurveyView } from "case-web-ui";
 import {
   ConfigFileStructure,
   dateLocales,
-  OutputFileStructure,
   SimulatorUIConfig,
   SurveyFileContent,
   SurveyViewCred,
@@ -29,10 +28,7 @@ declare global {
   interface Window {
     acquireVsCodeApi(): any;
     surveyData: SurveyFileContent | undefined;
-    outPutDirContent: OutputFileStructure | undefined;
-    changeInSurvey: boolean;
     configFilesDir: ConfigFileStructure;
-    changeInConfigFile: boolean;
     updatedConfigFileData: SurveyContext;
     selectedTheme: ThemeType;
   }
@@ -57,8 +53,7 @@ const defaultSimulatorUIConfig: SimulatorUIConfig = {
 
 const initialSurveyCred: SurveyViewCred = {
   simulatorUIConfig: { ...defaultSimulatorUIConfig },
-
-  survey: window.surveyData ? window.surveyData.survey : undefined,
+  survey: undefined,
   context: { ...defaultSurveyContext },
   selectedLanguage: "en",
   prefillValues: [],
@@ -71,37 +66,66 @@ const SurveySimulator: React.FC = (props) => {
   const [surveyViewCred, setSurveyViewCred] = useState<SurveyViewCred>({
     ...initialSurveyCred,
   });
-  const [changedSelectTheFileBtnText, setChangedSelectTheFileBtnText] =
-    useState("Survey Selection");
-  const [outPutDirContentValue, setOutPutDirContentValue] = useState(false);
   const [configDirContentValue, setConfigDirContentValue] = useState(false);
   const [navbarToggleIsOpen, setNavbarToggleIsOpen] = useState(false);
-
+  const [outputDirFiles, setoutputDirFiles] = useState(undefined);
+  const [selectSurveyBtnLoadingState, setselectSurveyBtnLoadingState] =
+    useState(false);
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (window.changeInSurvey) {
-        setSurveyViewCred((prevState) => ({
-          ...prevState,
-          survey: undefined,
-          inLoadingState: false,
-        }));
-        setSurveyViewCred((prevState) => ({
-          ...prevState,
-          survey: window.surveyData ? window.surveyData.survey : undefined,
-          inLoadingState: false,
-        }));
-        window.changeInSurvey = false;
+    //listener for messages from the vscode
+    window.addEventListener("message", (event) => {
+      const message = event.data;
+      // Sets the values for the globel object in react app
+      switch (message.command) {
+        case "sendOutputFileContent":
+          setoutputDirFiles(message.content);
+          break;
+
+        case "setNewSurvey":
+          const surveyData = message.content as SurveyFileContent;
+          setSurveyViewCred((prevState) => ({
+            ...prevState,
+            survey: undefined,
+            inLoadingState: false,
+          }));
+          setSurveyViewCred((prevState) => ({
+            ...prevState,
+            survey: surveyData.survey,
+            inLoadingState: false,
+          }));
+          setselectSurveyBtnLoadingState(false);
+          break;
+
+        case "setUpdatedSurvey":
+          setSurveyViewCred((prevState) => ({
+            ...prevState,
+            survey: undefined,
+            inLoadingState: false,
+          }));
+          setSurveyViewCred((prevState) => ({
+            ...prevState,
+            survey: message.content,
+            inLoadingState: false,
+          }));
+          break;
+
+        case "setConfigFilesList":
+          window.configFilesDir = message.content;
+          break;
+
+        case "setUpdatedConfigFileData":
+          setSurveyViewCred((prevState) => ({
+            ...prevState,
+            context: window.updatedConfigFileData,
+            inLoadingState: false,
+          }));
+          break;
+
+        case "updateSelectedTheme":
+          window.selectedTheme = message.content;
+          break;
       }
-      if (window.changeInConfigFile) {
-        setSurveyViewCred((prevState) => ({
-          ...prevState,
-          context: window.updatedConfigFileData,
-          inLoadingState: false,
-        }));
-        window.changeInConfigFile = false;
-      }
-    }, 10);
-    return () => clearInterval(interval);
+    });
   }, []);
 
   const giveCommandToVscode = (command: string, data: string) => {
@@ -148,35 +172,15 @@ const SurveySimulator: React.FC = (props) => {
               giveCommandToVscode={(command: string, data: string) => {
                 giveCommandToVscode(command, data);
               }}
-              setChangedSelectTheFileBtnText={(newText: string) => {
-                setChangedSelectTheFileBtnText(newText);
-              }}
-              changedSelectTheFileBtnText={changedSelectTheFileBtnText}
-              setOutPutDirContentValue={(value: boolean) => {
-                setOutPutDirContentValue(value);
-              }}
-              outPutDirContentValue={outPutDirContentValue}
-              onChangedSurveyViewCred={() => {
-                setSurveyViewCred((prevState) => ({
-                  ...prevState,
-                  survey: undefined,
-                  inLoadingState: false,
-                }));
-
-                setSurveyViewCred((prevState) => ({
-                  ...prevState,
-                  survey: window.surveyData
-                    ? window.surveyData.survey
-                    : undefined,
-                  inLoadingState: false,
-                }));
-              }}
               onChangedSurveyViewCredLoadingState={(state: boolean) => {
+                setselectSurveyBtnLoadingState(state);
                 setSurveyViewCred((prevState) => ({
                   ...prevState,
                   inLoadingState: state,
                 }));
               }}
+              outputDirFiles={outputDirFiles}
+              isSelectSurveyBtnInLoadingState={selectSurveyBtnLoadingState}
             />
             <UploadPrefill
               onPrefillChange={(

@@ -3,24 +3,29 @@ import { OutputFileStructure } from "../model";
 import "../Css/Toolbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 interface SelectFileDropdownProps {
   giveCommandToVscode: (command: string, data: string) => void;
-  setChangedSelectTheFileBtnText: (newText: string) => void;
-  changedSelectTheFileBtnText: string;
-  setOutPutDirContentValue: (value: boolean) => void;
-  outPutDirContentValue: boolean;
-  onChangedSurveyViewCred: () => void;
   onChangedSurveyViewCredLoadingState: (state: boolean) => void;
+  isSelectSurveyBtnInLoadingState: boolean;
+  outputDirFiles: OutputFileStructure | undefined;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
+  const [selectSurveyBtnText, setSelectSurveyeBtnText] =
+    useState("Survey Selection");
+
   const setDropdowns = (items: OutputFileStructure): React.ReactNode => {
     return items.directoryContent.map((item, index, items) => {
       return (
         <div className="btn-custom">
-          <p className="fw-bold h7" style={{ paddingLeft: "1rem" }}>
+          <p
+            key={item.surveyName}
+            className="fw-bold h7"
+            style={{ paddingLeft: "1rem" }}
+          >
             {item.surveyName}
           </p>
           {setDropdownItems(item.surveyFiles, item.surveyPath)}
@@ -39,12 +44,13 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
     return items.map((item) => {
       return (
         <button
+          key={item}
           className="dropdown-item btn-custom "
           style={{ paddingLeft: "1rem" }}
           type="button"
           id={item}
           onClick={() => {
-            window.surveyData = undefined;
+            props.onChangedSurveyViewCredLoadingState(true);
             props.giveCommandToVscode(
               "fileSelectedForPreview",
               directoryPath + "/" + item
@@ -53,18 +59,9 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
               "selectedFileToDetectChanges",
               directoryPath + "/" + item
             );
-            props.setChangedSelectTheFileBtnText("loading");
-            props.onChangedSurveyViewCredLoadingState(true);
-            const intervalId = setInterval(() => {
-              if (window.surveyData) {
-                props.setChangedSelectTheFileBtnText(
-                  item.substring(0, item.lastIndexOf(".")).replace("_", " ")
-                );
-                props.onChangedSurveyViewCredLoadingState(false);
-                props.onChangedSurveyViewCred();
-                clearInterval(intervalId);
-              }
-            }, 10);
+            setSelectSurveyeBtnText(
+              item.substring(0, item.lastIndexOf(".")).replace("_", " ")
+            );
           }}
         >
           <p className="h7 small">
@@ -82,43 +79,18 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         type="button"
         id="SelectFileDropdown"
         data-bs-toggle="dropdown"
-        title={"Survey Selection: " + props.changedSelectTheFileBtnText}
+        title={"Survey Selection: " + selectSurveyBtnText}
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {
-          window.outPutDirContent = undefined;
-          props.setOutPutDirContentValue(false);
           props.giveCommandToVscode("getOutputDirFiles", "");
-          const intervalId = setInterval(() => {
-            if (window.outPutDirContent) {
-              if (
-                window.outPutDirContent.directoryContent.length &&
-                window.outPutDirContent.isOutputDirMissing === false
-              ) {
-                console.log(window.outPutDirContent);
-                props.setOutPutDirContentValue(true);
-                clearInterval(intervalId);
-              } else if (
-                !window.outPutDirContent.directoryContent.length &&
-                window.outPutDirContent.isOutputDirMissing === true
-              ) {
-                props.setOutPutDirContentValue(true);
-                console.log(window.outPutDirContent);
-                props.giveCommandToVscode(
-                  "showError",
-                  "The Output Directory is not yet generated for the project or the opened project is not appropriate."
-                );
-                clearInterval(intervalId);
-              }
-            }
-          }, 10);
         }}
       >
         <FontAwesomeIcon
           icon={faFile}
           style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
-        {props.changedSelectTheFileBtnText === "loading" ? (
+        {props.isSelectSurveyBtnInLoadingState ? (
           <div style={{ width: "80px" }}>
             <div
               className="spinner-border loaderColor"
@@ -126,10 +98,10 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
               role="status"
             ></div>
           </div>
-        ) : props.changedSelectTheFileBtnText.length <= 16 ? (
-          props.changedSelectTheFileBtnText
+        ) : selectSurveyBtnText.length <= 16 ? (
+          selectSurveyBtnText
         ) : (
-          props.changedSelectTheFileBtnText.substring(0, 15)
+          selectSurveyBtnText.substring(0, 15)
         )}
       </button>
 
@@ -138,11 +110,17 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         aria-labelledby="SelectFileDropdown"
         style={{ minWidth: "228px", maxHeight: "260px" }}
       >
-        {window.outPutDirContent ? (
-          props.outPutDirContentValue ? (
-            setDropdowns(window.outPutDirContent)
+        {props.outputDirFiles ? (
+          !props.outputDirFiles.isOutputDirMissing ? (
+            setDropdowns(props.outputDirFiles)
           ) : (
-            <div></div>
+            <div>
+              {" "}
+              {props.giveCommandToVscode(
+                "showError",
+                "The Output Directory is not yet generated for the project or the opened project is not appropriate."
+              )}
+            </div>
           )
         ) : (
           <div></div>
