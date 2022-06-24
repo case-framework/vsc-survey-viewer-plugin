@@ -23,7 +23,7 @@ export default class ViewLoader {
     this._panel = vscode.window.createWebviewPanel(
       "Survey Viewer",
       "Survey Viewer",
-      vscode.ViewColumn.Beside,
+      vscode.ViewColumn.Two,
       {
         enableScripts: true,
         retainContextWhenHidden: true,
@@ -146,7 +146,7 @@ export default class ViewLoader {
                   }
                 });
             } else {
-              vscode.window.showErrorMessage("Alredy in use");
+              vscode.window.showErrorMessage("Already in use");
             }
             break;
 
