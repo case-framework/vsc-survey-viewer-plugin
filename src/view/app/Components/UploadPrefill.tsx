@@ -60,9 +60,9 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
           icon={faFileLines}
           style={{ width: "20px", height: "20px", paddingRight: "0.3rem" }}
         />
-        {props.currentSelectFileName.length <= 18
+        {props.currentSelectFileName.length <= 16
           ? props.currentSelectFileName
-          : props.currentSelectFileName.substring(0, 17)}
+          : props.currentSelectFileName.substring(0, 15)}
       </button>
       <input
         type="file"

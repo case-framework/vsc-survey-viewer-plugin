@@ -222,7 +222,7 @@ const SurveySimulator: React.FC = (props) => {
               currentSelectFileName={
                 surveyViewCred.prefillsFile
                   ? surveyViewCred.prefillsFile.name
-                  : "Upload Prefill"
+                  : "Prefill"
               }
               giveCommandToVscode={(command: string, data: string) => {
                 giveCommandToVscode(command, data);
