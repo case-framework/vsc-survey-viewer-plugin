@@ -30,6 +30,7 @@ declare global {
     configFilesDir: ConfigFileStructure;
     updatedConfigFileData: SurveyContext;
     selectedTheme: ThemeType;
+    versionNumber: string;
   }
 }
 
@@ -288,8 +289,9 @@ const SurveySimulator: React.FC = (props) => {
                   }
                 );
                 a.href = URL.createObjectURL(file);
-                a.download = `${surveyViewCred.survey?.current.surveyDefinition.key
-                  }_responses_${new Date().toLocaleDateString()}.json`;
+                a.download = `${
+                  surveyViewCred.survey?.current.surveyDefinition.key
+                }_responses_${new Date().toLocaleDateString()}.json`;
                 a.click();
                 // giveCommandToVscode(
                 //   "showFileDownloadSuccessMsg",
@@ -305,12 +307,12 @@ const SurveySimulator: React.FC = (props) => {
               dateLocales={dateLocales}
             />
           ) : (
-            <p className="p-5 text-center">
+            <p className="p-5 text-center" style={{ minHeight: "550px" }}>
               Please Select The File To Preview The Survey.
             </p>
           )
         ) : (
-          <div className="p-5 text-center">
+          <div className="p-5 text-center" style={{ minHeight: "550px" }}>
             <div
               className="spinner-border"
               style={{ width: "2rem", height: "2rem", color: "black" }}
@@ -319,7 +321,7 @@ const SurveySimulator: React.FC = (props) => {
           </div>
         )}
       </div>
-      <p className="text-muted mt-5 text-center ">version</p>
+      <p className="text-muted mt-3 text-center ">{window.versionNumber}</p>
       <EnterFileNameDialog
         giveCommandToVscode={(command: string, data: string) => {
           giveCommandToVscode(command, data);

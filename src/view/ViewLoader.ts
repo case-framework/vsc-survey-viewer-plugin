@@ -18,6 +18,7 @@ export default class ViewLoader {
 
   constructor(context: vscode.ExtensionContext) {
     this._extensionPath = context.extensionPath;
+    const versionNumber = context.extension.packageJSON.version;
 
     context.workspaceState.update("selectedTheme", ThemeType.defaultTheme);
     this._panel = vscode.window.createWebviewPanel(
@@ -32,9 +33,11 @@ export default class ViewLoader {
         ],
       }
     );
-
     // Gets the content to load in webview
-    this._panel.webview.html = this.getWebviewContent(ThemeType.defaultTheme);
+    this._panel.webview.html = this.getWebviewContent(
+      ThemeType.defaultTheme,
+      versionNumber
+    );
 
     // Recieves mesages from react app
     this._panel.webview.onDidReceiveMessage(
@@ -136,7 +139,8 @@ export default class ViewLoader {
                         message.data
                       );
                       this._panel.webview.html = this.getWebviewContent(
-                        message.data
+                        message.data,
+                        versionNumber
                       );
                       this._panel.webview.postMessage({
                         command: "updateSelectedTheme",
@@ -162,7 +166,10 @@ export default class ViewLoader {
     );
   }
   // Returns the content for webview of vscode
-  private getWebviewContent(themeType: ThemeType): string {
+  private getWebviewContent(
+    themeType: ThemeType,
+    versionNumber: string
+  ): string {
     // Local path to main script run in the webview
     const reactAppPathOnDisk = vscode.Uri.file(
       path.join(this._extensionPath, "surveyViewer", themeType + ".js")
@@ -180,7 +187,7 @@ export default class ViewLoader {
                     content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *;">
         <script>
           window.acquireVsCodeApi = acquireVsCodeApi;
-          window.surveyData = undefined;
+          window.versionNumber = "${versionNumber}";
 
          
         </script>
