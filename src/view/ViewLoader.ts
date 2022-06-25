@@ -47,23 +47,23 @@ export default class ViewLoader {
             if (this._panel) {
               const content = this.getOutputDirFiles();
               this._panel.webview.postMessage({
-                command: "sendOutputFileContent",
+                command: "setOutputFilesList",
                 content: content,
               });
             }
             break;
 
-          case "fileSelectedForPreview":
+          case "fileSelectedForSurvey":
             if (this._panel) {
               const survey = this.getSurveyFileContent(message.data);
               this._panel.webview.postMessage({
-                command: "setNewSurvey",
+                command: "setSelectedSurveyData",
                 content: survey,
               });
             }
             break;
 
-          case "showError":
+          case "OutputDirNotFoundError":
             if (this._panel) {
               vscode.window.showErrorMessage(message.data);
             }
@@ -91,7 +91,7 @@ export default class ViewLoader {
             }
             break;
 
-          case "selectedFileToDetectChanges":
+          case "setSelectedSurveyFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
               vscode.workspace
                 .createFileSystemWatcher(message.data)
@@ -99,7 +99,7 @@ export default class ViewLoader {
                   if (this._panel) {
                     const survey = this.getSurveyFileContent(message.data);
                     this._panel.webview.postMessage({
-                      command: "setUpdatedSurvey",
+                      command: "setSelectedSurveyUpdatedData",
                       content: survey,
                     });
                   }
@@ -111,14 +111,14 @@ export default class ViewLoader {
             if (this._panel) {
               const configData = this.getConfigFileContent(message.data);
               this._panel.webview.postMessage({
-                command: "setConfigData",
+                command: "setSelectedConfigFileData",
                 content: configData,
               });
             }
 
             break;
 
-          case "setConfigFileChangeWatcher":
+          case "setSelectedConfigFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
               vscode.workspace
                 .createFileSystemWatcher(message.data)
@@ -126,7 +126,7 @@ export default class ViewLoader {
                   if (this._panel) {
                     const configData = this.getConfigFileContent(message.data);
                     this._panel.webview.postMessage({
-                      command: "setUpdatedConfigFileData",
+                      command: "setSelectedConfigFileUpdatedData",
                       content: configData,
                     });
                   }

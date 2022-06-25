@@ -33,7 +33,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
               item.configFilePath
             );
             props.giveCommandToVscode(
-              "setConfigFileChangeWatcher",
+              "setSelectedConfigFileChangeWatcher",
               item.configFilePath
             );
 

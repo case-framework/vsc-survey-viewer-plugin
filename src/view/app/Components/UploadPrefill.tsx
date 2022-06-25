@@ -17,7 +17,6 @@ interface UploadPrefillProps {
 const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
   const openDialogForFileSelection = () => {
     const inputRef = document.getElementById("input_file_selector");
-    console.log(inputRef);
     if (inputRef) {
       inputRef.click();
     }
@@ -31,7 +30,6 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
       reader.onabort = () => console.log("file reading was aborted");
       reader.onerror = () => console.log("file reading has failed");
       reader.onload = () => {
-        // Do whatever you want with the file contents
         const res = reader.result;
         if (!res || typeof res !== "string") {
           console.error("TODO: handle file upload error");

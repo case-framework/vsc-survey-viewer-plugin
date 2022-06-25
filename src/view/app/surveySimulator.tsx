@@ -79,11 +79,11 @@ const SurveySimulator: React.FC = (props) => {
       const message = event.data;
       // Sets the values for the globel object in react app
       switch (message.command) {
-        case "sendOutputFileContent":
+        case "setOutputFilesList":
           setoutputDirFiles(message.content);
           break;
 
-        case "setNewSurvey":
+        case "setSelectedSurveyData":
           const surveyData = message.content as SurveyFileContent;
           setSurveyViewCred((prevState) => ({
             ...prevState,
@@ -99,7 +99,7 @@ const SurveySimulator: React.FC = (props) => {
           console.log(surveyViewCred);
           break;
 
-        case "setUpdatedSurvey":
+        case "setSelectedSurveyUpdatedData":
           const newSurveyData = message.content as SurveyFileContent;
           setSurveyViewCred((prevState) => ({
             ...prevState,
@@ -118,7 +118,7 @@ const SurveySimulator: React.FC = (props) => {
           setconfigDirList(message.content);
           break;
 
-        case "setConfigData":
+        case "setSelectedConfigFileData":
           setSurveyViewCred((prevState) => ({
             ...prevState,
             context: message.content
@@ -130,7 +130,7 @@ const SurveySimulator: React.FC = (props) => {
           }
           break;
 
-        case "setUpdatedConfigFileData":
+        case "setSelectedConfigFileUpdatedData":
           setSurveyViewCred((prevState) => ({
             ...prevState,
             context: message.content

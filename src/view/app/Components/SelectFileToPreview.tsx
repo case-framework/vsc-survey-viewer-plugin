@@ -52,11 +52,11 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
           onClick={() => {
             props.onChangedSurveyViewCredLoadingState(true);
             props.giveCommandToVscode(
-              "fileSelectedForPreview",
+              "fileSelectedForSurvey",
               directoryPath + "/" + item
             );
             props.giveCommandToVscode(
-              "selectedFileToDetectChanges",
+              "setSelectedSurveyFileChangeWatcher",
               directoryPath + "/" + item
             );
             setSelectSurveyeBtnText(
