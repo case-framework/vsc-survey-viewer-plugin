@@ -77,12 +77,14 @@ const SurveySimulator: React.FC = (props) => {
     //listener for messages from the vscode
     window.addEventListener("message", (event) => {
       const message = event.data;
-      // Sets the values for the globel object in react app
+
       switch (message.command) {
+        // Sets the files of output directory to show in survey selection
         case "setOutputFilesList":
           setoutputDirFiles(message.content);
           break;
 
+        // Sets the survey to surveyView as per selected by user
         case "setSelectedSurveyData":
           const surveyData = message.content as SurveyFileContent;
           setSurveyViewCred((prevState) => ({
@@ -99,6 +101,7 @@ const SurveySimulator: React.FC = (props) => {
           console.log(surveyViewCred);
           break;
 
+        // Sets the updated survey to surveyView when the user changes something from the selected file for survey
         case "setSelectedSurveyUpdatedData":
           const newSurveyData = message.content as SurveyFileContent;
           setSurveyViewCred((prevState) => ({
@@ -114,10 +117,12 @@ const SurveySimulator: React.FC = (props) => {
           console.log(surveyViewCred);
           break;
 
+        // Sets the files from the config foldet to show in config dropdown
         case "setConfigFilesList":
           setconfigDirList(message.content);
           break;
 
+        //Sets the config file data to surveyView as per the selected file by user
         case "setSelectedConfigFileData":
           setSurveyViewCred((prevState) => ({
             ...prevState,
@@ -130,6 +135,7 @@ const SurveySimulator: React.FC = (props) => {
           }
           break;
 
+        // Sets the updated config to surveyView when the user changes something from the selected file for config
         case "setSelectedConfigFileUpdatedData":
           setSurveyViewCred((prevState) => ({
             ...prevState,
@@ -146,6 +152,7 @@ const SurveySimulator: React.FC = (props) => {
     });
   }, []);
 
+  // General function for giving command to VScode(which is outside the react app)
   const giveCommandToVscode = (command: string, data: string) => {
     vscode.postMessage({
       command: command,

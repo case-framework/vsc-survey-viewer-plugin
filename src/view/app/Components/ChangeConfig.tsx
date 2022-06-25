@@ -28,10 +28,13 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
           className="dropdown-item nav-item btn-custom"
           type="button"
           onClick={() => {
+            // Commanding to get the content of the selected config file
             props.giveCommandToVscode(
               "getSelectedConfigFileContent",
               item.configFilePath
             );
+
+            // Commanding to get the set the watcher on selected file so that it can be updated when user changes something
             props.giveCommandToVscode(
               "setSelectedConfigFileChangeWatcher",
               item.configFilePath

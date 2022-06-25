@@ -17,6 +17,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
   const [selectSurveyBtnText, setSelectSurveyeBtnText] =
     useState("Survey Selection");
 
+  // Sets the dropdown content based on the files we have in output directory.
   const setDropdowns = (items: OutputFileStructure): React.ReactNode => {
     return items.directoryContent.map((item, index, items) => {
       return (
@@ -36,7 +37,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
       );
     });
   };
-
+  // Sets the surveys for particular survey study
   const setDropdownItems = (
     items: string[],
     directoryPath: string
@@ -51,10 +52,12 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
           id={item}
           onClick={() => {
             props.onChangedSurveyViewCredLoadingState(true);
+            // Commanding to get the survey data from selected file.
             props.giveCommandToVscode(
               "fileSelectedForSurvey",
               directoryPath + "/" + item
             );
+            // Commanding to set the watcher on selected file , so that the we gets notified when user updated something in the selected file.
             props.giveCommandToVscode(
               "setSelectedSurveyFileChangeWatcher",
               directoryPath + "/" + item
@@ -83,6 +86,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
         aria-haspopup="true"
         aria-expanded="false"
         onClick={() => {
+          // Commanding to get files list from the output directory.
           props.giveCommandToVscode("getOutputDirFiles", "");
         }}
       >
@@ -117,7 +121,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
             <div>
               {" "}
               {props.giveCommandToVscode(
-                "showError",
+                "OutputDirNotFoundError",
                 "The Output Directory is not yet generated for the project or the opened project is not appropriate."
               )}
             </div>

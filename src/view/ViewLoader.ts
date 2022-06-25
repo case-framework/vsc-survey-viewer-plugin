@@ -196,8 +196,6 @@ export default class ViewLoader {
           window.acquireVsCodeApi = acquireVsCodeApi;
           window.versionNumber = "${versionNumber}";
           window.selectedTheme = "${themeType}";
-
-         
         </script>
     </head>
     <body style="padding:0;">
