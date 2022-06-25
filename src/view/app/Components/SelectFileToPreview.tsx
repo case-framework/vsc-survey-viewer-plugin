@@ -20,7 +20,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
   const setDropdowns = (items: OutputFileStructure): React.ReactNode => {
     return items.directoryContent.map((item, index, items) => {
       return (
-        <div className="btn-custom">
+        <div key={index} className="btn-custom">
           <p
             key={item.surveyName}
             className="fw-bold h7"

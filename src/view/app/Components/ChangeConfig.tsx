@@ -24,6 +24,7 @@ const ChangeConfig: React.FC<ChangeConfigProps> = (props) => {
     return configFileList.map((item) => {
       return (
         <button
+          key={item.configFileName}
           className="dropdown-item nav-item btn-custom"
           type="button"
           onClick={() => {
