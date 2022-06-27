@@ -40,7 +40,7 @@ const UploadPrefill: React.FC<UploadPrefillProps> = (props) => {
       };
       reader.readAsText(prefills);
     } else {
-      // Command to show error message when user selects nothing from the dialog box
+      // Command to show error message when user selects nothing from the dialog box.
       props.giveCommandToVscode(
         "PrefillFileSelectionError",
         "No appropriate file is selected"

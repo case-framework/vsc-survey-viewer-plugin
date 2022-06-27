@@ -121,7 +121,7 @@ const SelectFileToPreview: React.FC<SelectFileDropdownProps> = (props) => {
             <div>
               {" "}
               {props.giveCommandToVscode(
-                "OutputDirNotFoundError",
+                "outputDirNotFoundError",
                 "The Output Directory is not yet generated for the project or the opened project is not appropriate."
               )}
             </div>

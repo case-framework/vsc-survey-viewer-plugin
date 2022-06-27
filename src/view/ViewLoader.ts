@@ -63,7 +63,7 @@ export default class ViewLoader {
             }
             break;
 
-          case "OutputDirNotFoundError":
+          case "outputDirNotFoundError":
             if (this._panel) {
               vscode.window.showErrorMessage(message.data);
             }
@@ -120,17 +120,21 @@ export default class ViewLoader {
 
           case "setSelectedConfigFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
-              vscode.workspace
-                .createFileSystemWatcher(message.data)
-                .onDidChange(() => {
-                  if (this._panel) {
-                    const configData = this.getConfigFileContent(message.data);
-                    this._panel.webview.postMessage({
-                      command: "setSelectedConfigFileUpdatedData",
-                      content: configData,
-                    });
+              const watcher = vscode.workspace.createFileSystemWatcher(
+                message.data
+              );
+              watcher.onDidChange(() => {
+                if (this._panel) {
+                  const configData = this.getConfigFileContent(message.data);
+                  this._panel.webview.postMessage({
+                    command: "setSelectedConfigFileUpdatedData",
+                    content: configData,
+                  });
+                  if (configData === undefined) {
+                    watcher.dispose();
                   }
-                });
+                }
+              });
             }
             break;
 
