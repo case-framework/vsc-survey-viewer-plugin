@@ -102,7 +102,7 @@ export default class ViewLoader {
                     "survey"
                   );
                   this._panel.webview.postMessage({
-                    command: "setSelectedSurveyUpdatedData",
+                    command: "setSelectedSurveyData",
                     content: survey,
                   });
                   if (survey === undefined) {
@@ -138,7 +138,7 @@ export default class ViewLoader {
                     "config"
                   );
                   this._panel.webview.postMessage({
-                    command: "setSelectedConfigFileUpdatedData",
+                    command: "setSelectedConfigFileData",
                     content: configData,
                   });
                   if (configData === undefined) {

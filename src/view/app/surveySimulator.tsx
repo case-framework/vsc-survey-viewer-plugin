@@ -90,7 +90,6 @@ const SurveySimulator: React.FC = (props) => {
           setSurveyViewCred((prevState) => ({
             ...prevState,
             survey: undefined,
-            inLoadingState: false,
           }));
           setSurveyViewCred((prevState) => ({
             ...prevState,
@@ -101,23 +100,7 @@ const SurveySimulator: React.FC = (props) => {
           console.log(surveyViewCred);
           break;
 
-        // Sets the updated survey to surveyView when the user changes something from the selected file for survey
-        case "setSelectedSurveyUpdatedData":
-          const newSurveyData = message.content as SurveyFileContent;
-          setSurveyViewCred((prevState) => ({
-            ...prevState,
-            survey: undefined,
-            inLoadingState: false,
-          }));
-          setSurveyViewCred((prevState) => ({
-            ...prevState,
-            survey: newSurveyData.survey,
-            inLoadingState: false,
-          }));
-          console.log(surveyViewCred);
-          break;
-
-        // Sets the files from the config foldet to show in config dropdown
+        // Sets the files from the config folder to show in config dropdown
         case "setConfigFilesList":
           setconfigDirList(message.content);
           break;
@@ -129,20 +112,6 @@ const SurveySimulator: React.FC = (props) => {
             context: message.content
               ? message.content
               : defaultSimulatorUIConfig,
-          }));
-          if (message.content === undefined) {
-            setCurrentConfigFileText("Config");
-          }
-          break;
-
-        // Sets the updated config to surveyView when the user changes something from the selected file for config
-        case "setSelectedConfigFileUpdatedData":
-          setSurveyViewCred((prevState) => ({
-            ...prevState,
-            context: message.content
-              ? message.content
-              : defaultSimulatorUIConfig,
-            inLoadingState: false,
           }));
           if (message.content === undefined) {
             setCurrentConfigFileText("Config");
@@ -283,10 +252,10 @@ const SurveySimulator: React.FC = (props) => {
 
       <div className="container">
         <div className="row">
-          <div className="col-12 col-lg-8 offset-lg-2 pt-3"
-            style={{ minHeight: '60vh' }}
+          <div
+            className="col-12 col-lg-8 offset-lg-2 pt-3"
+            style={{ minHeight: "60vh" }}
           >
-
             {!surveyViewCred.inLoadingState ? (
               surveyViewCred.survey ? (
                 <SurveyView
@@ -310,8 +279,9 @@ const SurveySimulator: React.FC = (props) => {
                       }
                     );
                     a.href = URL.createObjectURL(file);
-                    a.download = `${surveyViewCred.survey?.current.surveyDefinition.key
-                      }_responses_${new Date().toLocaleDateString()}.json`;
+                    a.download = `${
+                      surveyViewCred.survey?.current.surveyDefinition.key
+                    }_responses_${new Date().toLocaleDateString()}.json`;
                     a.click();
                     // giveCommandToVscode(
                     //   "showFileDownloadSuccessMsg",
@@ -320,22 +290,29 @@ const SurveySimulator: React.FC = (props) => {
                   }}
                   nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
                   backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}
-                  submitBtnText={surveyViewCred.simulatorUIConfig.texts.submitBtn}
+                  submitBtnText={
+                    surveyViewCred.simulatorUIConfig.texts.submitBtn
+                  }
                   invalidResponseText={
                     surveyViewCred.simulatorUIConfig.texts.invalidResponseText
                   }
                   dateLocales={dateLocales}
                 />
               ) : (
-                <div className="h-100 d-flex align-items-center w-100" style={{ minHeight: "85vh" }}>
+                <div
+                  className="h-100 d-flex align-items-center w-100"
+                  style={{ minHeight: "85vh" }}
+                >
                   <p className="px-2 text-center flex-grow-1">
                     Select a survey to start preview.
                   </p>
                 </div>
-
               )
             ) : (
-              <div className="px-2 py-5 text-center" style={{ minHeight: "550px" }}>
+              <div
+                className="px-2 py-5 text-center"
+                style={{ minHeight: "550px" }}
+              >
                 <div
                   className="spinner-border"
                   style={{ width: "2rem", height: "2rem", color: "black" }}
@@ -346,7 +323,9 @@ const SurveySimulator: React.FC = (props) => {
           </div>
         </div>
       </div>
-      <p className="text-muted text-center p-2">Survey Viewer v{window.versionNumber} <br></br>  2022 - coneno</p>
+      <p className="text-muted text-center p-2">
+        Survey Viewer v{window.versionNumber} <br></br> 2022 - coneno
+      </p>
       <EnterFileNameDialog
         giveCommandToVscode={(command: string, data: string) => {
           giveCommandToVscode(command, data);
