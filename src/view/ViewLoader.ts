@@ -55,7 +55,7 @@ export default class ViewLoader {
 
           case "fileSelectedForSurvey":
             if (this._panel) {
-              const survey = this.getSurveyFileContent(message.data);
+              const survey = this.getJsonFileContent(message.data, "survey");
               this._panel.webview.postMessage({
                 command: "setSelectedSurveyData",
                 content: survey,
@@ -97,7 +97,10 @@ export default class ViewLoader {
                 .createFileSystemWatcher(message.data)
                 .onDidChange(() => {
                   if (this._panel) {
-                    const survey = this.getSurveyFileContent(message.data);
+                    const survey = this.getJsonFileContent(
+                      message.data,
+                      "survey"
+                    );
                     this._panel.webview.postMessage({
                       command: "setSelectedSurveyUpdatedData",
                       content: survey,
@@ -109,7 +112,10 @@ export default class ViewLoader {
 
           case "getSelectedConfigFileContent":
             if (this._panel) {
-              const configData = this.getConfigFileContent(message.data);
+              const configData = this.getJsonFileContent(
+                message.data,
+                "config"
+              );
               this._panel.webview.postMessage({
                 command: "setSelectedConfigFileData",
                 content: configData,
@@ -125,7 +131,10 @@ export default class ViewLoader {
               );
               watcher.onDidChange(() => {
                 if (this._panel) {
-                  const configData = this.getConfigFileContent(message.data);
+                  const configData = this.getJsonFileContent(
+                    message.data,
+                    "config"
+                  );
                   this._panel.webview.postMessage({
                     command: "setSelectedConfigFileUpdatedData",
                     content: configData,
@@ -209,20 +218,11 @@ export default class ViewLoader {
     </html>`;
   }
 
-  // Returns the content of the survey file
-  private getSurveyFileContent(
-    filePath: string
-  ): SurveyFileContent | undefined {
-    if (fs.existsSync(filePath)) {
-      let content = fs.readFileSync(filePath, "utf8");
-      let surveyData: SurveyFileContent = JSON.parse(content);
-      return surveyData;
-    }
-    return undefined;
-  }
-
-  // Returns the content of the config file
-  private getConfigFileContent(filePath: string): SurveyContext | undefined {
+  // Returns the content of the Json file
+  private getJsonFileContent(
+    filePath: string,
+    fileType: string
+  ): SurveyContext | SurveyFileContent | undefined {
     if (fs.existsSync(filePath)) {
       let content = fs.readFileSync(filePath, "utf8");
       try {
@@ -231,9 +231,15 @@ export default class ViewLoader {
         vscode.window.showErrorMessage("JSON syntax error");
         return undefined;
       }
-      let configData: SurveyContext = JSON.parse(content);
-      return configData;
+      if (fileType === "config") {
+        let configData: SurveyContext = JSON.parse(content);
+        return configData;
+      } else if (fileType === "survey") {
+        let surveyData: SurveyFileContent = JSON.parse(content);
+        return surveyData;
+      }
     }
+    vscode.window.showErrorMessage("File does not exist");
     return undefined;
   }
 
