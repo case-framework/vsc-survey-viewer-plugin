@@ -93,20 +93,23 @@ export default class ViewLoader {
 
           case "setSelectedSurveyFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
-              vscode.workspace
-                .createFileSystemWatcher(message.data)
-                .onDidChange(() => {
-                  if (this._panel) {
-                    const survey = this.getJsonFileContent(
-                      message.data,
-                      "survey"
-                    );
-                    this._panel.webview.postMessage({
-                      command: "setSelectedSurveyUpdatedData",
-                      content: survey,
-                    });
+              const surveyFileWatcher =
+                vscode.workspace.createFileSystemWatcher(message.data);
+              surveyFileWatcher.onDidChange(() => {
+                if (this._panel) {
+                  const survey = this.getJsonFileContent(
+                    message.data,
+                    "survey"
+                  );
+                  this._panel.webview.postMessage({
+                    command: "setSelectedSurveyUpdatedData",
+                    content: survey,
+                  });
+                  if (survey === undefined) {
+                    surveyFileWatcher.dispose();
                   }
-                });
+                }
+              });
             }
             break;
 
@@ -126,10 +129,9 @@ export default class ViewLoader {
 
           case "setSelectedConfigFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
-              const watcher = vscode.workspace.createFileSystemWatcher(
-                message.data
-              );
-              watcher.onDidChange(() => {
+              const configFileWatcher =
+                vscode.workspace.createFileSystemWatcher(message.data);
+              configFileWatcher.onDidChange(() => {
                 if (this._panel) {
                   const configData = this.getJsonFileContent(
                     message.data,
@@ -140,7 +142,7 @@ export default class ViewLoader {
                     content: configData,
                   });
                   if (configData === undefined) {
-                    watcher.dispose();
+                    configFileWatcher.dispose();
                   }
                 }
               });
