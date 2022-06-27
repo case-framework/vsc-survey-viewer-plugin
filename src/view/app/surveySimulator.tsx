@@ -281,63 +281,72 @@ const SurveySimulator: React.FC = (props) => {
         </div>
       </nav>
 
-      <div className="container p-3">
-        {!surveyViewCred.inLoadingState ? (
-          surveyViewCred.survey ? (
-            <SurveyView
-              loading={false}
-              showKeys={surveyViewCred.simulatorUIConfig.showKeys}
-              survey={surveyViewCred.survey}
-              context={surveyViewCred.context}
-              prefills={surveyViewCred.prefillValues}
-              languageCode={
-                surveyViewCred.selectedLanguage
-                  ? surveyViewCred.selectedLanguage
-                  : "en"
-              }
-              onSubmit={(responses) => {
-                const exportData = responses.slice();
-                var a = document.createElement("a");
-                var file = new Blob(
-                  [JSON.stringify(exportData, undefined, 2)],
-                  {
-                    type: "json",
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-lg-8 offset-lg-2 pt-3"
+            style={{ minHeight: '60vh' }}
+          >
+
+            {!surveyViewCred.inLoadingState ? (
+              surveyViewCred.survey ? (
+                <SurveyView
+                  loading={false}
+                  showKeys={surveyViewCred.simulatorUIConfig.showKeys}
+                  survey={surveyViewCred.survey}
+                  context={surveyViewCred.context}
+                  prefills={surveyViewCred.prefillValues}
+                  languageCode={
+                    surveyViewCred.selectedLanguage
+                      ? surveyViewCred.selectedLanguage
+                      : "en"
                   }
-                );
-                a.href = URL.createObjectURL(file);
-                a.download = `${
-                  surveyViewCred.survey?.current.surveyDefinition.key
-                }_responses_${new Date().toLocaleDateString()}.json`;
-                a.click();
-                // giveCommandToVscode(
-                //   "showFileDownloadSuccessMsg",
-                //   "The file is saved"
-                // );
-              }}
-              nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
-              backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}
-              submitBtnText={surveyViewCred.simulatorUIConfig.texts.submitBtn}
-              invalidResponseText={
-                surveyViewCred.simulatorUIConfig.texts.invalidResponseText
-              }
-              dateLocales={dateLocales}
-            />
-          ) : (
-            <p className="p-5 text-center" style={{ minHeight: "550px" }}>
-              Please Select The File To Preview The Survey.
-            </p>
-          )
-        ) : (
-          <div className="p-5 text-center" style={{ minHeight: "550px" }}>
-            <div
-              className="spinner-border"
-              style={{ width: "2rem", height: "2rem", color: "black" }}
-              role="status"
-            ></div>
+                  onSubmit={(responses) => {
+                    const exportData = responses.slice();
+                    var a = document.createElement("a");
+                    var file = new Blob(
+                      [JSON.stringify(exportData, undefined, 2)],
+                      {
+                        type: "json",
+                      }
+                    );
+                    a.href = URL.createObjectURL(file);
+                    a.download = `${surveyViewCred.survey?.current.surveyDefinition.key
+                      }_responses_${new Date().toLocaleDateString()}.json`;
+                    a.click();
+                    // giveCommandToVscode(
+                    //   "showFileDownloadSuccessMsg",
+                    //   "The file is saved"
+                    // );
+                  }}
+                  nextBtnText={surveyViewCred.simulatorUIConfig.texts.nextBtn}
+                  backBtnText={surveyViewCred.simulatorUIConfig.texts.backBtn}
+                  submitBtnText={surveyViewCred.simulatorUIConfig.texts.submitBtn}
+                  invalidResponseText={
+                    surveyViewCred.simulatorUIConfig.texts.invalidResponseText
+                  }
+                  dateLocales={dateLocales}
+                />
+              ) : (
+                <div className="h-100 d-flex align-items-center w-100" style={{ minHeight: "85vh" }}>
+                  <p className="px-2 text-center flex-grow-1">
+                    Select a survey to start preview.
+                  </p>
+                </div>
+
+              )
+            ) : (
+              <div className="px-2 py-5 text-center" style={{ minHeight: "550px" }}>
+                <div
+                  className="spinner-border"
+                  style={{ width: "2rem", height: "2rem", color: "black" }}
+                  role="status"
+                ></div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
-      <p className="text-muted mt-3 text-center ">{window.versionNumber}</p>
+      <p className="text-muted text-center p-2">Survey Viewer v{window.versionNumber} <br></br>  2022 - coneno</p>
       <EnterFileNameDialog
         giveCommandToVscode={(command: string, data: string) => {
           giveCommandToVscode(command, data);
