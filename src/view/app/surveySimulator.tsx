@@ -22,6 +22,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "./Css/Toolbar.css";
+import './ScssFiles/additionalStyles.scss';
+
+
 declare global {
   interface Window {
     acquireVsCodeApi(): any;
@@ -279,9 +282,8 @@ const SurveySimulator: React.FC = (props) => {
                       }
                     );
                     a.href = URL.createObjectURL(file);
-                    a.download = `${
-                      surveyViewCred.survey?.current.surveyDefinition.key
-                    }_responses_${new Date().toLocaleDateString()}.json`;
+                    a.download = `${surveyViewCred.survey?.current.surveyDefinition.key
+                      }_responses_${new Date().toLocaleDateString()}.json`;
                     a.click();
                     // giveCommandToVscode(
                     //   "showFileDownloadSuccessMsg",
@@ -301,7 +303,7 @@ const SurveySimulator: React.FC = (props) => {
               ) : (
                 <div
                   className="h-100 d-flex align-items-center w-100"
-                  style={{ minHeight: "85vh" }}
+                  style={{ minHeight: "80vh" }}
                 >
                   <p className="px-2 text-center flex-grow-1">
                     Select a survey to start preview.
@@ -323,8 +325,8 @@ const SurveySimulator: React.FC = (props) => {
           </div>
         </div>
       </div>
-      <p className="text-muted text-center p-2">
-        Survey Viewer v{window.versionNumber} <br></br> 2022 - coneno
+      <p className="text-muted text-center p-2 fs-small">
+        © 2022 Survey Viewer v{window.versionNumber} <br></br> coneno GmbH
       </p>
       <EnterFileNameDialog
         giveCommandToVscode={(command: string, data: string) => {
