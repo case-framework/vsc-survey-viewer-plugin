@@ -19,7 +19,7 @@ import ChangeConfig from "./Components/ChangeConfig";
 import ChangeTheme from "./Components/ChangeTheme";
 import { ThemeType } from "./AppConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faUpRightFromSquare, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "./Css/Toolbar.css";
 import './ScssFiles/additionalStyles.scss';
@@ -326,7 +326,16 @@ const SurveySimulator: React.FC = (props) => {
         </div>
       </div>
       <p className="text-muted text-center p-2 fs-small">
-        © 2022 Survey Viewer v{window.versionNumber} <br></br> coneno GmbH
+        © 2022 Survey Viewer v{window.versionNumber} <br></br>
+        <a
+          className="btn text-muted fs-small py-1"
+          href="https://coneno.com">
+          coneno GmbH
+          <FontAwesomeIcon
+            className="ms-1"
+            icon={faUpRightFromSquare} size="sm" />
+        </a>
+
       </p>
       <EnterFileNameDialog
         giveCommandToVscode={(command: string, data: string) => {
