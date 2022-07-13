@@ -95,16 +95,22 @@ export default class ViewLoader {
           case "setSelectedSurveyFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
               this.setSrcFileChangeWatcher(
-                message.data
-                  .replace("output", "src/studies")
-                  .replace("json", "ts")
+                path.join(
+                  `${
+                    vscode.workspace.workspaceFolders
+                      ? vscode.workspace.workspaceFolders[0].uri.fsPath
+                      : undefined
+                  }`,
+                  "src",
+                  "studies"
+                )
               );
               const surveyFileWatcher =
                 vscode.workspace.createFileSystemWatcher(message.data);
               surveyFileWatcher.onDidChange(() => {
                 vscode.window
                   .showInformationMessage(
-                    "The change in selected survey detected. Do you want to reload the survey",
+                    "The change in survey detected. Do you want to reload the survey",
                     "Yes",
                     "No"
                   )
