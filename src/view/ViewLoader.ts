@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
+import * as cp from "child_process";
 import {
   ConfigFile,
   ConfigFileStructure,
@@ -93,22 +94,43 @@ export default class ViewLoader {
 
           case "setSelectedSurveyFileChangeWatcher":
             if (vscode.workspace.workspaceFolders) {
+              this.setSrcFileChangeWatcher(
+                path.join(
+                  `${
+                    vscode.workspace.workspaceFolders
+                      ? vscode.workspace.workspaceFolders[0].uri.fsPath
+                      : undefined
+                  }`,
+                  "src",
+                  "studies"
+                )
+              );
               const surveyFileWatcher =
                 vscode.workspace.createFileSystemWatcher(message.data);
               surveyFileWatcher.onDidChange(() => {
-                if (this._panel) {
-                  const survey = this.getJsonFileContent(
-                    message.data,
-                    "survey"
-                  );
-                  this._panel.webview.postMessage({
-                    command: "setSelectedSurveyData",
-                    content: survey,
+                vscode.window
+                  .showInformationMessage(
+                    "The change in survey detected. Do you want to reload the survey",
+                    "Yes",
+                    "No"
+                  )
+                  .then((value: string | undefined) => {
+                    if (value === "Yes") {
+                      if (this._panel) {
+                        const survey = this.getJsonFileContent(
+                          message.data,
+                          "survey"
+                        );
+                        this._panel.webview.postMessage({
+                          command: "setSelectedSurveyData",
+                          content: survey,
+                        });
+                        if (survey === undefined) {
+                          surveyFileWatcher.dispose();
+                        }
+                      }
+                    }
                   });
-                  if (survey === undefined) {
-                    surveyFileWatcher.dispose();
-                  }
-                }
               });
             }
             break;
@@ -376,5 +398,31 @@ export default class ViewLoader {
 
       return contentWithError;
     }
+  }
+  // setting the watcher on survey in src directory corresponsing to the survey in output directory.
+  private setSrcFileChangeWatcher(path: string) {
+    if (vscode.workspace.workspaceFolders) {
+      const srcFileWatcher = vscode.workspace.createFileSystemWatcher(path);
+      srcFileWatcher.onDidChange(() => {
+        this.execShell(
+          "npm start study=tekenradar",
+          `${
+            vscode.workspace.workspaceFolders
+              ? vscode.workspace.workspaceFolders[0].uri.fsPath
+              : undefined
+          }`
+        );
+      });
+    }
+  }
+  // function for script excecution.
+  private execShell(cmd: string, cwd: string) {
+    let terminal = vscode.window.createTerminal({
+      name: "start study cmd",
+      cwd: cwd,
+      hideFromUser: false,
+    });
+    terminal.sendText(cmd);
+    terminal.show();
   }
 }
