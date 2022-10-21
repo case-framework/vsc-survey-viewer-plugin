@@ -3,10 +3,10 @@ import { SurveyView } from "case-web-ui";
 import {
   dateLocales,
   SimulatorUIConfig,
-  SurveyFileContent,
   SurveyViewCred,
 } from "./model";
 import {
+  Survey,
   SurveyContext,
   SurveySingleItemResponse,
 } from "survey-engine/data_types";
@@ -89,14 +89,14 @@ const SurveySimulator: React.FC = (props) => {
 
         // Sets the survey to surveyView as per selected by user
         case "setSelectedSurveyData":
-          const surveyData = message.content as SurveyFileContent;
+          const surveyData = message.content as Survey;
           setSurveyViewCred((prevState) => ({
             ...prevState,
             survey: undefined,
           }));
           setSurveyViewCred((prevState) => ({
             ...prevState,
-            survey: surveyData.survey,
+            survey: surveyData,
             inLoadingState: false,
           }));
           setselectSurveyBtnLoadingState(false);
@@ -282,7 +282,7 @@ const SurveySimulator: React.FC = (props) => {
                       }
                     );
                     a.href = URL.createObjectURL(file);
-                    a.download = `${surveyViewCred.survey?.current.surveyDefinition.key
+                    a.download = `${surveyViewCred.survey?.surveyDefinition.key
                       }_responses_${new Date().toLocaleDateString()}.json`;
                     a.click();
                     // giveCommandToVscode(

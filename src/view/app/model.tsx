@@ -5,10 +5,7 @@ import {
 } from "survey-engine/data_types";
 import { nl, nlBE, fr, de, it } from "date-fns/locale";
 
-export interface SurveyFileContent {
-  studyKey: string;
-  survey: Survey;
-}
+
 export interface SurveyViewCred {
   survey?: Survey;
   context?: SurveyContext;

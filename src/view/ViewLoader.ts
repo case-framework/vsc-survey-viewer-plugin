@@ -7,9 +7,8 @@ import {
   ConfigFileStructure,
   OutputFileStructure,
   SurveyDirectory,
-  SurveyFileContent,
 } from "./app/model";
-import { SurveyContext } from "survey-engine/data_types";
+import { Survey, SurveyContext } from "survey-engine/data_types";
 import { ThemeType } from "./app/AppConstants";
 
 export default class ViewLoader {
@@ -96,10 +95,9 @@ export default class ViewLoader {
             if (vscode.workspace.workspaceFolders) {
               this.setSrcFileChangeWatcher(
                 path.join(
-                  `${
-                    vscode.workspace.workspaceFolders
-                      ? vscode.workspace.workspaceFolders[0].uri.fsPath
-                      : undefined
+                  `${vscode.workspace.workspaceFolders
+                    ? vscode.workspace.workspaceFolders[0].uri.fsPath
+                    : undefined
                   }`,
                   "src",
                   "studies"
@@ -246,7 +244,7 @@ export default class ViewLoader {
   private getJsonFileContent(
     filePath: string,
     fileType: string
-  ): SurveyContext | SurveyFileContent | undefined {
+  ): SurveyContext | Survey | undefined {
     if (fs.existsSync(filePath)) {
       let content = fs.readFileSync(filePath, "utf8");
       try {
@@ -259,7 +257,7 @@ export default class ViewLoader {
         let configData: SurveyContext = JSON.parse(content);
         return configData;
       } else if (fileType === "survey") {
-        let surveyData: SurveyFileContent = JSON.parse(content);
+        let surveyData: Survey = JSON.parse(content);
         return surveyData;
       }
     }
@@ -320,10 +318,9 @@ export default class ViewLoader {
   // Creats a new file for config and opens it in new tab
   private createNewConfigFile(fileName: string) {
     const configFilePath = path.join(
-      `${
-        vscode.workspace.workspaceFolders
-          ? vscode.workspace.workspaceFolders[0].uri.fsPath
-          : undefined
+      `${vscode.workspace.workspaceFolders
+        ? vscode.workspace.workspaceFolders[0].uri.fsPath
+        : undefined
       }`,
       "config"
     );
@@ -358,10 +355,9 @@ export default class ViewLoader {
   // Returns the files from the config directory
   private getConfigFilesList(): ConfigFileStructure {
     const configFilePath = path.join(
-      `${
-        vscode.workspace.workspaceFolders
-          ? vscode.workspace.workspaceFolders[0].uri.fsPath
-          : undefined
+      `${vscode.workspace.workspaceFolders
+        ? vscode.workspace.workspaceFolders[0].uri.fsPath
+        : undefined
       }`,
       "config"
     );
@@ -370,10 +366,9 @@ export default class ViewLoader {
       const fullContent: ConfigFile[] = [];
       fs.readdirSync(configFilePath).forEach((file) => {
         let filePath = path.join(
-          `${
-            vscode.workspace.workspaceFolders
-              ? vscode.workspace.workspaceFolders[0].uri.fsPath
-              : undefined
+          `${vscode.workspace.workspaceFolders
+            ? vscode.workspace.workspaceFolders[0].uri.fsPath
+            : undefined
           }`,
           "config",
           `${file}`
@@ -406,10 +401,9 @@ export default class ViewLoader {
       srcFileWatcher.onDidChange(() => {
         this.execShell(
           "npm start study=tekenradar",
-          `${
-            vscode.workspace.workspaceFolders
-              ? vscode.workspace.workspaceFolders[0].uri.fsPath
-              : undefined
+          `${vscode.workspace.workspaceFolders
+            ? vscode.workspace.workspaceFolders[0].uri.fsPath
+            : undefined
           }`
         );
       });
