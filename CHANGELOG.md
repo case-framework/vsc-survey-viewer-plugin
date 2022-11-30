@@ -4,6 +4,12 @@ All notable changes to the "surveyviewer" extension will be documented in this f
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.6.1]
+
+### Changed
+
+- Fix issue that prevented the plugin to load using recent VSC versions.
+
 ## [0.6.0]
 
 ### Changed

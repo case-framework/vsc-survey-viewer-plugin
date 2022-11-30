@@ -217,7 +217,7 @@ export default class ViewLoader {
       path.join(this._extensionPath, "surveyViewer", themeType + ".js")
     );
 
-    const reactAppUri = reactAppPathOnDisk.with({ scheme: "vscode-resource" });
+    const reactAppUri = this._panel?.webview.asWebviewUri(reactAppPathOnDisk);
 
     return `<!DOCTYPE html>
     <html lang="en">
@@ -225,8 +225,6 @@ export default class ViewLoader {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title></title>
-        <meta http-equiv="Content-Security-Policy"
-                    content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *;">
         <script>
           window.acquireVsCodeApi = acquireVsCodeApi;
           window.versionNumber = "${versionNumber}";
